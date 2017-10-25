@@ -8,3 +8,4 @@
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
 
+    echo file_get_contents('php://input');
