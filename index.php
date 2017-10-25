@@ -25,8 +25,8 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    $result = pg_query($db, "SELECT * FROM Speakers");
-    echo $result;
+    //$result = pg_query($db, "SELECT * FROM Speakers");
+    echo 'ok';
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
