@@ -66,6 +66,19 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
+        if ($messageText == "О форуме") {
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["О Гиперкубе"]],
+                [["Биржа деловых контактов"]],
+                [["Самое интересное"]],
+                [["Как добраться"], ["Питание"]],
+                [["Размещение"],["Меню"]]
+            ], true, true);
+            $answer = "Здесь содержится полезная информация о нашем форуме. 
+                Выберите раздел:";
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
     }, function ($message) use ($name){
         return true;
     });
