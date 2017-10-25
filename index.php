@@ -22,8 +22,14 @@ require_once('vendor/autoload.php');
     }
 
     $bot->command('start', function ($message) use ($bot) {
-        $answer = 'Добро пожаловать';
+        $answer = 'Что я могу для вас сделать?';
         $bot->sendMessage($message->getChat()->getId(), $answer);
+    });
+
+    $bot->command('help', function ($message) use ($bot) {
+       $answer = 'Команды:
+       /help - помощь';
+       $bot->sendMessage($message->getChat()->getId(), $answer);
     });
 
     $bot->run();
