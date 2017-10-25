@@ -25,8 +25,10 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    pg_copy_to($db, "public.\"Speakers\"", $result);
-    var_dump($result);
+    $result = pg_copy_to($db, "SELECT id, name, about, refphoto
+	FROM public.\"Speakers\"
+    WHERE ID = 1;");
+    var_dump(array($result));
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
