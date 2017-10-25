@@ -141,16 +141,14 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "30 ноября") {
             $db = pg_connect(pg_connection_string());
-            $result = pg_query($db, "SELECT id, name, about, refphoto
-	FROM public.\"Speakers\"
-    WHERE ID = 1;");
-            $result = pg_fetch_assoc($result);
-            $answerName = "Спикер: " . $result['name'];
-            $answerAbout = "Информация" . $result['about'];
-            $answerPhoto = $result['refphoto'];
-            $bot->sendMessage($message->getChat()->getId(),$answerName);
-            $bot->sendMessage($message->getChat()->getId(),$answerAbout);
-            $bot->sendPhoto($message->getChat()->getId(),$answerPhoto);
+            $results = pg_query($db, "SELECT id, name, about, refphoto FROM public.\"Speakers\";");
+            $results = pg_fetch_assoc($results);
+
+            foreach ($results as $result) {
+                $bot->sendMessage($message->getChat()->getId(), $result['name']);
+                $bot->sendMessage($message->getChat()->getId(),$result['about']);
+                $bot->sendPhoto($message->getChat()->getId(),$result['refphoto']);
+            }
         }
 
     }, function ($message) use ($name){
