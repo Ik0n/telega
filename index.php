@@ -138,7 +138,7 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "30 ноября") {
             $db = pg_connect(pg_connection_string());
-            $chelik = pg_query($db, "SELECT id, name, about, refphoto FROM public.Speakers WHERE ID = 1");
+            $chelik = pg_query($db, "SELECT id, name, about, refphoto FROM public.\"Speakers\" WHERE ID = ");
             $answerName = "Спикер: " . $chelik['name'];
             $answerAbout = "Информация" . $chelik['about'];
             $answerPhoto = $chelik['refphoto'];
