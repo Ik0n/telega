@@ -79,6 +79,45 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
+        if ($messageText == "О Гиперкубе") {
+            $answer = '«Гиперкуб» − это центр городского развития «Сколково».
+            Центр, в котором разрабатываются информационные, экономические, инженерные, 
+            градостроительные и организационные модели будущего и царит атмосфера творчества, в которой реализуются любые идеи.';
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "О Гиперкубе"]],
+                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Самое интересное"]],
+                [["text" => "Как добраться"], ["text" => "Питание"]],
+                [["text" => "Размещение"],["text" => "Меню"]],
+            ], true, true);
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "Как добраться") {
+            $answer = 'Адрес: 
+            ИЦ Сколково, ул. Малевича, д 1. Москва';
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "О Гиперкубе"]],
+                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Самое интересное"]],
+                [["text" => "Как добраться"], ["text" => "Питание"]],
+                [["text" => "Размещение"],["text" => "Меню"]],
+            ], true, true);
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "Питание") {
+            $answer = 'На территории мероприятия для Вас будут работать рестораны, кафе и фудтраки.';
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "О Гиперкубе"]],
+                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Самое интересное"]],
+                [["text" => "Как добраться"], ["text" => "Питание"]],
+                [["text" => "Размещение"],["text" => "Меню"]],
+            ], true, true);
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
     }, function ($message) use ($name){
         return true;
     });
