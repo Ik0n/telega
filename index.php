@@ -140,15 +140,17 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "30 ноября") {
-            //$db = pg_connect(pg_connection_string());
-            //$chelik = pg_query($db, "SELECT id, name, about, refphoto FROM public.\"Speakers\" WHERE ID = ");
-            //var_dump($chelik);
-            //$answerName = "Спикер: " . $chelik['name'];
-            //$answerAbout = "Информация" . $chelik['about'];
-            //$answerPhoto = $chelik['refphoto'];
-            //$bot->sendMessage($message->getChat()->getId(),$answerName);
-            //$bot->sendMessage($message->getChat()->getId(),$answerAbout);
-            //$bot->sendPhoto($message->getChat()->getId(),$answerPhoto);
+            $db = pg_connect(pg_connection_string());
+            $result = pg_query($db, "SELECT id, name, about, refphoto
+	FROM public.\"Speakers\"
+    WHERE ID = 1;");
+            $result = pg_fetch_assoc($result);
+            $answerName = "Спикер: " . $result['name'];
+            $answerAbout = "Информация" . $result['about'];
+            $answerPhoto = $result['refphoto'];
+            $bot->sendMessage($message->getChat()->getId(),$answerName);
+            $bot->sendMessage($message->getChat()->getId(),$answerAbout);
+            $bot->sendPhoto($message->getChat()->getId(),$answerPhoto);
         }
 
     }, function ($message) use ($name){
