@@ -46,7 +46,7 @@ require_once('vendor/autoload.php');
         $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
             [["text" => "Расписание"], ["text" => "Моё расписание"]],
             [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
-            [["text" => "Подписаться на новости"]],
+            [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
             [["text" => "Связаться с организаторами"]],
             [["text" => "О форуме"]],
         ], true, true);
@@ -79,7 +79,7 @@ require_once('vendor/autoload.php');
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "Расписание"], ["text" => "Моё расписание"]],
                 [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
-                [["text" => "Подписаться на новости"]],
+                [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
                 [["text" => "Связаться с организаторами"]],
                 [["text" => "О форуме"]],
             ], true, true);
@@ -139,6 +139,10 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "30 ноября") {
+
+        }
+
+        if ($messageText == "Спикеры") {
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id, name, about, refphoto FROM public.\"Speakers\";");
             $results = pg_fetch_all($results);
@@ -147,7 +151,7 @@ require_once('vendor/autoload.php');
                 $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
                 $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                 $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
-                $bot->sendMessage($message->getChat()->getId(), "------------------------------");
+                $bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
 
             }
         }
