@@ -25,7 +25,7 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    pg_copy_to($db, "Speakers", $result);
+    pg_copy_to($db, "public.\"Speakers\"", $result);
     var_dump($result);
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
