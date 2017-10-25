@@ -25,8 +25,8 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    $result = pg_query($db, "SELECT statement goes here");
-    echo 'ok';
+    $result = pg_query($db, "SELECT id, name, about, refphoto FROM public.\"Speakers\" WHERE ID = ");
+    echo $result;
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
