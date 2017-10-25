@@ -25,9 +25,8 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    $result = pg_query($db, "SELECT id, name, about, refphoto
-	FROM public.\"Speakers\"
-    WHERE ID = 1;");
+    $result = pg_query($db, "SELECT id ,name, about, refphoto
+	FROM public.\"Speakers\"");
     $result = pg_fetch_assoc($result);
     var_dump($result);
 
