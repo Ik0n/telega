@@ -25,7 +25,7 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    $result = pg_copy_to($db, "SELECT id, name, about, refphoto
+    $result = pg_query($db, "SELECT id, name, about, refphoto
 	FROM public.\"Speakers\"
     WHERE ID = 1;");
     var_dump(array($result));
