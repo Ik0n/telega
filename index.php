@@ -6,6 +6,8 @@
  * Time: 18:17
  */
 
+header('Content-Type: text/html; charset=utf-8');
+
 require_once('vendor/autoload.php');
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
@@ -20,7 +22,8 @@ require_once('vendor/autoload.php');
     }
 
     $bot->command('start', function ($message) use ($bot) {
-        $bot->sendMessage($message->getChat()->getId, 'Добро пожаловать');
+        $answer = 'Добро пожаловать';
+        $bot->sendMessage($message->getChat()->getId(), $answer);
     });
 
     $bot->run();
