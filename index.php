@@ -23,4 +23,6 @@ require_once('vendor/autoload.php');
         $bot->sendMessage($message->getChat()->getId, 'Добро пожаловать');
     });
 
+    $bot->run();
+
 
