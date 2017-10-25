@@ -10,6 +10,24 @@ header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
 
+    function pg_connection_string() {
+        return "dbname=d4re8r18uqsqa 
+                host=ec2-46-51-187-253.eu-west-1.compute.amazonaws.com 
+                port=5432 
+                user=nhtxzmrecgoswb 
+                password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
+                sslmode=require";
+    }
+
+    $db = pg_connect(pg_connection_string());
+    if (!$db) {
+        echo "Database connection error";
+        exit;
+    }
+
+    $result = pg_query($db, "SELECT statement goes here");
+    echo "ok";
+
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
 
