@@ -6,6 +6,17 @@
  * Time: 18:17
  */
 
-    $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
+require_once('vendor/autoload.php');
 
-    echo file_get_contents('php://input');
+    $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
+    $bot = new \TelegramBot\Api\Client($token);
+
+    if (!file_exists("registered.trigger")) {
+        $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        $result = $bot->setWebhook($page_url);
+        if($result) {
+            file_put_contents("registered.trigger", time());
+        }
+    }
+
+
