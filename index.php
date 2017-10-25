@@ -26,7 +26,7 @@ require_once('vendor/autoload.php');
     }
 
     $result = pg_query($db, "SELECT statement goes here");
-    echo "ok";
+    echo 'ok';
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
@@ -134,6 +134,17 @@ require_once('vendor/autoload.php');
                 [["text" => "Размещение"],["text" => "Меню"]],
             ], true, true);
             $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "30 ноября") {
+            $db = pg_connect(pg_connection_string());
+            $chelik = pg_query($db, "SELECT id, name, about, refphoto FROM public.Speakers WHERE ID = 1");
+            $answerName = "Спикер: " . $chelik['name'];
+            $answerAbout = "Информация" . $chelik['about'];
+            $answerPhoto = $chelik['refphoto'];
+            $bot->sendMessage($message->getChat()->getId(),$answerName);
+            $bot->sendMessage($message->getChat()->getId(),$answerAbout);
+            $bot->sendPhoto($message->getChat()->getId(),$answerPhoto);
         }
 
     }, function ($message) use ($name){
