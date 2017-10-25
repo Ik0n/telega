@@ -23,7 +23,13 @@ require_once('vendor/autoload.php');
 
     $bot->command('start', function ($message) use ($bot) {
         $answer = 'Что я могу для вас сделать?';
-        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([[["text" => "Расписание"], ["text" => "Моё расписание"]]], true, true);
+        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+            [["text" => "Расписание"], ["text" => "Моё расписание"]],
+            [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
+            [["text" => "Подписаться на новости"]],
+            [["text" => "Связаться с организаторами"]],
+            [["text" => "О форуме"]],
+        ], true, true);
         $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
     });
 
