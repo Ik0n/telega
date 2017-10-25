@@ -48,10 +48,24 @@ require_once('vendor/autoload.php');
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                [["text" => "30 ноября"]],
                [["text" => "1 декабря"]],
+               [["text" => "Меню"]],
             ], true, true);
             $answer = "Выберите дату:";
             $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
+
+        if($messageText == "Меню") {
+            $answer = 'Что я могу для вас сделать?';
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
+                [["text" => "Подписаться на новости"]],
+                [["text" => "Связаться с организаторами"]],
+                [["text" => "О форуме"]],
+            ], true, true);
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
     }, function ($message) use ($name){
         return true;
     });
