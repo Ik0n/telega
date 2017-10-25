@@ -25,7 +25,9 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    //$result = pg_query($db, "SELECT * FROM Speakers");
+    $result = pg_query($db, "SELECT id, name, about, refphoto
+	FROM public.\"Speakers\"
+    WHERE ID = 1;");
     echo 'ok';
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
