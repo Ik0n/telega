@@ -39,8 +39,8 @@ require_once('vendor/autoload.php');
        $bot->sendMessage($message->getChat()->getId(), $answer);
     });
 
-    $bot->on(function ($update) use ($bot){
-        $message = $update->getMessage();
+    $bot->on(function($Update) use ($bot){
+        $message = $Update->getMessage();
         $messageText = $message->getText();
         $chatId = $message->getChat()->getId();
 
