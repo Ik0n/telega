@@ -13,7 +13,7 @@ require_once('vendor/autoload.php');
 
     if (!file_exists("registered.trigger")) {
         $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-        $result = $bot->setWebhook($page_url);
+        $result = $bot->setWebhook("https://bottelegabot.herokuapp.com/");
         if($result) {
             file_put_contents("registered.trigger", time());
         }
