@@ -145,9 +145,9 @@ require_once('vendor/autoload.php');
             $results = pg_fetch_assoc($results);
 
             foreach ($results as $result) {
-                $bot->sendMessage($message->getChat()->getId(), $result['name']);
-                $bot->sendMessage($message->getChat()->getId(),$result['about']);
-                $bot->sendPhoto($message->getChat()->getId(),$result['refphoto']);
+                $bot->sendMessage($message->getChat()->getId(), $result->name);
+                $bot->sendMessage($message->getChat()->getId(),$result->about);
+                $bot->sendPhoto($message->getChat()->getId(), $result->refphoto);
             }
         }
 
