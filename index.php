@@ -145,8 +145,10 @@ require_once('vendor/autoload.php');
 
             foreach ($results as $result) {
                 $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
-                $bot->sendMessage($message->getChat()->getId(), "О спикере" . $result['about']);
                 $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
+                $bot->sendMessage($message->getChat()->getId(), "------------------------------");
+
             }
         }
 
