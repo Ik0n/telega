@@ -78,7 +78,7 @@ require_once('vendor/autoload.php');
                [["text" => "Меню"]],
             ], true, true);
             $answer = "Выберите дату:";
-            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+            $bot->sendMessage($message->getChat()->getId(), $answer, null, null, null, $keyboard);
         }
 
         if($messageText == "Меню") {
@@ -90,7 +90,7 @@ require_once('vendor/autoload.php');
                 [["text" => "Связаться с организаторами"]],
                 [["text" => "О форуме"]],
             ], true, true);
-            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+            $bot->sendMessage($message->getChat()->getId(), $answer, null, null, null, $keyboard);
         }
 
         if ($messageText == "О форуме") {
