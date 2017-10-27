@@ -172,7 +172,7 @@ require_once('vendor/autoload.php');
               ]
             ]);
 
-            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
+            //$bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
 
         }
 
@@ -202,7 +202,7 @@ require_once('vendor/autoload.php');
                 ]
             ]);
 
-            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
+            //$bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
         }
 
         if ($messageText == "Спикеры") {
