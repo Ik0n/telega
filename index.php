@@ -25,6 +25,10 @@ require_once('vendor/autoload.php');
         exit;
     }
 
+    $word1 = "16qwe";
+    $word2 = "16";
+
+    var_dump(stristr($word1, $word2));
 
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
@@ -148,6 +152,13 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "30 ноября") {
+            $db = pg_connect(pg_connection_string());
+            $results = pg_query($db, "SELECT title, begin, \"end\" FROM public.\"Schedule\";");
+            $results = pg_fetch_all($results);
+
+            foreach ($results as $result) {
+                $bot->sendMessage($message->getChat()->getId(), mb_str);
+            }
 
         }
 
