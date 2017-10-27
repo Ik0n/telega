@@ -145,36 +145,6 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
-        if ($messageText == "30 ноября") {
-            $db = pg_connect(pg_connection_string());
-            $results = pg_query($db, "SELECT id,title, begin, \"end\" FROM public.\"Schedule\";");
-            $results = pg_fetch_all($results);
-            $date = "30";
-            foreach ($results as $result) {
-                $string = stristr($result['begin'], $date);
-                if ($string == $result['begin']) {
-                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
-                        [
-                            [
-                                ['callback_data' => $result['id'], 'text' => 'Добавить в своё расписание ' . $result['id']]
-                            ]
-                        ]
-                    );
-
-
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
-                }
-            }
-
-            $mainkeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-              [
-                  [["text" => "Меню"]]
-              ]
-            ]);
-
-            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
-
-        }
 
         if ($messageText == "1 декабря") {
             $db = pg_connect(pg_connection_string());
@@ -221,70 +191,6 @@ require_once('vendor/autoload.php');
 
     }, function ($message) use ($name){
         return true;
-    });
-
-    $bot->on(function ($update) use ($bot, $callback_loc, $find_command){
-       $callback = $update->getCallbackQuery();
-       $message = $callback->getMessage();
-       $chatId = $message->getChat()->getId();
-       $data = $callback->getData();
-
-       if ($data == 1) {
-           $bot->answerCallbackQuery($callback->getId(), 1);
-       }
-        if ($data == 2) {
-            $bot->answerCallbackQuery($callback->getId(), 2);
-        }
-        if ($data == 3) {
-            $bot->answerCallbackQuery($callback->getId(), 3);
-        }
-        if ($data == 4) {
-            $bot->answerCallbackQuery($callback->getId(), 4);
-        }
-        if ($data == 5) {
-            $bot->answerCallbackQuery($callback->getId(), 5);
-        }
-        if ($data == 6) {
-            $bot->answerCallbackQuery($callback->getId(), 6);
-        }
-        if ($data == 7) {
-            $bot->answerCallbackQuery($callback->getId(), 7);
-        }
-        if ($data == 8) {
-            $bot->answerCallbackQuery($callback->getId(), 8);
-        }
-        if ($data == 9) {
-            $bot->answerCallbackQuery($callback->getId(), 9);
-        }
-        if ($data == 11) {
-            $bot->answerCallbackQuery($callback->getId(), 11);
-        }
-        if ($data == 12) {
-            $bot->answerCallbackQuery($callback->getId(), 12);
-        }
-        if ($data == 13) {
-            $bot->answerCallbackQuery($callback->getId(), 13);
-        }
-        if ($data == 14) {
-            $bot->answerCallbackQuery($callback->getId(), 14);
-        }
-        if ($data == 15) {
-            $bot->answerCallbackQuery($callback->getId(), 15);
-        }
-        if ($data == 16) {
-            $bot->answerCallbackQuery($callback->getId(), 16);
-        }
-        if ($data == 17) {
-            $bot->answerCallbackQuery($callback->getId(), 17);
-        }
-        if ($data == 18) {
-            $bot->answerCallbackQuery($callback->getId(), 18);
-        }
-        if ($data == 19) {
-            $bot->answerCallbackQuery($callback->getId(), 19);
-        }
-
-
     });
 
     $bot->run();
