@@ -166,11 +166,11 @@ require_once('vendor/autoload.php');
                 }
             }
 
-            $mainkeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+            $mainkeyboard = new \TelegramBot\Api\Types\Inline\ReplyKeyboardMarkup([
               [
                   [["text" => "Меню"]]
               ]
-            );
+            ]);
 
             $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
 
@@ -196,11 +196,11 @@ require_once('vendor/autoload.php');
                 }
             }
 
-            $mainkeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+            $mainkeyboard = new \TelegramBot\Api\Types\Inline\ReplyKeyboardMarkup([
                 [
                     [["text" => "Меню"]]
                 ]
-            );
+            ]);
 
             $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
         }
