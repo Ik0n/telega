@@ -166,7 +166,7 @@ require_once('vendor/autoload.php');
                 }
             }
 
-            $mainkeyboard = new \TelegramBot\Api\Types\Inline\ReplyKeyboardMarkup([
+            $mainkeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
               [
                   [["text" => "Меню"]]
               ]
@@ -196,7 +196,7 @@ require_once('vendor/autoload.php');
                 }
             }
 
-            $mainkeyboard = new \TelegramBot\Api\Types\Inline\ReplyKeyboardMarkup([
+            $mainkeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [
                     [["text" => "Меню"]]
                 ]
