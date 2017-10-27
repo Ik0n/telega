@@ -166,6 +166,14 @@ require_once('vendor/autoload.php');
                 }
             }
 
+            $mainkeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+              [
+                  [["text" => "Меню"]]
+              ]
+            );
+
+            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
+
         }
 
         if ($messageText == "1 декабря") {
@@ -184,9 +192,17 @@ require_once('vendor/autoload.php');
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId, "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
                 }
             }
+
+            $mainkeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                [
+                    [["text" => "Меню"]]
+                ]
+            );
+
+            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
         }
 
         if ($messageText == "Спикеры") {
