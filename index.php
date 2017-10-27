@@ -223,6 +223,70 @@ require_once('vendor/autoload.php');
         return true;
     });
 
+    $bot->on(function ($update) use ($bot, $callback_loc, $find_command){
+       $callback = $update->getCallbackQuery();
+       $message = $callback->getMessage();
+       $chatId = $message->getChat()->getId();
+       $data = $callback->getData();
+
+       if ($data == 1) {
+           $bot->answerCallbackQuery($callback->getId(), 1);
+       }
+        if ($data == 2) {
+            $bot->answerCallbackQuery($callback->getId(), 2);
+        }
+        if ($data == 3) {
+            $bot->answerCallbackQuery($callback->getId(), 3);
+        }
+        if ($data == 4) {
+            $bot->answerCallbackQuery($callback->getId(), 4);
+        }
+        if ($data == 5) {
+            $bot->answerCallbackQuery($callback->getId(), 5);
+        }
+        if ($data == 6) {
+            $bot->answerCallbackQuery($callback->getId(), 6);
+        }
+        if ($data == 7) {
+            $bot->answerCallbackQuery($callback->getId(), 7);
+        }
+        if ($data == 8) {
+            $bot->answerCallbackQuery($callback->getId(), 8);
+        }
+        if ($data == 9) {
+            $bot->answerCallbackQuery($callback->getId(), 9);
+        }
+        if ($data == 11) {
+            $bot->answerCallbackQuery($callback->getId(), 11);
+        }
+        if ($data == 12) {
+            $bot->answerCallbackQuery($callback->getId(), 12);
+        }
+        if ($data == 13) {
+            $bot->answerCallbackQuery($callback->getId(), 13);
+        }
+        if ($data == 14) {
+            $bot->answerCallbackQuery($callback->getId(), 14);
+        }
+        if ($data == 15) {
+            $bot->answerCallbackQuery($callback->getId(), 15);
+        }
+        if ($data == 16) {
+            $bot->answerCallbackQuery($callback->getId(), 16);
+        }
+        if ($data == 17) {
+            $bot->answerCallbackQuery($callback->getId(), 17);
+        }
+        if ($data == 18) {
+            $bot->answerCallbackQuery($callback->getId(), 18);
+        }
+        if ($data == 19) {
+            $bot->answerCallbackQuery($callback->getId(), 19);
+        }
+
+
+    });
+
     $bot->run();
 
 
