@@ -41,7 +41,16 @@ require_once('vendor/autoload.php');
     }
 
     $bot->command('start', function ($message) use ($bot) {
-        $answer = 'Что я могу для вас сделать?' . $message->getFrom()->getId();
+        $answer = 'Что я могу для вас сделать?';
+
+        $db = pg_connect(pg_connection_string());
+        $result = pg_query($db , "SELECT telegram_id FROM public.\"Users\" WHERE telegram_id = " . $message->getFrom()->getId() . ";");
+        $result = pg_fetch_all($result);
+
+        if ($result != null) {
+            pg_query($db, "INSERT INTO public.\"Users\"(telegram_id) VALUES (" . $message->getFrom()->getId() . ");");
+        }
+
 
         $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
             [["text" => "Расписание"], ["text" => "Моё расписание"]],
