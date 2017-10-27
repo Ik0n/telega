@@ -41,10 +41,8 @@ require_once('vendor/autoload.php');
     }
 
     $bot->command('start', function ($message) use ($bot) {
+        $answer = 'Что я могу для вас сделать?' . $message->getFrom()->getId();
 
-        var_dump($message);
-
-        $answer = 'Что я могу для вас сделать?';
         $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
             [["text" => "Расписание"], ["text" => "Моё расписание"]],
             [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
