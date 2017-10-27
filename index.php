@@ -78,7 +78,7 @@ require_once('vendor/autoload.php');
                [["text" => "Меню"]],
             ], true, true);
             $answer = "Выберите дату:";
-            $bot->sendMessage($message->getChat()->getId(), $answer, null, null, null, $keyboard);
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
         if($messageText == "Меню") {
@@ -90,7 +90,7 @@ require_once('vendor/autoload.php');
                 [["text" => "Связаться с организаторами"]],
                 [["text" => "О форуме"]],
             ], true, true);
-            $bot->sendMessage($message->getChat()->getId(), $answer, null, null, null, $keyboard);
+            $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
         if ($messageText == "О форуме") {
@@ -153,16 +153,16 @@ require_once('vendor/autoload.php');
             foreach ($results as $result) {
                 $string = stristr($result['begin'], $date);
                 if ($string == $result['begin']) {
-                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                    /*$keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                         [
                             [
                                 ['callback_data' => $result['id'], 'text' => 'Добавить в своё расписание ' . $result['id']]
                             ]
                         ]
-                    );
+                    );*/
 
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end']);//, false, null, null, $keyboard);
                 }
             }
 
@@ -184,15 +184,15 @@ require_once('vendor/autoload.php');
             foreach ($results as $result) {
                 $string = stristr($result['begin'], $date);
                 if ($string == $result['begin']) {
-                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                    /*$keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                         [
                             [
                                 ['callback_data' => $result['id'], 'text' => 'Добавить в своё расписание' . $result['id']]
                             ]
                         ]
-                    );
+                    );*/
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end']);//, false, null, null, $keyboard);
                 }
             }
 
