@@ -30,7 +30,7 @@ require_once('vendor/autoload.php');
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
 
-    var_dump($bot);
+    var_dump($bot->getRawBody());
 
     if (!file_exists("registered.trigger")) {
         $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
