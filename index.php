@@ -151,7 +151,7 @@ require_once('vendor/autoload.php');
             $results = pg_fetch_all($results);
 
             foreach ($results as $result) {
-                if (stristr($result['title'], "16") == $result['title']) {
+                if (stristr($result['title'], "30") == $result['title']) {
                     $bot->sendMessage($message->getChat()->getId(), $result['title'] . " " . $result['begin'] . " " . $result['end']);
                 }
             }
