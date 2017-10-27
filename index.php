@@ -152,7 +152,8 @@ require_once('vendor/autoload.php');
             $date = "30";
 
             foreach ($results as $result) {
-                if (stristr($result['title'], $date) == $result['title']) {
+                $test = stristr($result['begin'], $date);
+                if ($test == $result['begin']) {
                     $bot->sendMessage($message->getChat()->getId(), $result['title'] . " " . $result['begin'] . " " . $result['end']);
                 }
             }
