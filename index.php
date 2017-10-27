@@ -151,8 +151,8 @@ require_once('vendor/autoload.php');
             $results = pg_fetch_all($results);
             $date = "30";
             foreach ($results as $result) {
-                $string = stristr($result['begin'], $date);
-                if ($string == $result['begin']) {
+                $test = stristr($result['begin'], $date);
+                if ($test == $result['begin']) {
                     $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                         [
                             [
