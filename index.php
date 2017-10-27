@@ -25,12 +25,6 @@ require_once('vendor/autoload.php');
         exit;
     }
 
-    $word1 = "16qwe";
-    $word2 = "16";
-
-    var_dump(stristr($word1, $word2));
-
-
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
 
@@ -157,7 +151,9 @@ require_once('vendor/autoload.php');
             $results = pg_fetch_all($results);
 
             foreach ($results as $result) {
-                $bot->sendMessage($message->getChat()->getId(), mb_str);
+                if (stristr($result['title'], "16") == $result['title']) {
+                    $bot->sendMessage($message->getChat()->getId(), $result['title'] . " " . $result['begin'] . " " . $result['end']);
+                }
             }
 
         }
