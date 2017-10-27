@@ -149,9 +149,10 @@ require_once('vendor/autoload.php');
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT title, begin, \"end\" FROM public.\"Schedule\";");
             $results = pg_fetch_all($results);
+            $date = "30";
 
             foreach ($results as $result) {
-                if (stristr($result['title'], "30") == $result['title']) {
+                if (stristr($result['title'], $date) == $result['title']) {
                     $bot->sendMessage($message->getChat()->getId(), $result['title'] . " " . $result['begin'] . " " . $result['end']);
                 }
             }
