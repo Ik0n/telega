@@ -47,7 +47,7 @@ require_once('vendor/autoload.php');
         $result = pg_query($db , "SELECT telegram_id FROM public.\"Users\" WHERE telegram_id = " . $message->getFrom()->getId() . ";");
         $result = pg_fetch_all($result);
 
-        if ($result != null) {
+        if ($result == null) {
             pg_query($db, "INSERT INTO public.\"Users\"(telegram_id) VALUES (" . $message->getFrom()->getId() . ");");
         }
 
