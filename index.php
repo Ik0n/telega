@@ -227,6 +227,9 @@ require_once('vendor/autoload.php');
     });*/
 
 
+    $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
+    $bot = new \TelegramBot\Api\Client($token);
+
    $bot->command('ibutton', function ($message) use ($bot) {
       $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
         [
