@@ -302,6 +302,15 @@ require_once('vendor/autoload.php');
               }
           }
       }
+
+      if ($data = stristr($data, "delete")) {
+          $db = pg_connect(pg_connection_string());
+          pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE schedule_id =" . preg_replace("/[^0-9]/",'', $data) . " and user_id =" . $chatId . ";");
+
+          $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка", true);
+      }
+
+
    }, function ($update) use ($bot){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
@@ -461,7 +470,7 @@ require_once('vendor/autoload.php');
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания' . $result['schedule_id']]
+                               ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания ' . $result['schedule_id']]
                            ]
                        ]
                    );
