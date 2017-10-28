@@ -19,7 +19,7 @@ require_once('vendor/autoload.php');
                 sslmode=require";
     }
 
-/*  $db = pg_connect(pg_connection_string());
+  $db = pg_connect(pg_connection_string());
  if (!$db) {
      echo "Database connection error";
      exit;
@@ -36,7 +36,7 @@ require_once('vendor/autoload.php');
      }
  }
 
- $bot->command('start', function ($message) use ($bot) {
+/* $bot->command('start', function ($message) use ($bot) {
      $answer = 'Что я могу для вас сделать?';
 
      $db = pg_connect(pg_connection_string());
