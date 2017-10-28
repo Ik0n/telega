@@ -282,6 +282,8 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
+       $bot->answerCallbackQuery($callback->getId(), $data, true);
+
 
       if ($data = stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
@@ -301,12 +303,9 @@ require_once('vendor/autoload.php');
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список.", true);
               }
           }
-      } elseif ($data = stristr($data, "delete")) {
-          $db = pg_connect(pg_connection_string());
-          $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
-          $resultsUsers = pg_fetch_all($resultsUsers);
+      }
+      if ($data = stristr($data, "delete")) {
 
-          $bot->answerCallbackQuery($callback->getId(), $data, true);
           $db = pg_connect(pg_connection_string());
           foreach ($resultsUsers as $result) {
               pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE schedule_id =" . preg_replace("/[^0-9]/",'', $data) . " and user_id =" . $result['id'] . ";");
