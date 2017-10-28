@@ -265,9 +265,8 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
-      if ($messageText == "pick") {
-          $bot->sendMessage($chatId, "hi, Ebat");
-      }
+          $bot->sendMessage($chatId, $messageText);
+
 
 
       if ($data != null) {
