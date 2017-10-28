@@ -187,13 +187,6 @@ $results = pg_fetch_all($results);
                 }
             }
 
-            $mainkeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [
-                    [["text" => "Меню"]]
-                ]
-            ]);
-
-            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
         }
 
 
