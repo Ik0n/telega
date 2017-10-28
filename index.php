@@ -183,7 +183,7 @@ $results = pg_fetch_all($results);
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end']);//, false, null, null, $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
                 }
             }
 
@@ -207,6 +207,22 @@ $results = pg_fetch_all($results);
     }, function ($message) use ($name){
         return true;
     });
+
+    $bot->on(function ($update) use($bot, $callback_loc, $find_command){
+       $callback = $update->getCallbackQuery();
+       $message = $callback->getMessage();
+       $chatId = $message->getChat()->getId();
+       $data = $callback->getData();
+
+        $db = pg_connect(pg_connection_string());
+        $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
+        $results = pg_fetch_all($results);
+
+        pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+
+    });
+
+
 
     $bot->run();
 
