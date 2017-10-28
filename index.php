@@ -292,6 +292,7 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Test") {
             $bot->sendMessage($message->getChat()->getId(), "hi", false, null, null);
+            $messageText = "";
         }
        }
        return true;
