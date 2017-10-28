@@ -305,9 +305,11 @@ require_once('vendor/autoload.php');
 
       if ($data = stristr($data, "delete")) {
           $db = pg_connect(pg_connection_string());
-          pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE schedule_id =" . preg_replace("/[^0-9]/",'', $data) . " and user_id =" . $chatId . ";");
+          foreach ($resultsUsers as $result) {
+              pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE schedule_id =" . preg_replace("/[^0-9]/",'', $data) . " and user_id =" . $result['id'] . ";");
 
-          $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка", true);
+              $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка", true);
+          }
       }
 
 
