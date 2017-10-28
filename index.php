@@ -284,10 +284,16 @@ require_once('vendor/autoload.php');
               }
           }
       }
-   }, function ($update){
+   }, function ($update) use ($bot){
        $callback = $update->getCallbackQuery();
-       if (is_null($callback) || !strlen($callback->getData()))
-           return false;
+       if (is_null($callback) || !strlen($callback->getData())) {
+        $message = $update->getMessage();
+        $messageText = $message->getText();
+
+        if ($messageText == "Test") {
+            $bot->sendMessage($message->getChat()->getId(), "hi");
+        }
+       }
        return true;
    });
 
