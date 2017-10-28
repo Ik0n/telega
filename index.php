@@ -282,6 +282,8 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
+       $bot->answerCallbackQuery($callback->getId(), $chatId, true);
+
       if ($data = stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
