@@ -10,7 +10,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
 
-    function pg_connection_string() {
+   /* function pg_connection_string() {
         return "dbname=d4re8r18uqsqa 
                 host=ec2-46-51-187-253.eu-west-1.compute.amazonaws.com 
                 port=5432 
@@ -203,7 +203,7 @@ require_once('vendor/autoload.php');
         return true;
     });
 
-    $bot->on(function ($Update) use($bot, $callback_loc, $find_command){
+       $bot->on(function ($Update) use($bot, $callback_loc, $find_command){
        $callback = $Update->getCallbackQuery();
        $message = $callback->getMessage();
        $chatId = $message->getChat()->getId();
@@ -224,8 +224,41 @@ require_once('vendor/autoload.php');
         if (is_null($callback) || !strlen($callback->getData()))
             return false;
         return true;
-    });
+    });*/
 
+
+   $bot->command('ibutton', function ($message) use ($bot) {
+      $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+        [
+            [
+                ['callback_data' => 'data_test', 'text' => 'Answer'],
+                ['callback_data' => 'data_test2', 'text' => 'Ответ']
+            ]
+        ]
+      );
+
+      $bot->sendMessage($message->getChat()->getId(), "тест", false, null, null, $keyboard);
+   });
+
+   $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
+      $callback = $update->getCallbackQuery();
+      $message = $callback->getMessage();
+      $chatId = $message->getChat()->getId();
+      $data = $callback->getData();
+
+      if ($data == "data_test") {
+          $bot->answerCallbackQuery($callback->getId(), "This is Answer!", true);
+      }
+      if ($data == "data_test2") {
+          $bot->sendMessage($chatId, "Это ответ!");
+          $bot->answerCallback($callback->getId());
+      }
+   }, function ($update){
+       $callback = $update->getCallbackQuery();
+       if (is_null($callback) || !strlen($callback->getData()))
+           return false;
+       return true;
+   });
 
 
     $bot->run();
