@@ -275,18 +275,19 @@ require_once('vendor/autoload.php');
           foreach ($resultsUsers as $result) {
               $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $result['id'] . " and schedule_id=". $data .";");
               $resultsMySchedule = pg_fetch_all($resultsMySchedule);
+              $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                  [
+                      [["text" => "Назад"]]
+                  ], true, true
+              );
               if ($resultsMySchedule == null) {
-                  $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                      [
-                        [["text" => "Назад"]]
-                      ], true, true
-                  );
                   $bot->answerCallbackQuery($callback->getId(), "Added" . $data . " " . $chatId . " " . $fromId . " " . $result['id'], true);
                   $bot->sendMessage($chatId, "Выбирите", false, null, null, $keyboard);
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
               }
               else {
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список ", true);
+                  $bot->sendMessage($chatId, "Выбирите", false, null, null, $keyboard);
               }
           }
       }
