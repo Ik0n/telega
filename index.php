@@ -293,19 +293,12 @@ require_once('vendor/autoload.php');
           foreach ($resultsUsers as $result) {
               $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $result['id'] . " and schedule_id=". $data .";");
               $resultsMySchedule = pg_fetch_all($resultsMySchedule);
-              $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                  [
-                      [["text" => "Назад"]]
-                  ], true, true
-              );
               if ($resultsMySchedule == null) {
                   $bot->answerCallbackQuery($callback->getId(), "Added" . $data . " " . $chatId . " " . $fromId . " " . $result['id'], true);
-                  $bot->sendMessage($chatId, "Выбирите", false, null, null, $keyboard);
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
               }
               else {
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список ", true);
-                  $bot->sendMessage($chatId, "Выбирите", false, null, null, $keyboard);
               }
           }
       }
@@ -314,15 +307,6 @@ require_once('vendor/autoload.php');
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
         $messageText = $message->getText();
-
-        if ($messageText == "Test") {
-            $bot->sendMessage($message->getChat()->getId(), "hi");
-            $messageText = "";
-        }
-
-        if ($messageText == "Назад") {
-            $bot->sendMessage($message->getChat()->getId(), "URA");
-        }
 
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
