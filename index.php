@@ -412,6 +412,23 @@ require_once('vendor/autoload.php');
                }
         }
 
+           if ($messageText == "30 ноября") {
+               $db = pg_connect(pg_connection_string());
+               $results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '30%';");
+               $results = pg_fetch_all($results);
+               foreach ($results as $result) {
+                   $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                       [
+                           [
+                               ['callback_data' => $result['id'], 'text' => 'Добавить в своё расписание ' . $result['id']]
+                           ]
+                       ]
+                   );
+
+                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+               }
+           }
+
         return false;
        }
        return true;
