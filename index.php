@@ -28,6 +28,10 @@ require_once('vendor/autoload.php');
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
 
+$results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '30%';");
+$results = pg_fetch_all($results);
+
+    var_dump($results);
 
 
     if (!file_exists("registered.trigger")) {
@@ -164,10 +168,6 @@ require_once('vendor/autoload.php');
 
 
                     $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
-                }
-
-                if ($counter > 10) {
-                    break;
                 }
             }
 
