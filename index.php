@@ -294,6 +294,8 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), "hi");
             $messageText = "";
         }
+
+        return false;
        }
        return true;
    });
