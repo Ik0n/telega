@@ -283,7 +283,7 @@ require_once('vendor/autoload.php');
       $data = $callback->getData();
 
 
-      if ($data != null) {
+      if (is_integer($data)) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
@@ -298,7 +298,7 @@ require_once('vendor/autoload.php');
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
               }
               else {
-                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список ", true);
+                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список.", true);
               }
           }
       }
