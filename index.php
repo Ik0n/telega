@@ -163,11 +163,7 @@ require_once('vendor/autoload.php');
                     );
 
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end']);//, false, null, null, $keyboard);
-                }
-
-                if ($counter > count($results)) {
-                    break;
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
                 }
             }
 
