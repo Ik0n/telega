@@ -214,12 +214,13 @@ $results = pg_fetch_all($results);
        $chatId = $message->getChat()->getId();
        $data = $callback->getData();
 
-        $db = pg_connect(pg_connection_string());
-        $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
-        $results = pg_fetch_all($results);
+       if ($data == 1) {
+           $db = pg_connect(pg_connection_string());
+           $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
+           $results = pg_fetch_all($results);
 
-        pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
-
+           pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+       }
     });
 
 
