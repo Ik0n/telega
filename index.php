@@ -28,12 +28,6 @@ require_once('vendor/autoload.php');
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
 
-$results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '30%';");
-$results = pg_fetch_all($results);
-
-    var_dump($results);
-
-
     if (!file_exists("registered.trigger")) {
         $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
         $result = $bot->setWebhook("https://bottelegabot.herokuapp.com/");
@@ -162,7 +156,7 @@ $results = pg_fetch_all($results);
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'],$keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
             }
         }
 
@@ -183,7 +177,7 @@ $results = pg_fetch_all($results);
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
                 }
             }
 
@@ -214,16 +208,16 @@ $results = pg_fetch_all($results);
        $chatId = $message->getChat()->getId();
        $data = $callback->getData();
 
-
-       $bot->answerInlineQuery($callback->getId(), "TEST");
-
        if ($data == 1) {
            $db = pg_connect(pg_connection_string());
            $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
            $results = pg_fetch_all($results);
 
            pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+
+           $bot->answerCallbackQuery($callback->getId(), "1");
        }
+
     }, function ($update){
         $callback = $update->getCallbackQuery();
         if (is_null($callback) || !strlen($callback->getData()))
