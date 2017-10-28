@@ -458,7 +458,15 @@ require_once('vendor/autoload.php');
                $results = pg_fetch_all($results);
                $bot->sendMessage($message->getChat()->getId(), "Ваше расписание :");
                foreach ($results as $result) {
-                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end']);
+                   $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                       [
+                           [
+                               ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания' . $result['schedule_id']]
+                           ]
+                       ]
+                   );
+
+                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
                }
            }
 
