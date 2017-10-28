@@ -291,7 +291,7 @@ require_once('vendor/autoload.php');
         $messageText = $message->getText();
 
         if ($messageText == "Test") {
-            $bot->sendMessage($message->getChat()->getId(), "hi", false, null, null);
+            $bot->sendMessage($message->getChat()->getId(), "hi");
             $messageText = "";
         }
        }
