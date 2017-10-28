@@ -450,7 +450,7 @@ require_once('vendor/autoload.php');
 
            if ($messageText == "Моё расписание") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".title, public.\"Schedule\".begin, public.\"Schedule\".end
+               $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".id as schedule_id, public.\"Schedule\".title, public.\"Schedule\".begin, public.\"Schedule\".end
 	                                            FROM public.\"Users\"
                                                 JOIN public.\"MySchedule\" on public.\"Users\".id = public.\"MySchedule\".user_id
                                                 JOIN public.\"Schedule\" on public.\"MySchedule\".schedule_id = public.\"Schedule\".id
