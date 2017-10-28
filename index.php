@@ -229,8 +229,9 @@ require_once('vendor/autoload.php');
 
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
+    $bot1 = new \TelegramBot\Api\Client($token);
 
-   $bot->command('ibutton', function ($message) use ($bot) {
+   $bot1->command('ibutton', function ($message) use ($bot) {
 
         for ($i = 1; $i < 10; $i++) {
 
@@ -247,7 +248,7 @@ require_once('vendor/autoload.php');
         }
    });
 
-   $bot->command('start', function ($message) use ($bot) {
+   $bot1->command('start', function ($message) use ($bot) {
       $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
           [
               [[ "text" => "Test"]]
@@ -264,9 +265,6 @@ require_once('vendor/autoload.php');
       $chatId = $message->getChat()->getId();
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
-
-          $bot->sendMessage($chatId, $messageText);
-
 
 
       if ($data != null) {
