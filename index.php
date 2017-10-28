@@ -69,10 +69,6 @@ require_once('vendor/autoload.php');
         $messageText = $message->getText();
         $chatId = $message->getChat()->getId();
 
-        $data = $Update->getCallbackQuery();
-        $teee = $data->getData();
-
-        $bot->sendMessage($message->getChat()->getId(), " === " . $teee);
 
         if($messageText == "Расписание") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -207,8 +203,8 @@ require_once('vendor/autoload.php');
         return true;
     });
 
-    $bot->on(function ($update) use($bot, $callback_loc, $find_command){
-       $callback = $update->getCallbackQuery();
+    $bot->on(function ($Update) use($bot, $callback_loc, $find_command){
+       $callback = $Update->getCallbackQuery();
        $message = $callback->getMessage();
        $chatId = $message->getChat()->getId();
        $data = $callback->getData();
