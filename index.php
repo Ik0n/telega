@@ -70,10 +70,17 @@ $results = pg_fetch_all($results);
        $bot->sendMessage($message->getChat()->getId(), $answer);
     });
 
-    $bot->on(function($Update) use ($bot){
-        $message = $Update->getMessage();
+    //$bot->on(function($Update) use ($bot){
+    $bot->on(function ($Update) use($bot, $callback_loc, $find_command){
+        //$message = $Update->getMessage();
+        //$messageText = $message->getText();
+        //$chatId = $message->getChat()->getId();
+
+        $callback = $Update->getCallbackQuery();
+        $message = $callback->getMessage();
         $messageText = $message->getText();
         $chatId = $message->getChat()->getId();
+        $data = $callback->getData();
 
         if($messageText == "Расписание") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -203,12 +210,17 @@ $results = pg_fetch_all($results);
 
             }
         }
-
-    }, function ($message) use ($name){
+    }, function ($update){
+        $callback = $update->getCallbackQuery();
+        if (is_null($callback) || !strlen($callback->getData()))
+            return false;
         return true;
     });
+ //   }, function ($message) use ($name){
+ //       return true;
+ //   });
 
-    $bot->on(function ($update) use($bot, $callback_loc, $find_command){
+    /*$bot->on(function ($update) use($bot, $callback_loc, $find_command){
        $callback = $update->getCallbackQuery();
        $message = $callback->getMessage();
        $chatId = $message->getChat()->getId();
@@ -229,7 +241,7 @@ $results = pg_fetch_all($results);
         if (is_null($callback) || !strlen($callback->getData()))
             return false;
         return true;
-    });
+    });*/
 
 
 
