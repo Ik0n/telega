@@ -282,7 +282,7 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
-      if ($data = stristr($data, "add")) {
+      if ($data == stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
@@ -301,7 +301,8 @@ require_once('vendor/autoload.php');
               }
           }
       }
-      if ($data = stristr($data, "delete")) {
+
+      if ($data == stristr($data, "delete")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
