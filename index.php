@@ -253,13 +253,14 @@ require_once('vendor/autoload.php');
       $chatId = $message->getChat()->getId();
       $data = $callback->getData();
 
-       $db = pg_connect(pg_connection_string());
-       $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
-       $results = pg_fetch_all($results);
 
-       pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+      if ($data == 1) {
+          $db = pg_connect(pg_connection_string());
+          $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
+          $results = pg_fetch_all($results);
 
-
+          pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+      }
    }, function ($update){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData()))
