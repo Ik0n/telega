@@ -304,6 +304,7 @@ require_once('vendor/autoload.php');
       }
 
       if ($data = stristr($data, "delete")) {
+          $bot->answerCallbackQuery($callback->getId(), $data, true);
           $db = pg_connect(pg_connection_string());
           foreach ($resultsUsers as $result) {
               pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE schedule_id =" . preg_replace("/[^0-9]/",'', $data) . " and user_id =" . $result['id'] . ";");
