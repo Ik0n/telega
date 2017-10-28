@@ -154,10 +154,7 @@ $results = pg_fetch_all($results);
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '30%';");
             $results = pg_fetch_all($results);
-            $date = "30";
             foreach ($results as $result) {
-                $test = stristr($result['begin'], $date);
-                if ($test == $result['begin']) {
                     $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                         [
                             [
@@ -166,9 +163,7 @@ $results = pg_fetch_all($results);
                         ]
                     );
 
-
                     $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
-                }
             }
 
             $mainkeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
