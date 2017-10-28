@@ -85,7 +85,7 @@ $results = pg_fetch_all($results);
             $bot->answerCallbackQuery($callback->getId(), "TEST");
         }
 
-        if($messageText == "Расписание") {
+        if($data == "Расписание") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                [["text" => "30 ноября"]],
                [["text" => "1 декабря"]],
