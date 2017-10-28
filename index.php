@@ -247,12 +247,29 @@ require_once('vendor/autoload.php');
         }
    });
 
+   $bot->command('start', function ($message) use ($bot) {
+      $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+          [
+              [['Test']]
+          ], true, true
+      );
+
+      $bot->sendMessage($message->getChat()->getId(), "pick", false, null, null, $keyboard);
+   });
+
    $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
       $callback = $update->getCallbackQuery();
       $message = $callback->getMessage();
+      $messageText = $message->getText();
       $chatId = $message->getChat()->getId();
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
+
+       if ($messageText == "Test") {
+           $bot->sendMessage($chatId, "Privet");
+       }
+
+
 
 
       if ($data != null) {
