@@ -307,6 +307,7 @@ require_once('vendor/autoload.php');
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
         $messageText = $message->getText();
+        $userId = $message->getFrom()->getId();
 
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -416,7 +417,7 @@ require_once('vendor/autoload.php');
                    [["text" => "Меню"]],
                ], true, true);
 
-               $bot->sendMessage($message->getChat()->getId(), "Выбирите дату", false, null, null, $keyboard);
+               $bot->sendMessage($message->getChat()->getId(), "Выбирите дату: ", false, null, null, $keyboard);
            }
 
            if ($messageText == "1 декабря") {
@@ -444,7 +445,21 @@ require_once('vendor/autoload.php');
                    [["text" => "Меню"]],
                ], true, true);
 
-               $bot->sendMessage($message->getChat()->getId(), "Выбирите дату", false, null, null, $keyboard);
+               $bot->sendMessage($message->getChat()->getId(), "Выбирите дату: ", false, null, null, $keyboard);
+           }
+
+           if ($messageText == "Моё расписание") {
+               $db = pg_connect(pg_connection_string());
+               $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".title, public.\"Schedule\".begin, public.\"Schedule\".end
+	                                            FROM public.\"Users\"
+                                                JOIN public.\"MySchedule\" on public.\"Users\".id = public.\"MySchedule\".user_id
+                                                JOIN public.\"Schedule\" on public.\"MySchedule\".schedule_id = public.\"Schedule\".id
+                                                WHERE public.\"Users\".telegram_id =" . $userId);
+               $results = pg_fetch_all($results);
+               $bot->sendMessage($message->getChat()->getId(), "Ваше расписание :");
+               foreach ($results as $result) {
+                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end']);
+               }
            }
 
         return false;
