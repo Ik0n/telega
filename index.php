@@ -69,6 +69,10 @@ require_once('vendor/autoload.php');
         $messageText = $message->getText();
         $chatId = $message->getChat()->getId();
 
+        $data = $Update->getCallbackQuery()->getData();
+
+        $bot->sendMessage($message->getChat()->getId(), " === " . $data);
+
         if($messageText == "Расписание") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                [["text" => "30 ноября"]],
