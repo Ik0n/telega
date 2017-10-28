@@ -69,7 +69,8 @@ require_once('vendor/autoload.php');
         $messageText = $message->getText();
         $chatId = $message->getChat()->getId();
 
-        $data = $Update->getCallbackQuery()->getData();
+        $data = $Update->getCallbackQuery();
+        $teee = $data->getData();
 
         $bot->sendMessage($message->getChat()->getId(), " === " . $data);
 
