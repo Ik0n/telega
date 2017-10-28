@@ -280,7 +280,7 @@ require_once('vendor/autoload.php');
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
               }
               else {
-                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список", true);
+                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список" . $messageText, true);
               }
           }
       }
@@ -290,17 +290,6 @@ require_once('vendor/autoload.php');
            return false;
        return true;
    });
-
-   $bot->on(function ($Update) use ($bot){
-       $message = $Update->getMessage();
-       $messageText = $message->getText();
-       $chatId = $message->getChat()->getId();
-
-       if ($messageText == "Test") {
-           $bot->sendMessage($chatId, "hi, ura");
-       }
-   });
-
 
     $bot->run();
 
