@@ -224,6 +224,11 @@ $results = pg_fetch_all($results);
 
            pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
        }
+    }, function ($update){
+        $callback = $update->getCallbackQuery();
+        if (is_null($callback) || !strlen($callback->getData()))
+            return false;
+        return true;
     });
 
 
