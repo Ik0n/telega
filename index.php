@@ -301,9 +301,11 @@ require_once('vendor/autoload.php');
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список.", true);
               }
           }
-      }
+      } elseif ($data = stristr($data, "delete")) {
+          $db = pg_connect(pg_connection_string());
+          $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
+          $resultsUsers = pg_fetch_all($resultsUsers);
 
-      if ($data = stristr($data, "delete")) {
           $bot->answerCallbackQuery($callback->getId(), $data, true);
           $db = pg_connect(pg_connection_string());
           foreach ($resultsUsers as $result) {
