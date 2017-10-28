@@ -293,7 +293,7 @@ require_once('vendor/autoload.php');
               $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $result['id'] . " and schedule_id=". preg_replace("/[^0-9]/",'', $data) .";");
               $resultsMySchedule = pg_fetch_all($resultsMySchedule);
               if ($resultsMySchedule == null) {
-                  $bot->answerCallbackQuery($callback->getId(), "Added" . preg_replace("/[^0-9]/",'', $data) . " " . $chatId . " " . $fromId . " " . $result['id'], true);
+                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие было добавлено в ваш список", true);
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
               }
               else {
@@ -310,7 +310,7 @@ require_once('vendor/autoload.php');
           foreach ($resultsUsers as $result) {
               pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE user_id=" . $result['id'] . "and schedule_id=" . preg_replace("/[^0-9]/",'', $data) . ";");
 
-              $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка " . $data . " " . $result['id'], true);
+              $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка ", true);
           }
           $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
               [
@@ -426,7 +426,7 @@ require_once('vendor/autoload.php');
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание ' . $result['id']]
+                               ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание ']
                            ]
                        ]
                    );
@@ -452,7 +452,7 @@ require_once('vendor/autoload.php');
                        $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                            [
                                [
-                                   ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание' . $result['id']]
+                                   ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание']
                                ]
                            ]
                        );
@@ -482,7 +482,7 @@ require_once('vendor/autoload.php');
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания ' . $result['schedule_id']]
+                               ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания ']
                            ]
                        ]
                    );
