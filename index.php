@@ -282,8 +282,6 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
-       $bot->answerCallbackQuery($callback->getId(), $chatId, true);
-
       if ($data = stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
@@ -308,10 +306,8 @@ require_once('vendor/autoload.php');
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
 
-
-          $db = pg_connect(pg_connection_string());
           foreach ($resultsUsers as $result) {
-              pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE schedule_id =" . preg_replace("/[^0-9]/",'', $data) . " and user_id =" . $result['id'] . ";");
+              pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE user_id=" . preg_replace("/[^0-9]/",'', $data) . "and schedule_id=" . $result['id'] . ";");
 
               $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка", true);
           }
