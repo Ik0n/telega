@@ -265,6 +265,11 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
+      if ($messageText == "pick") {
+          $bot->sendMessage($chatId, "hi, Ebat");
+      }
+
+
       if ($data != null) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
@@ -280,7 +285,7 @@ require_once('vendor/autoload.php');
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
               }
               else {
-                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список" . $messageText, true);
+                  $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список " . $messageText, true);
               }
           }
       }
