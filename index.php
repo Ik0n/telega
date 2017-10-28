@@ -75,17 +75,7 @@ $results = pg_fetch_all($results);
         $messageText = $message->getText();
         $chatId = $message->getChat()->getId();
 
-        $callback = $Update->getCallbackQuery();
-        $message1 = $callback->getMessage();
-        $chatId1 = $message1->getChat()->getId();
-        $data = $callback->getData();
-
-
-        if ($data == 1) {
-            $bot->answerCallbackQuery($callback->getId(), "TEST");
-        }
-
-        if($data == "Расписание") {
+        if($messageText == "Расписание") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                [["text" => "30 ноября"]],
                [["text" => "1 декабря"]],
@@ -172,7 +162,7 @@ $results = pg_fetch_all($results);
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'],$keyboard);
             }
         }
 
@@ -193,7 +183,7 @@ $results = pg_fetch_all($results);
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], $keyboard);
                 }
             }
 
@@ -225,7 +215,7 @@ $results = pg_fetch_all($results);
        $data = $callback->getData();
 
 
-       $bot->answerCallbackQuery($callback->getId(), "TEST");
+       $bot->answerInlineQuery($callback->getId(), "TEST");
 
        if ($data == 1) {
            $db = pg_connect(pg_connection_string());
