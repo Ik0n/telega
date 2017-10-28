@@ -230,6 +230,34 @@ require_once('vendor/autoload.php');
     $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     $bot = new \TelegramBot\Api\Client($token);
 
+    $bot->command('start', function ($message) use ($bot) {
+        $answer = 'Что я могу для вас сделать?';
+
+        $db = pg_connect(pg_connection_string());
+        $result = pg_query($db , "SELECT telegram_id FROM public.\"Users\" WHERE telegram_id = " . $message->getFrom()->getId() . ";");
+        $result = pg_fetch_all($result);
+
+        if ($result == null) {
+            pg_query($db, "INSERT INTO public.\"Users\"(telegram_id) VALUES (" . $message->getFrom()->getId() . ");");
+        }
+
+
+        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+            [["text" => "Расписание"], ["text" => "Моё расписание"]],
+            [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
+            [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+            [["text" => "Связаться с организаторами"]],
+            [["text" => "О форуме"]],
+        ], true, true);
+        $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+    });
+
+    $bot->command('help', function ($message) use ($bot) {
+        $answer = 'Команды:
+        /help - помощь';
+        $bot->sendMessage($message->getChat()->getId(), $answer);
+    });
+
    $bot->command('ibutton', function ($message) use ($bot) {
 
         for ($i = 1; $i < 10; $i++) {
@@ -245,16 +273,6 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), "тест", false, null, null, $keyboard);
 
         }
-   });
-
-   $bot->command('start', function ($message) use ($bot) {
-      $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-          [
-              [[ "text" => "Test"]]
-          ], true, true
-      );
-
-      $bot->sendMessage($message->getChat()->getId(), "pick", false, null, null, $keyboard);
    });
 
    $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
@@ -304,6 +322,80 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Назад") {
             $bot->sendMessage($message->getChat()->getId(), "URA");
+        }
+
+        if($messageText == "Расписание") {
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "30 ноября"]],
+                   [["text" => "1 декабря"]],
+                   [["text" => "Меню"]],
+               ], true, true);
+               $answer = "Выберите дату:";
+               $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if($messageText == "Меню") {
+               $answer = 'Что я могу для вас сделать?';
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                   [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
+                   [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                   [["text" => "Связаться с организаторами"]],
+                   [["text" => "О форуме"]],
+               ], true, true);
+               $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "О форуме") {
+               $answer = 'Здесь содержится полезная информация о нашем форуме.
+             Выберите раздел:';
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Биржа деловых контактов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"], ["text" => "Питание"]],
+                   [["text" => "Размещение"],["text" => "Меню"]],
+               ], true, true);
+               $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "О Гиперкубе") {
+               $answer = '«Гиперкуб» − это центр городского развития «Сколково».
+         Центр, в котором разрабатываются информационные, экономические, инженерные,
+         градостроительные и организационные модели будущего и царит атмосфера творчества, в которой реализуются любые идеи.';
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Биржа деловых контактов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"], ["text" => "Питание"]],
+                   [["text" => "Размещение"],["text" => "Меню"]],
+               ], true, true);
+               $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "Как добраться") {
+               $answer = 'Адрес:
+         ИЦ Сколково, ул. Малевича, д 1. Москва';
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Биржа деловых контактов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"], ["text" => "Питание"]],
+                   [["text" => "Размещение"],["text" => "Меню"]],
+               ], true, true);
+               $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
+        }
+
+        if ($messageText == "Питание") {
+               $answer = 'На территории мероприятия для Вас будут работать рестораны, кафе и фудтраки.';
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Биржа деловых контактов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"], ["text" => "Питание"]],
+                   [["text" => "Размещение"],["text" => "Меню"]],
+               ], true, true);
+               $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
         return false;
