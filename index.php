@@ -232,7 +232,7 @@ require_once('vendor/autoload.php');
 
    $bot->command('ibutton', function ($message) use ($bot) {
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 1; $i < 10; $i++) {
 
             $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                 [
@@ -261,8 +261,8 @@ require_once('vendor/autoload.php');
           $results = pg_fetch_all($results);
 
           foreach ($results as $result) {
-              pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
               $bot->answerCallbackQuery($callback->getId(), "Added" . $data . " " . $chatId . " " . $fromId . " " . $result['id'], true);
+              pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
           }
       }
    }, function ($update){
