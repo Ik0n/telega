@@ -214,6 +214,9 @@ $results = pg_fetch_all($results);
        $chatId = $message->getChat()->getId();
        $data = $callback->getData();
 
+
+       $bot->sendMessage($chatId, "TEST");
+
        if ($data == 1) {
            $db = pg_connect(pg_connection_string());
            $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
