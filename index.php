@@ -150,7 +150,6 @@ $results = pg_fetch_all($results);
         }
 
         if ($messageText == "30 ноября") {
-            $counter = 0;
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '30%';");
             $results = pg_fetch_all($results);
@@ -165,15 +164,6 @@ $results = pg_fetch_all($results);
 
                     $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
             }
-
-            $mainkeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [
-                    [["text" => "Меню"]]
-                ]
-            ]);
-
-            $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainkeyboard);
-
         }
 
 
