@@ -283,7 +283,7 @@ require_once('vendor/autoload.php');
       $data = $callback->getData();
 
 
-      if (is_integer($data)) {
+      if ($data['action'] = "add") {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
@@ -404,7 +404,7 @@ require_once('vendor/autoload.php');
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ['callback_data' => $result['id'], 'text' => 'Добавить в своё расписание ' . $result['id']]
+                               ['callback_data' =>  ["id" => $result['id'], "action" => "add"], 'text' => 'Добавить в своё расписание ' . $result['id']]
                            ]
                        ]
                    );
