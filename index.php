@@ -237,7 +237,7 @@ require_once('vendor/autoload.php');
             $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                 [
                     [
-                        ['callback_data' => $i, 'text' => 'Answer'],
+                        ['callback_data' => $i, 'text' => 'Answer' . $i],
                     ]
                 ]
             );
