@@ -250,7 +250,7 @@ require_once('vendor/autoload.php');
    $bot->command('start', function ($message) use ($bot) {
       $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
           [
-              [['Test']]
+              [[ "text" => "Test"]]
           ], true, true
       );
 
