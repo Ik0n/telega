@@ -231,16 +231,20 @@ require_once('vendor/autoload.php');
     $bot = new \TelegramBot\Api\Client($token);
 
    $bot->command('ibutton', function ($message) use ($bot) {
-      $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
-        [
-            [
-                ['callback_data' => 'data_test', 'text' => 'Answer'],
-                ['callback_data' => 'data_test2', 'text' => 'Ответ']
-            ]
-        ]
-      );
 
-      $bot->sendMessage($message->getChat()->getId(), "тест", false, null, null, $keyboard);
+        for ($i = 0; $i < 10; $i++) {
+
+            $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                [
+                    [
+                        ['callback_data' => $i, 'text' => 'Answer'],
+                    ]
+                ]
+            );
+
+            $bot->sendMessage($message->getChat()->getId(), "тест", false, null, null, $keyboard);
+
+        }
    });
 
    $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
@@ -249,13 +253,13 @@ require_once('vendor/autoload.php');
       $chatId = $message->getChat()->getId();
       $data = $callback->getData();
 
-      if ($data == "data_test") {
-          $bot->answerCallbackQuery($callback->getId(), "This is Answer!", true);
-      }
-      if ($data == "data_test2") {
-          $bot->sendMessage($chatId, "Это ответ!");
-          $bot->answerCallback($callback->getId());
-      }
+       $db = pg_connect(pg_connection_string());
+       $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
+       $results = pg_fetch_all($results);
+
+       pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+
+
    }, function ($update){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData()))
