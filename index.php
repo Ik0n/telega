@@ -254,7 +254,7 @@ require_once('vendor/autoload.php');
       $data = $callback->getData();
 
 
-      if ($data == 1) {
+      if ($data == '1') {
           $db = pg_connect(pg_connection_string());
           $results = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $message->getFrom()->getId() . ";");
           $results = pg_fetch_all($results);
