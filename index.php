@@ -318,7 +318,7 @@ require_once('vendor/autoload.php');
               ], true, true
           );
 
-          $bot->sendMessage($message->getChat()->getId(), "Нажмите чтобы обновить список: ", false, null, null,);
+          $bot->sendMessage($chatId, "Нажмите чтобы обновить список: ", false, null, null, $keyboard);
       }
 
 
