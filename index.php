@@ -260,6 +260,8 @@ require_once('vendor/autoload.php');
           $results = pg_fetch_all($results);
 
           pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (". $results['id'] . "," . $data . ");");
+
+          $bot->answerCallbackQuery($callback->getId(), "Added", true);
       }
    }, function ($update){
        $callback = $update->getCallbackQuery();
