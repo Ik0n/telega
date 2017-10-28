@@ -260,10 +260,11 @@ require_once('vendor/autoload.php');
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
 
-          $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $chatId . " and schedule_id=". $data .";");
-          $resultsMySchedule = pg_fetch_all($resultsMySchedule);
+
 
           foreach ($resultsUsers as $result) {
+              $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $result['id'] . " and schedule_id=". $data .";");
+              $resultsMySchedule = pg_fetch_all($resultsMySchedule);
               if ($resultsMySchedule == null) {
                   $bot->answerCallbackQuery($callback->getId(), "Added" . $data . " " . $chatId . " " . $fromId . " " . $result['id'], true);
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
