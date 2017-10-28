@@ -283,7 +283,7 @@ require_once('vendor/autoload.php');
       $data = $callback->getData();
 
 
-      if ($data['action'] = "add") {
+      if ($data = stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
           $resultsUsers = pg_fetch_all($resultsUsers);
@@ -291,11 +291,11 @@ require_once('vendor/autoload.php');
 
 
           foreach ($resultsUsers as $result) {
-              $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $result['id'] . " and schedule_id=". $data .";");
+              $resultsMySchedule = pg_query($db, "SELECT id, user_id, schedule_id FROM public.\"MySchedule\" WHERE user_id=". $result['id'] . " and schedule_id=". preg_replace("/[^0-9]/",'', $data) .";");
               $resultsMySchedule = pg_fetch_all($resultsMySchedule);
               if ($resultsMySchedule == null) {
-                  $bot->answerCallbackQuery($callback->getId(), "Added" . $data . " " . $chatId . " " . $fromId . " " . $result['id'], true);
-                  pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . $data . ");");
+                  $bot->answerCallbackQuery($callback->getId(), "Added" . preg_replace("/[^0-9]/",'', $data) . " " . $chatId . " " . $fromId . " " . $result['id'], true);
+                  pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
               }
               else {
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список.", true);
@@ -404,7 +404,7 @@ require_once('vendor/autoload.php');
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ['callback_data' =>  ["id" => $result['id'], "action" => "add"], 'text' => 'Добавить в своё расписание ' . $result['id']]
+                               ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание ' . $result['id']]
                            ]
                        ]
                    );
