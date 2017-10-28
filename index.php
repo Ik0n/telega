@@ -312,6 +312,13 @@ require_once('vendor/autoload.php');
 
               $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка", true);
           }
+          $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+              [
+                  [["text" => "Моё расписание"]]
+              ], true, true
+          );
+
+          $bot->sendMessage($message->getChat()->getId(), "Нажмите чтобы обновить список: ", false, null, null,);
       }
 
 
