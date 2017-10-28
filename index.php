@@ -310,7 +310,7 @@ require_once('vendor/autoload.php');
           foreach ($resultsUsers as $result) {
               pg_query($db, "DELETE FROM public.\"MySchedule\" WHERE user_id=" . preg_replace("/[^0-9]/",'', $data) . "and schedule_id=" . $result['id'] . ";");
 
-              $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка", true);
+              $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка " . $data . " " . $result['id'], true);
           }
       }
 
