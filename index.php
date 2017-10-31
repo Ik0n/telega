@@ -282,6 +282,23 @@ require_once('vendor/autoload.php');
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
 
+      if ($data == stristr($data, "like")) {
+          $db = pg_connect(pg_connection_string());
+          $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
+          $resultsUsers = pg_fetch_all($resultsUsers);
+
+          foreach ($resultsUsers as $result) {
+              $resultsUserVoices = pg_query($db, "SELECT id, user_id, speaker_id FROM public.\"UserVoices\" WHERE user_id=" . $chatId . " and speaker_id=" . preg_replace("/[^0-9]/",'', $data) . ";");
+              $resultsUserVoices = pg_fetch_all($resultsUserVoices);
+              if ($resultsUserVoices == null) {
+                  pg_query($db, "INSERT INTO public.\"UserVoices\"(user_id, speaker_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
+                  $bot->answerCallbackQuery($callback->getId(), "Вы поставили отметку мне нравиться", true);
+              } else {
+                  $bot->answerCallbackQuery($callback->getId(), "Вы уже оценили данного спикера", true);
+              }
+          }
+      }
+
       if ($data == stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
@@ -295,8 +312,7 @@ require_once('vendor/autoload.php');
               if ($resultsMySchedule == null) {
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие было добавлено в ваш список", true);
                   pg_query($db, "INSERT INTO public.\"MySchedule\" (user_id, schedule_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
-              }
-              else {
+              } else {
                   $bot->answerCallbackQuery($callback->getId(), "Данное мероприятие уже добавлено в ваш список.", true);
               }
           }
@@ -410,11 +426,20 @@ require_once('vendor/autoload.php');
                $results = pg_fetch_all($results);
 
                foreach ($results as $result) {
+                   $keyboard = \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                       [
+                           [
+                               ["callback_data" => "like" . $result['id'], "text" => "Мне нравиться"]
+                           ]
+                       ]
+                   );
+
+
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
-                   $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session']);
-                   $bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
+                   $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $keyboard);
+                   //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
 
                }
         }
