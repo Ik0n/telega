@@ -356,6 +356,23 @@ require_once('vendor/autoload.php');
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
+        if ($messageText == "Лидеры голосования") {
+            $db = pg_connect(pg_connection_string());
+            $results = pg_query($db, "SELECT public.\"Speakers\".name, public.\"Speakers\".refphoto, count(speaker_id) as \"qq\"
+	                                          FROM public.\"UserVoices\"
+                                              JOIN public.\"Speakers\" on public.\"UserVoices\".speaker_id = public.\"Speakers\".id
+                                              GROUP BY public.\"Speakers\".name, public.\"Speakers\".refphoto
+                                              ORDER BY qq DESC");
+            $results = pg_fetch_all($results);
+
+
+            foreach ($results as $result) {
+                $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
+                $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $result['qq']);
+            }
+        }
+
         if($messageText == "Меню") {
                $answer = 'Что я могу для вас сделать?';
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
