@@ -288,7 +288,7 @@ require_once('vendor/autoload.php');
           $resultsUsers = pg_fetch_all($resultsUsers);
 
           foreach ($resultsUsers as $result) {
-              $resultsUserVoices = pg_query($db, "SELECT id, user_id, speaker_id FROM public.\"UserVoices\" WHERE user_id=" . $chatId . " and speaker_id=" . preg_replace("/[^0-9]/",'', $data) . ";");
+              $resultsUserVoices = pg_query($db, "SELECT id, user_id, speaker_id FROM public.\"UserVoices\" WHERE user_id=" . $result['id'] . " and speaker_id=" . preg_replace("/[^0-9]/",'', $data) . ";");
               $resultsUserVoices = pg_fetch_all($resultsUserVoices);
               if ($resultsUserVoices == null) {
                   pg_query($db, "INSERT INTO public.\"UserVoices\"(user_id, speaker_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
