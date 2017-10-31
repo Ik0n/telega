@@ -426,7 +426,7 @@ require_once('vendor/autoload.php');
                $results = pg_fetch_all($results);
 
                foreach ($results as $result) {
-                   $keyboard = \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                   $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
                                ["callback_data" => "like" . $result['id'], "text" => "Мне нравиться"]
