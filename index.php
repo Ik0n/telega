@@ -406,13 +406,14 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Спикеры") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id, name, about, refphoto FROM public.\"Speakers\";");
+               $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\";");
                $results = pg_fetch_all($results);
 
                foreach ($results as $result) {
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
+                   $bot->sendMessage($message->getChat()->getId(), "Сессия: ") . $result['session'];
                    $bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
 
                }
