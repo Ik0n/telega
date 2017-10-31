@@ -413,7 +413,7 @@ require_once('vendor/autoload.php');
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
-                   $bot->sendMessage($message->getChat()->getId(), "Сессия: ") . $result['session'];
+                   $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session']);
                    $bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
 
                }
