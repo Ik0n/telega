@@ -203,8 +203,7 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "О форуме") {
-               $answer = 'Здесь содержится полезная информация о нашем форуме.
-             Выберите раздел:';
+               $answer = 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:';
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "О Гиперкубе"]],
                    [["text" => "Биржа деловых контактов"]],
@@ -216,9 +215,7 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "О Гиперкубе") {
-               $answer = '«Гиперкуб» − это центр городского развития «Сколково».
-         Центр, в котором разрабатываются информационные, экономические, инженерные,
-         градостроительные и организационные модели будущего и царит атмосфера творчества, в которой реализуются любые идеи.';
+               $answer = '«Гиперкуб» − это центр городского развития «Сколково». Центр, в котором разрабатываются информационные, экономические, инженерные,градостроительные и организационные модели будущего и царит атмосфера творчества, в которой реализуются любые идеи.';
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
                 [["text" => "Биржа деловых контактов"]],
@@ -230,8 +227,7 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "Как добраться") {
-               $answer = 'Адрес:
-         ИЦ Сколково, ул. Малевича, д 1. Москва';
+               $answer = 'Адрес: ИЦ Сколково, ул. Малевича, д 1. Москва';
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
                 [["text" => "Биржа деловых контактов"]],
@@ -337,8 +333,9 @@ require_once('vendor/autoload.php');
                            ]
                        ]
                    );
-
-                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . " Дата и время начала: " . $result['begin'] . " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                   $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
+                       "<b>Дата и время начала: </b>" . $result['begin'] . "\n" .
+                       "<b>Дата и время конца: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
                }
            }
 
