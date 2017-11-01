@@ -8,7 +8,7 @@
 
 if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
     setcookie("user", "admin");
-    echo "Вы вошли ";
+    echo "Вы вошли <br>";
     echo "<a href='speakers/index.php'>Спикеры</a>";
 } else {
     header('Location: login.html', true, 301);

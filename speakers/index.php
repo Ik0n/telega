@@ -5,6 +5,9 @@
  * Date: 01.11.2017
  * Time: 16:23
  */
+
+    var_dump($_COOKIE);
+
     if ($_COOKIE == null) {
         header('Location: telegabot/login.html', true, 301);
     }
@@ -20,7 +23,7 @@
         $data = $_POST;
         pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
 
-}
+    }
 
     $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
     $results = pg_fetch_all($results);
