@@ -42,7 +42,7 @@ echo "<a href='/feedback/index.php'>Самое интересное</a><br>";
 ?>
 
 <? foreach ($results as $result) { ?>
-    <table style="width: 100%">
+    <table border="0.5px solid black">
         <tr>
             <td><? echo $result['id']; ?></td>
             <td><? echo $result['title']; ?></td>

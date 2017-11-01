@@ -34,7 +34,7 @@ $results = pg_fetch_all($results);
 ?>
 
 <? foreach ($results as $result) { ?>
-    <table style="width: 100%">
+    <table border="0.5px solid black">
         <tr>
             <td><? echo $result['id']; ?></td>
             <td><? echo $result['number']; ?></td>
