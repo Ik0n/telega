@@ -5,7 +5,7 @@
  * Date: 01.11.2017
  * Time: 17:59
  */
-if ($_COOKIE != null) {
+if ($_COOKIE == null) {
     header('Location: telegabot/login.html', true, 301);
 }
 
