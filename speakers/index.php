@@ -6,7 +6,7 @@
  * Time: 16:23
  */
     if ($_COOKIE['user'] != "admin") {
-        header('Location: /login.html', true, 301);
+        header('Location: telegabot/login.html', true, 301);
     }
 
     $db = pg_connect("dbname=d4re8r18uqsqa 
