@@ -139,7 +139,7 @@ require_once('vendor/autoload.php');
 
         $phoneNumber = explode(' ', $messageText);
 
-        $bot->sendMessage($message->getChat()->getId(), preg_match("^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$", "88005553535" ));
+        $bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
