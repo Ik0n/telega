@@ -7,9 +7,11 @@
  */
 
 if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
-    setcookie("user", "admin");
+    echo date() . "<br>";
+    echo time() . "<br>";
     echo "Вы вошли <br>";
     echo "<a href='speakers/index.php'>Спикеры</a>";
+    echo "<a href='schedule/index.php'>Расписание</a>";
 } else {
     header('Location: login.html', true, 301);
 }

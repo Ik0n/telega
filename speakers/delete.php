@@ -5,10 +5,6 @@
  * Date: 01.11.2017
  * Time: 17:59
  */
-if ($_COOKIE == null) {
-    header('Location: telegabot/login.html', true, 301);
-}
-
 
 if (isset($_GET['id'])) {
     $db = pg_connect("dbname=d4re8r18uqsqa 
