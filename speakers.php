@@ -15,11 +15,9 @@
     if (isset($_POST['submit'])) {
         $data = $_POST;
         var_dump($data);
-        pg_query($db, "INSERT INTO public.\"Speakers\"(
-	name, about, refphoto, session)
-	VALUES (". $data['name'] ."," . $data['about'] ."," . $data['refphoto'] . "," . $data['session'] . ");");
+        pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
 
-    }
+}
 
     $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
     $results = pg_fetch_all($results);
