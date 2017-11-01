@@ -137,6 +137,8 @@ require_once('vendor/autoload.php');
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
 
+        $phoneNumber = explode(' ', $messageText);
+
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
