@@ -154,7 +154,7 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), $answer);
         }
 
-        if (preg_match("^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$", $phoneNumber[0])) {
+        if (preg_match("^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$", $phoneNumber[0])) {
             $bot->sendMessage($message->getChat()->getId(), "Ваш номер " . $phoneNumber[0]);
         }
 
