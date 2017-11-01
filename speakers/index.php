@@ -39,7 +39,7 @@
                 <td><? echo $result['about']; ?></td>
                 <td><? echo $result['refphoto']; ?></td>
                 <td><? echo $result['session']; ?></td>
-                <td><? echo "<a href='delete.php?id=" . $result['id']. "'></a>"?></td>
+                <td><? echo "<a href='delete.php?id=" . $result['id']. "'>Удалить запись</a>"?></td>
             </tr>
         </table>
     <? } ?>
