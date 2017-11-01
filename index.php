@@ -363,7 +363,7 @@ require_once('vendor/autoload.php');
 
         if (filter_var($messageText, FILTER_VALIDATE_EMAIL)) {
             $db = pg_connect(pg_connection_string());
-            pg_query($db, "INSERT INTO public.\"Subscribers\" (email) VALUES (" . $messageText . ");");
+            pg_query($db, "INSERT INTO public.\"Subscribers\" (email) VALUES ('" . $messageText . "');");
             $bot->sendMessage($message->getChat()->getId(), "Вы попдисались на новости " . $messageText);
         }
 
