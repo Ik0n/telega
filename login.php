@@ -8,4 +8,6 @@
 
 if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
     echo "Вы вошли";
+} else {
+    header('Location: login.html', true, 301);
 }
