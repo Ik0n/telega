@@ -5,7 +5,12 @@
  * Date: 01.11.2017
  * Time: 16:23
  */
-    $db = pg_connect(pg_connection_string());
+    $db = pg_connect("dbname=d4re8r18uqsqa 
+                host=ec2-46-51-187-253.eu-west-1.compute.amazonaws.com 
+                port=5432 
+                user=nhtxzmrecgoswb 
+                password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
+                sslmode=require");
     $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\";");
     $results = pg_fetch_all($results);
 ?>
