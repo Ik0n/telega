@@ -14,6 +14,7 @@
 
     if (isset($_POST['submit'])) {
         $data = $_POST;
+        var_dump($data);
         pg_query($db, "INSERT INTO public.\"Speakers\"(
 	name, about, refphoto, session)
 	VALUES (". $data['name'] ."," . $data['about'] ."," . $data['refphoto'] . "," . $data['session'] . ");");
