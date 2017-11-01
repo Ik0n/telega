@@ -85,7 +85,7 @@ require_once('vendor/autoload.php');
                   pg_query($db, "INSERT INTO public.\"UserVoices\"(user_id, speaker_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
                   $bot->answerCallbackQuery($callback->getId(), "Вы поставили отметку мне нравиться", true);
               } else {
-                  $bot->answerCallbackQuery($callback->getId(), "Вы уже оценили данного спикера", true);
+                  $bot->answerCallbackQuery($callback->getId(), "Вы уже оценили данного спикера" . $message->getText(), true);
               }
           }
       }
@@ -154,7 +154,7 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), $answer);
         }
 
-        if (preg_match("^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$", $phoneNumber[0])) {
+        if (preg_match("^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$", $phoneNumber[0]) ) {
             $bot->sendMessage($message->getChat()->getId(), "Ваш номер " . $phoneNumber[0]);
         }
 
