@@ -278,9 +278,9 @@ require_once('vendor/autoload.php');
                            ]
                        ]
                    );
-                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] .
-                       " Дата и время начала: " . $result['begin'] .
-                       " Дата и время конца: " . $result['end'], false, null, null, $keyboard);
+                   $bot->sendMessage($message->getChat()->getId(), "Тема(ы): " . $result['title'] . "." .
+                       " Дата и время начала: " . $result['begin'] . "." .
+                       " Дата и время конца: " . $result['end'] . ".", false, null, null, $keyboard);
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
