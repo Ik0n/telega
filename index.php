@@ -361,7 +361,7 @@ require_once('vendor/autoload.php');
             $bot->sendMessage($message->getChat()->getId(), $answer);
         }
 
-        if (preg_replace("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", '', $messageText)) {
+        if (preg_replace("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", '', $messageText) == $messageText) {
             $db = pg_connect(pg_connection_string());
             pg_query($db, "INSERT INTO public.\"Subscribers\"(email) VALUES (" . $messageText . ");");
             $bot->sendMessage($message->getChat()->getId(), "Вы попдисались на новости");
