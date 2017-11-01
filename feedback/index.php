@@ -26,6 +26,13 @@ $results = pg_fetch_all($results);
     <title>Adminka</title>
 </head>
 <body>
+<?
+    echo "<a href='/speakers/index.php'>Спикеры</a><br>";
+    echo "<a href='/schedule/index.php'>Расписание</a><br>";
+    echo "<a href='/subscribers/index.php'>Подписчики</a><br>";
+    echo "<a href='/feedback/index.php'>Самое интересное</a><br>";
+?>
+
 <? foreach ($results as $result) { ?>
     <table style="width: 100%">
         <tr>
