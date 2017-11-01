@@ -358,27 +358,18 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Лидеры голосования") {
             $db = pg_connect(pg_connection_string());
-            $resultsUserVoices = pg_query($db, "SELECT public.\"Speakers\".name, public.\"Speakers\".refphoto, count(speaker_id) as \"qq\"
-	                                          FROM public.\"UserVoices\"
-                                              JOIN public.\"Speakers\" on public.\"UserVoices\".speaker_id = public.\"Speakers\".id
-                                              GROUP BY public.\"Speakers\".name, public.\"Speakers\".refphoto
-                                              ORDER BY qq DESC");
+            $resultsUserVoices = pg_query($db, "SELECT name, refphoto, count(speaker_id) as \"counter\"
+	                                                      FROM public.\"Speakers\"
+                                                          LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
+                                                          GROUP BY name, refphoto
+                                                          ORDER BY counter DESC");
             $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
 
             foreach ($resultsUserVoices as $resultUserVoices) {
                 $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
                 $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $resultUserVoices['qq']);
-
-                $resultsSpeakers = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" WHERE name !=". $resultUserVoices['name'] .";");
-                $resultsSpeakers = pg_fetch_all($resultsSpeakers);
-
-                foreach ($resultsSpeakers as $resultSpeaker) {
-                        $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultSpeaker['name']);
-                        $bot->sendPhoto($message->getChat()->getId(), $resultSpeaker['refphoto']);
-                        $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: 0");
-                }
+                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $resultUserVoices['counter']);
             }
         }
 
