@@ -358,10 +358,10 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Подписаться на новости") {
             $answer = "Введите свой email";
-            $bot->sendMessage($message->getChat()->getId(), $answer . " " . preg_match("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", "nick@mail.com"));
+            $bot->sendMessage($message->getChat()->getId(), $answer);
         }
 
-        if (preg_match("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", $messageText)) {
+        if (filter_var($messageText, FILTER_VALIDATE_EMAIL)) {
             $db = pg_connect(pg_connection_string());
             pg_query($db, "INSERT INTO public.\"Subscribers\"(email) VALUES (" . $messageText . ");");
             $bot->sendMessage($message->getChat()->getId(), "Вы попдисались на новости");
