@@ -29,7 +29,7 @@
 </head>
 <body>
     <? foreach ($results as $result) { ?>
-        <table class="table" border="1px solid black">
+        <table class="table-bordered">
             <tr>
                 <td><? echo $result['id']; ?></td>
                 <td><? echo $result['name']; ?></td>
