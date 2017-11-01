@@ -358,7 +358,7 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Подписаться на новости") {
             $answer = "Введите свой email";
-            $bot->sendMessage($message->getChat()->getId(), $answer);
+            $bot->sendMessage($message->getChat()->getId(), $answer . " " . preg_replace("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", '', $messageText));
         }
 
         if (preg_replace("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", '', $messageText) == $messageText) {
