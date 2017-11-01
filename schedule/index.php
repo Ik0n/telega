@@ -50,11 +50,11 @@ $results = pg_fetch_all($results);
     <br>
     <input type="text" name="title" title="title" required>
     <hr>
-    Начало мероприятия
+    Начало мероприятия(пример: 1 ноября 2017, 20:00)
     <br>
     <input type="text" name="begin" title="begin" required>
     <hr>
-    Конец мероприятия
+    Конец мероприятия(пример: 1 ноября 2017, 21:00)
     <br>
     <input type="text" name="end" title="end" required>
     <hr>
