@@ -157,7 +157,7 @@ require_once('vendor/autoload.php');
         }
 
         if (preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $messageText)) {
-            $bot->sendMessage($message->getChat()->getId(), "Ваш номер " . $messageText);
+            $bot->sendMessage($message->getChat()->getId(), "Ваш номер " . $phoneNumber[0]);
         }
 
         if ($messageText == "Подписаться на новости") {
