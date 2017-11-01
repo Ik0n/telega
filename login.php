@@ -8,7 +8,7 @@
 
 if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
     echo "Вы вошли ";
-    echo "<a href='speakers.php'>Спикеры</a>";
+    echo "<a href='speakers/index.php'>Спикеры</a>";
 } else {
     header('Location: login.html', true, 301);
 }

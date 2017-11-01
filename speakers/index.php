@@ -14,7 +14,6 @@
 
     if (isset($_POST['submit'])) {
         $data = $_POST;
-        var_dump($data);
         pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
 
 }
@@ -40,10 +39,11 @@
                 <td><? echo $result['about']; ?></td>
                 <td><? echo $result['refphoto']; ?></td>
                 <td><? echo $result['session']; ?></td>
+                <td><? echo "<a href='delete.php?id=" . $result['id']. "'></a>"?></td>
             </tr>
         </table>
     <? } ?>
-    <form action="speakers.php" method="POST">
+    <form action="index.php" method="POST">
         ФИО спикера
         <br>
         <input type="text" name="name" title="name" required>
