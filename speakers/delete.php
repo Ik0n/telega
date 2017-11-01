@@ -6,7 +6,7 @@
  * Time: 17:59
  */
 if ($_COOKIE['user'] != "admin") {
-    header('Location: login.html', true, 301);
+    header('Location: /login.html', true, 301);
 }
 
 
