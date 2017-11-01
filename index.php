@@ -149,6 +149,15 @@ require_once('vendor/autoload.php');
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
+        if ($messageText == "Связаться с организаторами") {
+            $answer = "Введите свой номер телефона и ваше сообщение через пробел(Пример: 88005553535 Сообщение)";
+            $bot->sendMessage($message->getChat()->getId(), $answer);
+        }
+
+        if (preg_match("^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$", $phoneNumber[0])) {
+            $bot->sendMessage($message->getChat()->getId(), "Ваш номер " . $phoneNumber[0]);
+        }
+
         if ($messageText == "Подписаться на новости") {
             $answer = "Введите свой email";
             $bot->sendMessage($message->getChat()->getId(), $answer);

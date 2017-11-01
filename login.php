@@ -8,8 +8,6 @@
 
 if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
     $test = date("H:i", time() + 10800);
-    $t = explode(' ', "88005553535 Круто");
-    echo $t[0];
 
     echo "Вы вошли <br>";
     echo "<a href='speakers/index.php'>Спикеры</a><br>";
