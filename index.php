@@ -356,6 +356,17 @@ require_once('vendor/autoload.php');
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
+        if ($messageText == "Подписаться на новости") {
+            $answer = "Введите свой email";
+            $bot->sendMessage($message->getChat()->getId(), $answer);
+        }
+
+        if (preg_replace("^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", $messageText) != null) {
+            $db = pg_connect(pg_connection_string());
+            pg_query($db, "INSERT INTO public.\"Subscribers\"(email) VALUES (" . $messageText . ");");
+            $bot->sendMessage($message->getChat()->getId(), "Вы попдисались на новости");
+        }
+
         if ($messageText == "Лидеры голосования") {
             $db = pg_connect(pg_connection_string());
             $resultsUserVoices = pg_query($db, "SELECT name, refphoto, count(speaker_id) as \"counter\"
