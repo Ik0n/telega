@@ -365,20 +365,19 @@ require_once('vendor/autoload.php');
                                               ORDER BY qq DESC");
             $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
-            $resultsSpeakers = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\";");
-            $resultsSpeakers = pg_fetch_all($resultsSpeakers);
 
             foreach ($resultsUserVoices as $resultUserVoices) {
+                $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
+                $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $resultUserVoices['qq']);
+
+                $resultsSpeakers = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" WHERE name !=". $resultUserVoices['name'] .";");
+                $resultsSpeakers = pg_fetch_all($resultsSpeakers);
+
                 foreach ($resultsSpeakers as $resultSpeaker) {
-                    if ($resultUserVoices['name'] == $resultSpeaker['name']) {
-                        $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
-                        $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                        $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $resultUserVoices['qq']);
-                    } else {
                         $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultSpeaker['name']);
                         $bot->sendPhoto($message->getChat()->getId(), $resultSpeaker['refphoto']);
                         $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: 0");
-                    }
                 }
             }
         }
