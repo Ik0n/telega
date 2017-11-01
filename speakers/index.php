@@ -5,6 +5,10 @@
  * Date: 01.11.2017
  * Time: 16:23
  */
+    if ($_COOKIE['user'] != "admin") {
+        header('Location: login.html', true, 301);
+    }
+
     $db = pg_connect("dbname=d4re8r18uqsqa 
                 host=ec2-46-51-187-253.eu-west-1.compute.amazonaws.com 
                 port=5432 
