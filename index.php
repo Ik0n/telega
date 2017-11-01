@@ -137,7 +137,7 @@ require_once('vendor/autoload.php');
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
 
-        $phoneNumber = explode(' ', $messageText);
+        $feedback = explode(':', $messageText);
 
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
@@ -152,12 +152,14 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "Связаться с организаторами") {
-            $answer = "Введите свой номер телефона и ваше сообщение через пробел(Пример: 88005553535 Сообщение)";
+            $answer = "Введите свой номер телефона и ваше сообщение через двоеточие (Пример: 88005553535:Сообщение)";
             $bot->sendMessage($message->getChat()->getId(), $answer);
         }
 
         if (preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $messageText)) {
-            $bot->sendMessage($message->getChat()->getId(), "Ваш номер " . $phoneNumber[0]);
+            $db = pg_connect(pg_connection_string());
+            pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "');");
+            $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
         }
 
         if ($messageText == "Подписаться на новости") {
