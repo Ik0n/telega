@@ -11,7 +11,7 @@
                 user=nhtxzmrecgoswb 
                 password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
                 sslmode=require");
-    $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\";");
+    $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
     $results = pg_fetch_all($results);
 ?>
 <!doctype html>
@@ -25,7 +25,7 @@
 </head>
 <body>
     <? foreach ($results as $result) { ?>
-        <table>
+        <table border="1px solid black">
             <tr>
                 <td><? echo $result['id']; ?></td>
                 <td><? echo $result['name']; ?></td>
