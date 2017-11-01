@@ -85,7 +85,7 @@ require_once('vendor/autoload.php');
                   pg_query($db, "INSERT INTO public.\"UserVoices\"(user_id, speaker_id) VALUES (" . $result['id'] . "," . preg_replace("/[^0-9]/",'', $data) . ");");
                   $bot->answerCallbackQuery($callback->getId(), "Вы поставили отметку мне нравиться", true);
               } else {
-                  $bot->answerCallbackQuery($callback->getId(), "Вы уже оценили данного спикера" . $message->getText(), true);
+                  $bot->answerCallbackQuery($callback->getId(), "Вы уже оценили данного спикера", true);
               }
           }
       }
@@ -139,7 +139,7 @@ require_once('vendor/autoload.php');
 
         $phoneNumber = explode(' ', $messageText);
 
-        $bot->sendMessage($message->getChat()->getId(), $messageText);
+        $bot->sendMessage($message->getChat()->getId(), preg_match("^((\+?7|8)[ \-] ?)?((\(\d{3}\))|(\d{3}))?([ \-])?(\d{3}[\- ]?\d{2}[\- ]?\d{2})$", "88005553535" ));
 
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
