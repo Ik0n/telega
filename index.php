@@ -358,18 +358,28 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Лидеры голосования") {
             $db = pg_connect(pg_connection_string());
-            $results = pg_query($db, "SELECT public.\"Speakers\".name, public.\"Speakers\".refphoto, count(speaker_id) as \"qq\"
+            $resultsUserVoices = pg_query($db, "SELECT public.\"Speakers\".name, public.\"Speakers\".refphoto, count(speaker_id) as \"qq\"
 	                                          FROM public.\"UserVoices\"
                                               JOIN public.\"Speakers\" on public.\"UserVoices\".speaker_id = public.\"Speakers\".id
                                               GROUP BY public.\"Speakers\".name, public.\"Speakers\".refphoto
                                               ORDER BY qq DESC");
-            $results = pg_fetch_all($results);
+            $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
+            $resultsSpeakers = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\";");
+            $resultsSpeakers = pg_fetch_all($resultsSpeakers);
 
-            foreach ($results as $result) {
-                $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
-                $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
-                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $result['qq']);
+            foreach ($resultsUserVoices as $resultUserVoices) {
+                foreach ($resultsSpeakers as $resultSpeaker) {
+                    if ($resultUserVoices['name'] == $resultSpeaker['name']) {
+                        $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
+                        $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                        $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $resultUserVoices['qq']);
+                    } else {
+                        $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultSpeaker['name']);
+                        $bot->sendPhoto($message->getChat()->getId(), $resultSpeaker['refphoto']);
+                        $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: 0");
+                    }
+                }
             }
         }
 
