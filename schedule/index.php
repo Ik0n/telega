@@ -15,11 +15,13 @@ $db = pg_connect("dbname=d4re8r18uqsqa
 
 if (isset($_POST['submit'])) {
     $data = $_POST;
-    pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
+    pg_query($db, "INSERT INTO public.\"Schedule\"(
+	title, begin, \"end\")
+	VALUES ('". $_POST['title'] ."','" . $_POST['begin'] . "','" . $_POST['end'] . "');");
 
 }
 
-$results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
+$results = pg_query($db, "SELECT id, title, begin, \"end\" FROM public.\"Schedule\";");
 $results = pg_fetch_all($results);
 ?>
 <!doctype html>
@@ -36,30 +38,25 @@ $results = pg_fetch_all($results);
     <table>
         <tr>
             <td><? echo $result['id']; ?></td>
-            <td><? echo $result['name']; ?></td>
-            <td><? echo $result['about']; ?></td>
-            <td><? echo $result['refphoto']; ?></td>
-            <td><? echo $result['session']; ?></td>
+            <td><? echo $result['title']; ?></td>
+            <td><? echo $result['begin']; ?></td>
+            <td><? echo $result['end']; ?></td>
             <td><? echo "<a href='delete.php?id=" . $result['id']. "'>Удалить запись</a>"?></td>
         </tr>
     </table>
 <? } ?>
 <form action="index.php" method="POST">
-    ФИО спикера
+    Название мероприятия
     <br>
-    <input type="text" name="name" title="name" required>
+    <input type="text" name="title" title="title" required>
     <hr>
-    О спикере
+    Начало мероприятия
     <br>
-    <input type="text" name="about" title="about" required>
+    <input type="text" name="begin" title="begin" required>
     <hr>
-    Ссылка на фотографию спикера
+    Конец мероприятия
     <br>
-    <input type="text" name="refphoto" title="refphoto" required>
-    <hr>
-    Сессия в которой участвует спикер
-    <br>
-    <input type="text" name="session" title="session" required>
+    <input type="text" name="end" title="end" required>
     <hr>
     <input type="submit" name="submit">
 </form>

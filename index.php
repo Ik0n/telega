@@ -136,11 +136,6 @@ require_once('vendor/autoload.php');
         $message = $update->getMessage();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
-           $test = date("H:i", time() + 10800);
-
-        if ($test == "19:33") {
-            $bot->sendMessage($messageText->getChat()->getId(), "RABOTAET");
-        }
 
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
