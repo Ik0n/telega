@@ -22,11 +22,11 @@
     <? foreach ($results as $result) { ?>
         <table>
             <tr>
-                <td><? $result['id'] ?></td>
-                <td><? $result['name'] ?></td>
-                <td><? $result['about'] ?></td>
-                <td><? $result['refphoto'] ?></td>
-                <td><? $result['session'] ?></td>
+                <td><? echo $result['id']; ?></td>
+                <td><? echo $result['name']; ?></td>
+                <td><? echo $result['about']; ?></td>
+                <td><? echo $result['refphoto']; ?></td>
+                <td><? echo $result['session']; ?></td>
             </tr>
         </table>
     <? } ?>
