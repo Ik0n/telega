@@ -7,7 +7,7 @@
  */
 
 if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
-    var_dump(time() . " " . date("DD.MM.YYYY"));
+    var_dump(time() . " " . date("d.m.Y"));
     echo "Вы вошли <br>";
     echo "<a href='speakers/index.php'>Спикеры</a>";
     echo "<a href='schedule/index.php'>Расписание</a>";
