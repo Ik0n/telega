@@ -20,6 +20,19 @@ require_once('TelegramBot.php');
                 sslmode=require";
    }
 
+   $tester = 0;
+
+   function setTester($value) {
+       global $tester;
+       $tester = $value;
+   }
+
+   function getTester() {
+       global $tester;
+       return $tester;
+   }
+
+
 
    $db = pg_connect(pg_connection_string());
      if (!$db) {
@@ -272,16 +285,15 @@ require_once('TelegramBot.php');
         }
 
         if ($messageText == "Показать ещё") {
-            static $tb;
-            if ($tb == null) {
-                $tb = 6;
+            if (getTester() == 0) {
+                setTester(6);
             }
 
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY id
-    LIMIT 6 OFFSET " . $tb . ";");
+    LIMIT 6 OFFSET " . getTester() . ";");
             $results = pg_fetch_all($results);
 
             if ($results != null) {
@@ -309,7 +321,7 @@ require_once('TelegramBot.php');
                 }
 
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
-                $tb = $tb + 6;
+                setTester(getTester() + 6);
             } else {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                     [["text" => "Расписание"], ["text" => "Моё расписание"]],
@@ -320,7 +332,7 @@ require_once('TelegramBot.php');
                 ], true, true);
 
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
-                $tb = 0;
+                setTester(0);
             }
 
 
