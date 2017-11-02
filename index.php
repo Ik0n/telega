@@ -6,6 +6,7 @@
  * Time: 18:17
  */
 
+namespace telegabot;
 
 header('Content-Type: text/html; charset=utf-8');
 
@@ -33,7 +34,7 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- $tb = TelegramBot::class;
+ $tb = new TelegramBot();
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
