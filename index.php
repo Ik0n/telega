@@ -10,7 +10,7 @@
 header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
-use TelegramBot;
+require_once('TelegramBot.php');
 
     $tb = new TelegramBot();
 
