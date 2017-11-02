@@ -6,7 +6,7 @@
  * Time: 18:17
  */
 
-header('Content-Type: text/html; charset=utf-8');
+/*header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
 require_once('TelegramBot.php');
@@ -135,7 +135,7 @@ require_once('TelegramBot.php');
         $message = $update->getMessage();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
-           static $tb;
+        static $tb;
         $feedback = explode(':', $messageText);
 
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
@@ -410,5 +410,8 @@ require_once('TelegramBot.php');
    });
 
     $bot->run();
+*/
 
+$telegabot = new Digital();
+$telegabot->start($telegabot->getBot());
 
