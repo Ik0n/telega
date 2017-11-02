@@ -283,11 +283,12 @@ require_once('TelegramBot.php');
         }
 
         if ($messageText == "Показать ещё") {
+            $counter = $test;
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY id
-    LIMIT 6 OFFSET 6" . $test . ";");
+    LIMIT 6 OFFSET " . $counter . ";");
             $results = pg_fetch_all($results);
 
             if ($results != null) {
