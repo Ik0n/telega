@@ -21,7 +21,7 @@ require_once('TelegramBot.php');
    }
 
 
-/*   $db = pg_connect(pg_connection_string());
+   $db = pg_connect(pg_connection_string());
      if (!$db) {
           echo "Database connection error";
           exit;
@@ -135,7 +135,6 @@ require_once('TelegramBot.php');
         $message = $update->getMessage();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
-        static $tb;
         $feedback = explode(':', $messageText);
 
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
@@ -273,6 +272,7 @@ require_once('TelegramBot.php');
         }
 
         if ($messageText == "Показать ещё") {
+            static $tb;
             if ($tb == null) {
                 $tb = 6;
             }
@@ -410,64 +410,4 @@ require_once('TelegramBot.php');
    });
 
     $bot->run();
-*/
-
-$digital = new Digital();
-$bot = new \TelegramBot\Api\Client($digital->getToken());
-
-$db = pg_connect(pg_connection_string());
-if (!$db) {
-    echo "Database connection error";
-    exit;
-}
-
-if (!file_exists("registered.trigger")) {
-    $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-    $result = $bot->setWebhook("https://bottelegabot.herokuapp.com/");
-    if($result) {
-        file_put_contents("registered.trigger", time());
-    }
-}
-
-$bot->command('start', function ($message) use ($bot) {
-    $answer = 'Что я могу для вас сделать?';
-
-    $db = pg_connect(pg_connection_string());
-    $result = pg_query($db , "SELECT telegram_id FROM public.\"Users\" WHERE telegram_id = " . $message->getFrom()->getId() . ";");
-    $result = pg_fetch_all($result);
-
-    if ($result == null) {
-        pg_query($db, "INSERT INTO public.\"Users\"(telegram_id) VALUES (" . $message->getFrom()->getId() . ");");
-    }
-
-
-    $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-        [["text" => "Расписание"], ["text" => "Моё расписание"]],
-        [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
-        [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
-        [["text" => "Связаться с организаторами"]],
-        [["text" => "О форуме"]],
-    ], true, true);
-    $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-});
-
-$bot->command('help', function ($message) use ($bot) {
-    $answer = 'Команды:
-        /help - помощь';
-    $bot->sendMessage($message->getChat()->getId(), $answer);
-});
-
-$bot->on(function ($update) use ($bot, $callback_loc, $find_command, $digital) {
-    $digital->startCallback($bot, $update);
-}, function ($update) use ($bot, $digital){
-    $callback = $update->getCallbackQuery();
-    if (is_null($callback) || !strlen($callback->getData())) {
-        $digital->start($bot, $update);
-    return false;
-    }
-
-    return true;
-   });
-
-$bot->run();
 
