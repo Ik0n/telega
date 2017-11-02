@@ -274,10 +274,11 @@ require_once('TelegramBot.php');
                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
-                   $bot->sendMessage($message->getChat()->getId(), "", false, null, null, $keyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
-               $tb->setCounterForSelectDB(6);
+
+                $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
+                $tb->setCounterForSelectDB(6);
         }
 
         if ($messageText == "Показать ещё") {
@@ -308,8 +309,9 @@ require_once('TelegramBot.php');
                     $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                     $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                     $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
-                    $bot->sendMessage($message->getChat()->getId(), "", false, null, null, $keyboard);
                 }
+
+                $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
                 $tb->setCounterForSelectDB($tb->getCounterForSelectDB() + 6);
             } else {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -323,6 +325,8 @@ require_once('TelegramBot.php');
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров!", false, null, null, $keyboard);
                 $tb->setCounterForSelectDB(0);
             }
+
+
         }
 
            if ($messageText == "30 ноября") {
