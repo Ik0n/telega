@@ -20,7 +20,7 @@ require_once('TelegramBot.php');
                 sslmode=require";
    }
 
-   $tester = 0;
+   static $tester = 0;
 
    function setTester($value) {
        global $tester;
@@ -334,8 +334,6 @@ require_once('TelegramBot.php');
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
                 setTester(0);
             }
-
-
 
         }
 
