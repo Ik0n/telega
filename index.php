@@ -282,7 +282,6 @@ require_once('TelegramBot.php');
         }
 
         if ($messageText == "Показать ещё") {
-            global $tb;
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
