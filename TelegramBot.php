@@ -13,7 +13,7 @@ class TelegramBot
     /**
      * @param mixed $counterForSelectDB
      */
-    public function setCounterForSelectDB($counterForSelectDB)
+    public function setCounterForSelectDB($counterForSelectDB = 6)
     {
         $this->counterForSelectDB = $counterForSelectDB;
     }
