@@ -8,7 +8,7 @@
 
 class TelegramBot
 {
-    public $counterForSelectDB;
+    public $counterForSelectDB = 6;
 
     /**
      * @param mixed $counterForSelectDB
