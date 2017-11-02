@@ -287,8 +287,9 @@ require_once('TelegramBot.php');
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY id
-    LIMIT 6 OFFSET " . $test . ";");
+    LIMIT 6 OFFSET 6" . $test . ";");
             $results = pg_fetch_all($results);
+
             if ($results != null) {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
                     [
