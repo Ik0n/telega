@@ -324,7 +324,7 @@ require_once('TelegramBot.php');
                     [["text" => "О форуме"]],
                 ], true, true);
 
-                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров!", false, null, null, $keyboard);
+                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! " . $tb->getCounterForSelectDB() , false, null, null, $keyboard);
                 $tb->setCounterForSelectDB(0);
             }
 
