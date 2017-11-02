@@ -152,13 +152,13 @@ require_once('vendor/autoload.php');
         }
 
         if ($messageText == "Связаться с организаторами") {
-            $answer = "Введите свой номер телефона и ваше сообщение через двоеточие (Пример: 88005553535:Сообщение)";
+            $answer = "Введите свой номер телефона, название компании и ваше сообщение через двоеточие (Пример: 88005553535:НазваниеКомпании:Сообщение)";
             $bot->sendMessage($message->getChat()->getId(), $answer);
         }
 
         if (preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $messageText)) {
             $db = pg_connect(pg_connection_string());
-            pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "');");
+            pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
             $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
         }
 
