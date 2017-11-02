@@ -284,8 +284,10 @@ require_once('TelegramBot.php');
         if ($messageText == "Показать ещё") {
             global $tb;
             $db = pg_connect(pg_connection_string());
-            $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id
-                                            LIMIT 6 OFFSET". $tb->getCounterForSelectDB() .";");
+            $results = pg_query($db, "SELECT id, name, about, refphoto, session
+	FROM public.\"Speakers\"
+    ORDER BY id
+    LIMIT 6 OFFSET " . $tb->getCounterForSelectDB() . ";");
             $results = pg_fetch_all($results);
             if ($results != null) {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
