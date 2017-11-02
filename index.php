@@ -251,9 +251,16 @@ require_once('TelegramBot.php');
                $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id LIMIT 6;");
                $results = pg_fetch_all($results);
                 global $tb;
+                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                    [
+                        [
+                            ["text" => "Показать ещё"]
+                        ]
+                    ], true, true
+                );
 
                foreach ($results as $result) {
-                   $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                   $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
                                ["callback_data" => "like" . $result['id'], "text" => "Мне нравиться"]
@@ -262,10 +269,12 @@ require_once('TelegramBot.php');
                    );
 
 
+
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
-                   $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $keyboard);
+                   $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
+                   $bot->sendMessage($message->getChat()->getId(), "", false, null, null, $keyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
                $tb->setCounterForSelectDB(6);
@@ -278,6 +287,14 @@ require_once('TelegramBot.php');
                                             LIMIT 6 OFFSET". $tb->getCounterForSelectDB() .";");
             $results = pg_fetch_all($results);
             if ($results != null) {
+                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                    [
+                        [
+                            ["text" => "Показать ещё"]
+                        ]
+                    ], true, true
+                );
+
                 foreach ($results as $result) {
                     $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                         [
@@ -291,6 +308,7 @@ require_once('TelegramBot.php');
                     $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                     $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                     $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
+                    $bot->sendMessage($message->getChat()->getId(), "", false, null, null, $keyboard);
                 }
                 $tb->setCounterForSelectDB($tb->getCounterForSelectDB() + 6);
             } else {
