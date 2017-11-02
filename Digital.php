@@ -5,13 +5,16 @@
  * Date: 03.11.2017
  * Time: 0:51
  */
-header('Content-Type: text/html; charset=utf-8');
+//header('Content-Type: text/html; charset=utf-8');
 
-require_once('vendor/autoload.php');
-require_once('TelegramBot.php');
+//require_once('vendor/autoload.php');
+//require_once('TelegramBot.php');
+
+include('vendor/autoload.php');
 
 class Digital
 {
+
     public $counter;
 
     /**
