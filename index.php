@@ -29,6 +29,7 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
+ static $tb;
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -129,7 +130,7 @@ require_once('TelegramBot.php');
       }
 
 
-   }, function ($update) use ($bot){
+   }, function ($update) use ($bot, $tb){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
@@ -273,8 +274,6 @@ require_once('TelegramBot.php');
         }
 
         if ($messageText == "Показать ещё") {
-            static $tb;
-
             if ($tb == null) {
                 $tb = 6;
             }
