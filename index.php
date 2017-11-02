@@ -33,7 +33,7 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- $tb = new TelegramBot();
+ $tb = TelegramBot::class;
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -321,9 +321,10 @@ require_once('TelegramBot.php');
                     [["text" => "О форуме"]],
                 ], true, true);
 
-                $tb->setCounterForSelectDB(15);
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! " . $tb->getCounterForSelectDB() , false, null, null, $keyboard);
+                $tb->setCounterForSelectDB(0);
             }
+
 
 
         }
