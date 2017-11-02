@@ -6,9 +6,13 @@
  * Time: 18:17
  */
 
+
 header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
+use TelegramBot;
+
+    $tb = new TelegramBot();
 
    function pg_connection_string() {
         return "dbname=d4re8r18uqsqa 
@@ -17,13 +21,17 @@ require_once('vendor/autoload.php');
                 user=nhtxzmrecgoswb 
                 password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
                 sslmode=require";
-    }
+   }
 
-  $db = pg_connect(pg_connection_string());
- if (!$db) {
-     echo "Database connection error";
-     exit;
- }
+
+
+
+
+   $db = pg_connect(pg_connection_string());
+     if (!$db) {
+          echo "Database connection error";
+          exit;
+     }
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
@@ -240,8 +248,9 @@ require_once('vendor/autoload.php');
 
         if ($messageText == "Спикеры") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\";");
+               $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id LIMIT 6;");
                $results = pg_fetch_all($results);
+                global $tb;
 
                foreach ($results as $result) {
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
@@ -258,8 +267,44 @@ require_once('vendor/autoload.php');
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $keyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
-
                }
+               $tb->setCounterForSelectDB(6);
+        }
+
+        if ($messageText == "Показать ещё") {
+            global $tb;
+            $db = pg_connect(pg_connection_string());
+            $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id
+                                            LIMIT 6 OFFSET". $tb->getCounterForSelectDB() .";");
+            $results = pg_fetch_all($results);
+            if ($results != null) {
+                foreach ($results as $result) {
+                    $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                        [
+                            [
+                                ["callback_data" => "like" . $result['id'], "text" => "Мне нравиться"]
+                            ]
+                        ]
+                    );
+
+                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
+                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
+                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
+                }
+                $tb->setCounterForSelectDB($tb->getCounterForSelectDB() + 6);
+            } else {
+                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                    [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                    [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
+                    [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                    [["text" => "Связаться с организаторами"]],
+                    [["text" => "О форуме"]],
+                ], true, true);
+
+                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров!", false, null, null, $keyboard);
+                $tb->setCounterForSelectDB(0);
+            }
         }
 
            if ($messageText == "30 ноября") {
