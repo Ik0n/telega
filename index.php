@@ -276,9 +276,9 @@ require_once('TelegramBot.php');
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
-
-                $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
                 $tb->setCounterForSelectDB(6);
+                $bot->sendMessage($message->getChat()->getId(), "Выберите действие " . $tb->getCounterForSelectDB(), false, null, null, $keyboard);
+
         }
 
         if ($messageText == "Показать ещё") {
