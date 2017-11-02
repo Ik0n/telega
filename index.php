@@ -20,7 +20,7 @@ require_once('TelegramBot.php');
                 sslmode=require";
    }
 
-   static $tester = 0;
+   static $tester;
 
    function setTester($value) {
        global $tester;
