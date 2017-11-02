@@ -43,8 +43,8 @@ class Digital
         return "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
     }
 
-    public function getBot() {
-        return new \TelegramBot\Api\Client($this->getToken());
+    public function getBot($token) {
+        return new \TelegramBot\Api\Client($token);
     }
 
     public function start($bot) {

@@ -413,5 +413,5 @@ require_once('TelegramBot.php');
 */
 
 $telegabot = new Digital();
-$telegabot->start($telegabot->getBot());
+$telegabot->start($telegabot->getBot($telegabot->getToken()));
 
