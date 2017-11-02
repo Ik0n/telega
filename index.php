@@ -33,6 +33,7 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
+ $tb = new TelegramBot();
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -41,9 +42,6 @@ require_once('TelegramBot.php');
          file_put_contents("registered.trigger", time());
      }
  }
-    $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
-    $bot = new \TelegramBot\Api\Client($token);
-
     $bot->command('start', function ($message) use ($bot) {
         $answer = 'Что я могу для вас сделать?';
 
@@ -136,7 +134,7 @@ require_once('TelegramBot.php');
       }
 
 
-   }, function ($update) use ($bot){
+   }, function ($update) use ($bot, $tb){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
@@ -144,8 +142,6 @@ require_once('TelegramBot.php');
         $userId = $message->getFrom()->getId();
 
         $feedback = explode(':', $messageText);
-
-         $tb = new TelegramBot();
 
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
