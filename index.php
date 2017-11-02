@@ -312,7 +312,7 @@ require_once('TelegramBot.php');
 
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
                 $tb->setCounterForSelectDB($tb->getCounterForSelectDB() + 6);
-            } else if ($results == null) {
+            } else {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                     [["text" => "Расписание"], ["text" => "Моё расписание"]],
                     [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
@@ -321,8 +321,8 @@ require_once('TelegramBot.php');
                     [["text" => "О форуме"]],
                 ], true, true);
 
+                $tb->setCounterForSelectDB(15);
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! " . $tb->getCounterForSelectDB() , false, null, null, $keyboard);
-                $tb->setCounterForSelectDB(0);
             }
 
 
