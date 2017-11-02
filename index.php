@@ -315,7 +315,7 @@ require_once('TelegramBot.php');
 
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
                 $test = $test + 6;
-            } else {
+            } else if ($results == null) {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                     [["text" => "Расписание"], ["text" => "Моё расписание"]],
                     [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
