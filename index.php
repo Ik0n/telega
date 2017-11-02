@@ -280,15 +280,12 @@ require_once('TelegramBot.php');
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
+                setTester(6);
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
 
         }
 
         if ($messageText == "Показать ещё") {
-            if (getTester() == 0) {
-                setTester(6);
-            }
-
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
