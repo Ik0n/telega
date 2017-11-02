@@ -6,7 +6,6 @@
  * Time: 18:17
  */
 
-
 header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
@@ -21,7 +20,9 @@ require_once('TelegramBot.php');
                 sslmode=require";
    }
 
-
+    function createTb() {
+       return $tb = new TelegramBot();
+    }
 
 
 
@@ -33,7 +34,6 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- $tb = TelegramBot::class;
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -134,12 +134,14 @@ require_once('TelegramBot.php');
       }
 
 
-   }, function ($update) use ($bot, $tb){
+   }, function ($update) use ($bot){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
+
+        $tb = createTb();
 
         $feedback = explode(':', $messageText);
 
@@ -273,12 +275,14 @@ require_once('TelegramBot.php');
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
+                global $tb;
                 $tb->setCounterForSelectDB(6);
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие " . $tb->getCounterForSelectDB(), false, null, null, $keyboard);
 
         }
 
         if ($messageText == "Показать ещё") {
+            global $tb;
             $db = pg_connect(pg_connection_string());
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
