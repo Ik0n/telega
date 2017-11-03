@@ -11,12 +11,20 @@ class ComposerStaticInit6ad042ad6632577d86c00365bf35471f
         array (
             'TelegramBot\\Api\\' => 16,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'TelegramBot\\Api\\' => 
         array (
             0 => __DIR__ . '/..' . '/telegram-bot/api/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
     );
 

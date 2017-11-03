@@ -10,6 +10,9 @@ header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
 require_once('TelegramBot.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 $tb = new TelegramBot();
 
@@ -165,7 +168,15 @@ $tb = new TelegramBot();
             pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
             $subject = $feedback[0] . " " . $feedback[1];
             $mailMessage = $feedback[2];
-            mail("ik0n16111998@gmail.com", $subject, $mailMessage);
+
+            $mail = new PHPMailer();
+            $mail->addAddress("ik0n16111998@gmail.com");
+            $mail->Subject = $subject;
+            $mail->AltBody = $mailMessage;
+
+            $mail->send();
+
+
             $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
         }
 
