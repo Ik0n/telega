@@ -163,6 +163,7 @@ $tb = new TelegramBot();
         if (preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $messageText)) {
             $db = pg_connect(pg_connection_string());
             pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
+            mail("ik0n16111998@gmail.com", $feedback[0] . " " . $feedback[1], $feedback[2] );
             $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
         }
 
