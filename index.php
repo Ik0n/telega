@@ -27,9 +27,16 @@ require_once('TelegramBot.php');
           exit;
      }
 
+
+
+
+
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- $tb = new TelegramBot();
+ if (!isset($tb)) {
+     $tb = new TelegramBot();
+ }
+
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
