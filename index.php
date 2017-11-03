@@ -11,6 +11,9 @@ header('Content-Type: text/html; charset=utf-8');
 require_once('vendor/autoload.php');
 require_once('TelegramBot.php');
 
+$tb = new TelegramBot();
+
+
    function pg_connection_string() {
         return "dbname=d4re8r18uqsqa 
                 host=ec2-46-51-187-253.eu-west-1.compute.amazonaws.com 
@@ -33,10 +36,6 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- if (!isset($tb)) {
-     $tb = new TelegramBot();
- }
-
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -274,7 +273,7 @@ require_once('TelegramBot.php');
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
-                $tb->setCounterForSelectDB(6);
+                file_put_contents("counter.txt", 6);
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
 
         }
@@ -284,7 +283,7 @@ require_once('TelegramBot.php');
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY id
-    LIMIT 6 OFFSET " . $tb->getCounterForSelectDB() . ";");
+    LIMIT 6 OFFSET " . file_get_contents("counter.txt") . ";");
             $results = pg_fetch_all($results);
 
             if ($results != null) {
@@ -312,7 +311,7 @@ require_once('TelegramBot.php');
                 }
 
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
-                $tb->setCounterForSelectDB($tb->getCounterForSelectDB() + 6);
+                file_put_contents("counter.txt", file_get_contents("counter.txt") + 6);
             } else {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                     [["text" => "Расписание"], ["text" => "Моё расписание"]],
@@ -323,7 +322,7 @@ require_once('TelegramBot.php');
                 ], true, true);
 
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
-                $tb->setCounterForSelectDB(0);
+                file_put_contents("counter.txt", 0);
             }
 
         }
