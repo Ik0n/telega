@@ -173,15 +173,16 @@ $tb = new TelegramBot();
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'ik0n16111998@gmail.com';
-            $mail->Password = 'MegaForever40';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = '465';
             $mail->CharSet = 'UTF-8';
 
+            $mail->Username = 'ik0n16111998@gmail.com';
+            $mail->Password = 'MegaForever40';
 
 
-            $mail->addAddress("ik0n16111998@gmail.com");
+
+            $mail->addAddress("Ik0nChannel1@mail.ru);
             $mail->Subject = $subject;
             $mail->AltBody = $mailMessage;
 
