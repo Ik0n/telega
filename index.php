@@ -10,8 +10,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 require_once('vendor/autoload.php');
 require_once('TelegramBot.php');
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+require_once('SendMailSmtpClass.php');
 
 
 $tb = new TelegramBot();
@@ -169,25 +168,11 @@ $tb = new TelegramBot();
             $subject = $feedback[0] . " " . $feedback[1];
             $mailMessage = $feedback[2];
 
-            $mail = new PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = '465';
-            $mail->CharSet = 'UTF-8';
+            $headers= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
-            $mail->Username = 'ik0n16111998@gmail.com';
-            $mail->Password = 'MegaForever40';
-
-
-
-            $mail->addAddress("Ik0nChannel1@mail.ru");
-            $mail->Subject = $subject;
-            $mail->AltBody = $mailMessage;
-
-            $mail->send();
-
+            $mailSMTP = new SendMailSmtpClass('ik0n16111998@gmail.com', 'MegaForever40', 'ssl://smtp.gmail.com', 'Evgeniy', 465);
+            $mailSMTP->send('Ik0nChannel1@mail.ru', $subject, $mailMessage, $headers);
 
             $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
         }
