@@ -165,7 +165,7 @@ $tb = new TelegramBot();
             pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
             $subject = $feedback[0] . " " . $feedback[1];
             $mailMessage = $feedback[2];
-            mb_send_mail("ik0n16111998@gmail.com", $subject, $mailMessage);
+            mail("ik0n16111998@gmail.com", $subject, $mailMessage);
             $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
         }
 
