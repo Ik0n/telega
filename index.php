@@ -29,7 +29,7 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- $bot = new TelegramBot();
+ $tb = new TelegramBot();
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -137,7 +137,6 @@ require_once('TelegramBot.php');
         $userId = $message->getFrom()->getId();
         $feedback = explode(':', $messageText);
         global $tb;
-
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
         if($messageText == "Расписание") {
