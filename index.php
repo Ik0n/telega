@@ -20,19 +20,6 @@ require_once('TelegramBot.php');
                 sslmode=require";
    }
 
-   static $tester;
-
-   function setTester($value) {
-       global $tester;
-       $tester = $value;
-   }
-
-   function getTester() {
-       global $tester;
-       return $tester;
-   }
-
-
 
    $db = pg_connect(pg_connection_string());
      if (!$db) {
@@ -42,7 +29,15 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
+ $tb = new TelegramBot();
 
+ if (!file_exists("registered.trigger")) {
+     $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+     $result = $bot->setWebhook("https://bottelegabot.herokuapp.com/");
+     if($result) {
+         file_put_contents("registered.trigger", time());
+     }
+ }
     $bot->command('start', function ($message) use ($bot) {
         $answer = 'Что я могу для вас сделать?';
 
@@ -71,7 +66,7 @@ require_once('TelegramBot.php');
         $bot->sendMessage($message->getChat()->getId(), $answer);
     });
 
-   $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
+   $bot->on(function ($update) use ($bot, $callback_loc, $find_command, $tb) {
       $callback = $update->getCallbackQuery();
       $message = $callback->getMessage();
       $chatId = $message->getChat()->getId();
@@ -135,7 +130,7 @@ require_once('TelegramBot.php');
       }
 
 
-   }, function ($update) use ($bot){
+   }, function ($update) use ($bot, $tb){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
@@ -273,7 +268,7 @@ require_once('TelegramBot.php');
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
-                setTester(6);
+                $tb->setCounterForSelectDB(6);
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
 
         }
@@ -283,7 +278,7 @@ require_once('TelegramBot.php');
             $results = pg_query($db, "SELECT id, name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY id
-    LIMIT 6 OFFSET " . getTester() . ";");
+    LIMIT 6 OFFSET " . $tb->getCounterForSelectDB() . ";");
             $results = pg_fetch_all($results);
 
             if ($results != null) {
@@ -311,7 +306,7 @@ require_once('TelegramBot.php');
                 }
 
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
-                setTester(getTester() + 6);
+                $tb->setCounterForSelectDB($tb->getCounterForSelectDB() + 6);
             } else {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                     [["text" => "Расписание"], ["text" => "Моё расписание"]],
@@ -322,7 +317,7 @@ require_once('TelegramBot.php');
                 ], true, true);
 
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
-                setTester(0);
+                $tb->setCounterForSelectDB(0);
             }
 
         }
