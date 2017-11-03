@@ -29,6 +29,7 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
+ $bot = new TelegramBot();
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -64,9 +65,6 @@ require_once('TelegramBot.php');
         /help - помощь';
         $bot->sendMessage($message->getChat()->getId(), $answer);
     });
-
-$tb = new TelegramBot();
-
    $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
       $callback = $update->getCallbackQuery();
       $message = $callback->getMessage();
@@ -131,13 +129,14 @@ $tb = new TelegramBot();
       }
 
 
-   }, function ($update) use ($bot, $tb){
+   }, function ($update) use ($bot){
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
         $message = $update->getMessage();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
         $feedback = explode(':', $messageText);
+        global $tb;
 
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
@@ -317,7 +316,7 @@ $tb = new TelegramBot();
                     [["text" => "О форуме"]],
                 ], true, true);
 
-                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! " . print_r($GLOBALS['tb']), false, null, null, $keyboard);
+                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
                 $tb->setCounterForSelectDB(0);
             }
 
