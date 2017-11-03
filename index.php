@@ -29,7 +29,6 @@ require_once('TelegramBot.php');
 
  $token = "466539344:AAE9QgFeHOxqWvJfEPgWcEXGDSvHj2qCZeM";
  $bot = new \TelegramBot\Api\Client($token);
- $tb = new TelegramBot();
 
  if (!file_exists("registered.trigger")) {
      $page_url = "https://" . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
@@ -66,7 +65,9 @@ require_once('TelegramBot.php');
         $bot->sendMessage($message->getChat()->getId(), $answer);
     });
 
-   $bot->on(function ($update) use ($bot, $callback_loc, $find_command, $tb) {
+$tb = new TelegramBot();
+
+   $bot->on(function ($update) use ($bot, $callback_loc, $find_command) {
       $callback = $update->getCallbackQuery();
       $message = $callback->getMessage();
       $chatId = $message->getChat()->getId();
