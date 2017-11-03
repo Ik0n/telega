@@ -317,7 +317,7 @@ $tb = new TelegramBot();
                     [["text" => "О форуме"]],
                 ], true, true);
 
-                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
+                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! " . $GLOBALS, false, null, null, $keyboard);
                 $tb->setCounterForSelectDB(0);
             }
 
