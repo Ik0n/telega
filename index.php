@@ -182,7 +182,7 @@ $tb = new TelegramBot();
 
 
 
-            $mail->addAddress("Ik0nChannel1@mail.ru);
+            $mail->addAddress("Ik0nChannel1@mail.ru");
             $mail->Subject = $subject;
             $mail->AltBody = $mailMessage;
 
