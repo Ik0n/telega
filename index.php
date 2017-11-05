@@ -264,7 +264,7 @@ $tb = new TelegramBot();
                 [["text" => "Размещение"],["text" => "Меню"]],
             ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-               $bot->sendLocation($message->getChat()->getId(),55.687238, 37.343065);
+               $bot->sendLocation($message->getChat()->getId(), 55.696560, 37.355938);
         }
 
 
