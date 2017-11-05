@@ -178,6 +178,7 @@ $tb = new TelegramBot();
             $mail->Port = '587';
             $mail->Username = "ik0n16111998@gmail.com";
             $mail->Password = "MegaForever40";
+            $mail->CharSet="UTF-8";
             $mail->setFrom("ik0n16111998@gmail.com");
 
             $mail->Subject = $subject;
