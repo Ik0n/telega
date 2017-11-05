@@ -172,20 +172,17 @@ $tb = new TelegramBot();
 
             $mail = new PHPMailer;
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = '465';
             $mail->Username = "ik0n16111998@gmail.com";
             $mail->Password = "MegaForever40";
-            $mail->SMTPSecure = 'ssl';
-            $mail->Port = '465';
-            $mail->CharSet = 'UTF-8';
-
-            $mail->From = 'ik0n16111998@gmail.com';
-            $mail->FromName = 'Bot';
-            $mail->addAddress('ik0n16111998@gmail.com');
+            $mail->setFrom("ik0n16111998@gmail.com");
 
             $mail->Subject = $subject;
             $mail->Body = $mailMessage;
+            $mail->addAddress('ik0n16111998@gmail.com');
 
             $mail->send();
 
