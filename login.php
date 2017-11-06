@@ -13,7 +13,8 @@ if ($_POST['login'] == "admin" && $_POST['password'] == "admin") {
     echo "<a href='/speakers/'>Спикеры</a><br>";
     echo "<a href='/schedule/'>Расписание</a><br>";
     echo "<a href='/subscribers/'>Подписчики</a><br>";
-    echo "<a href='/feedback/'>Самое интересное</a><br>";
+    echo "<a href='/feedback/'>Заявки для обратной связи</a><br>";
+    echo "<a href='/MostInteresting/'>Самое интересное</a><br>";
 } else {
     header('Location: /login.html', true, 301);
 }
