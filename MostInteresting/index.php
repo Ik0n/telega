@@ -13,7 +13,15 @@ $db = pg_connect("dbname=d4re8r18uqsqa
                 password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
                 sslmode=require");
 
-$results = pg_query($db, "SELECT id, \"number\", content FROM public.\"Feedback\";");
+if (isset($_POST['submit'])) {
+    $data = $_POST;
+    pg_query($db, "UPDATE public.\"MostInteresting\"
+	SET content= '" . $_POST['content'] . "'
+	WHERE id = 1;");
+
+}
+
+$results = pg_query($db, "SELECT id, content FROM public.\"MostInteresting\";");
 $results = pg_fetch_all($results);
 ?>
 <!doctype html>
@@ -38,11 +46,17 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
     <table border="1px solid black">
         <tr>
             <td><? echo $result['id']; ?></td>
-            <td><? echo $result['number']; ?></td>
             <td><? echo $result['content']; ?></td>
         </tr>
     </table>
 <? } ?>
+<form action="index.php" method="POST">
+    Содежание
+    <br>
+    <input type="text" name="content" title="content" required>
+    <br>
+    <input type="submit" name="submit">
+</form>
 </body>
 </html>
 

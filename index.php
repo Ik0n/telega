@@ -159,6 +159,24 @@ $tb = new TelegramBot();
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
         }
 
+        if ($messageText == "Самое интересное") {
+            $db = pg_connect(pg_connection_string());
+            $results = pg_query($db, "SELECT content
+	FROM public.\"MostInteresting\"
+	WHERE id = 1;");
+            $results = pg_fetch_all($results);
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "О Гиперкубе"]],
+                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Самое интересное"]],
+                [["text" => "Как добраться"]],
+                [["text" => "Размещение"],["text" => "Меню"]],
+            ], true, true);
+            foreach ($results as $result) {
+                $bot->sendMessage($message->getChat()->getId(), $result['content'], false, null, null, $keyboard);
+            }
+        }
+
         if ($messageText == "Связаться с организаторами") {
             $answer = "Контактный номер для связи с организатором: <b>+7(926)232-15-37</b> \n Введите свой номер телефона, название компании и ваше сообщение через двоеточие.\n (Пример: 88005553535: НазваниеКомпании: Сообщение)";
             $bot->sendMessage($message->getChat()->getId(), $answer, "HTML");
