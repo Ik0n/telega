@@ -149,6 +149,25 @@ $tb = new TelegramBot();
         global $tb;
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
+        if($messageText == "Биржа деловых контактов") {
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "О Гиперкубе"]],
+                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Самое интересное"]],
+                [["text" => "Как добраться"]],
+                [["text" => "Размещение"],["text" => "Меню"]],
+            ], true, true);
+            $chatKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                [
+                    [
+                        ["url" => "https://t.me/digitaltechnologiesforum", "text" => "Чат для делегатов"]
+                    ]
+                ]
+            );
+            $bot->sendMessage($message->getChat()->getId(), "Нажмите на кнопку", false, null, null, $chatKeyboard);
+            $bot->sendMessage($message->getChat()->getId(), 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:', false, null, null, $keyboard);
+        }
+
         if($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
