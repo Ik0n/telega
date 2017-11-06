@@ -235,7 +235,7 @@ $tb = new TelegramBot();
         if (filter_var($messageText, FILTER_VALIDATE_EMAIL)) {
             $db = pg_connect(pg_connection_string());
             pg_query($db, "INSERT INTO public.\"Subscribers\" (email) VALUES ('" . $messageText . "');");
-            $bot->sendMessage($message->getChat()->getId(), "Вы попдисались на новости " . $messageText);
+            $bot->sendMessage($message->getChat()->getId(), "Вы подписались на новости " . $messageText);
         }
 
         if ($messageText == "Лидеры голосования") {
@@ -251,7 +251,7 @@ $tb = new TelegramBot();
             foreach ($resultsUserVoices as $resultUserVoices) {
                 $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
                 $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравиться: " . $resultUserVoices['counter']);
+                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter']);
             }
         }
 
@@ -314,6 +314,9 @@ $tb = new TelegramBot();
                     [
                         [
                             ["text" => "Показать ещё"]
+                        ],
+                        [
+                            ["text" => "Меню"]
                         ]
                     ], true, true
                 );
@@ -353,6 +356,9 @@ $tb = new TelegramBot();
                     [
                         [
                             ["text" => "Показать ещё"]
+                        ],
+                        [
+                            ["text" => "Меню"]
                         ]
                     ], true, true
                 );
@@ -411,7 +417,7 @@ $tb = new TelegramBot();
                    [["text" => "Меню"]],
                ], true, true);
 
-               $bot->sendMessage($message->getChat()->getId(), "Выбирите дату: ", false, null, null, $keyboard);
+               $bot->sendMessage($message->getChat()->getId(), "Выберите дату: ", false, null, null, $keyboard);
            }
 
            if ($messageText == "1 декабря") {
@@ -440,7 +446,7 @@ $tb = new TelegramBot();
                    [["text" => "Меню"]],
                ], true, true);
 
-               $bot->sendMessage($message->getChat()->getId(), "Выбирите дату: ", false, null, null, $keyboard);
+               $bot->sendMessage($message->getChat()->getId(), "Выберите дату: ", false, null, null, $keyboard);
            }
 
            if ($messageText == "Моё расписание") {
