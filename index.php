@@ -519,7 +519,7 @@ $tb = new TelegramBot();
 
            if ($messageText == "30 ноября") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '30%';");
+               $results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\" WHERE date_begin like '30%' ORDER BY time_begin;");
                $results = pg_fetch_all($results);
                foreach ($results as $result) {
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
@@ -530,8 +530,8 @@ $tb = new TelegramBot();
                        ]
                    );
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Начало: </b>" . $result['begin'] . "\n" .
-                       "<b>Завершение: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
+                       "<b>Начало: </b>" . $result['date_begin'] . " " . $result['time_begin'] . "\n" .
+                       "<b>Завершение: </b>" . $result['date_end'] . " " . $result['time_end'], "HTML" , null, null, $keyboard);
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
@@ -544,7 +544,7 @@ $tb = new TelegramBot();
 
            if ($messageText == "1 декабря") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id ,title, begin, \"end\" FROM public.\"Schedule\" WHERE begin like '1%';");
+               $results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\" WHERE date_begin like '1%' ORDER BY time_begin;");
                $results = pg_fetch_all($results);
                $date = "1";
                foreach ($results as $result) {
@@ -558,8 +558,8 @@ $tb = new TelegramBot();
                            ]
                        );
                        $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                           "<b>Начало: </b>" . $result['begin'] . "\n" .
-                           "<b>Завершение: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
+                           "<b>Начало: </b>" . $result['date_begin'] . " " . $result['time_begin'] . "\n" .
+                           "<b>Завершение: </b>" . $result['date_end'] . " " . $result['time_end'], "HTML" , null, null, $keyboard);
                    }
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -573,7 +573,7 @@ $tb = new TelegramBot();
 
            if ($messageText == "Моё расписание") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".id as schedule_id, public.\"Schedule\".title, public.\"Schedule\".begin, public.\"Schedule\".end
+               $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".id as schedule_id, public.\"Schedule\".title, public.\"Schedule\".date_begin, public.\"Schedule\".date_end, public.\"Schedule\".time_begin, public.\"Schedule\".time_end
 	                                            FROM public.\"Users\"
                                                 JOIN public.\"MySchedule\" on public.\"Users\".id = public.\"MySchedule\".user_id
                                                 JOIN public.\"Schedule\" on public.\"MySchedule\".schedule_id = public.\"Schedule\".id
@@ -589,8 +589,8 @@ $tb = new TelegramBot();
                        ]
                    );
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Дата и время начала: </b>" . $result['begin'] . "\n" .
-                       "<b>Дата и время конца: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
+                       "<b>Начало: </b>" . $result['date_begin'] . " " . $result['time_begin'] . "\n" .
+                       "<b>Завершение: </b>" . $result['date_end'] . " " . $result['time_end'], "HTML" , null, null, $keyboard);
                }
            }
 
