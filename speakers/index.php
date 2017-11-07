@@ -60,7 +60,7 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
             </tr>
         </table>
     <? } ?>
-    <form action="index.php" method="POST">
+    <form action="index.php" method="POST" enctype="multipart/form-data">
         ФИО спикера
         <br>
         <input type="text" name="name" title="name" required>
