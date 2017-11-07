@@ -172,7 +172,7 @@ $tb = new TelegramBot();
 
             $bot->sendMessage($message->getChat()->getId(), $text, "HTML");
             $bot->sendPhoto($message->getChat()->getId(), "http://www.skolkovo.ru/public/images/stories/campus/2012/hoteltanshan/hoteltanshan_001.jpg");
-            $bot->sendMessag($message->getChat()->getId(), "", "HTML", false, null, null, $keyboard);
+            $bot->sendMessag($message->getChat()->getId(), "Стоимость проживания - 7500руб./чел. + 880 завтрак чел./день.", "HTML", null, null, $keyboard);
 
         }
 
