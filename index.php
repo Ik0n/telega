@@ -171,7 +171,7 @@ $tb = new TelegramBot();
             $text = "Гостиница \"Тянь-Шань\", размещена на территории Парка Сколково. Номера имеют площадь 30 кв.м и оснащены всеми необходимыми атрибутами для бизнес-путешественника. В каждом номере есть сейф, гладильная доска и утюг, а также все необходимое для приготовления чая или кофе. Для удобства гостей в номерах есть мини-бар. Ванные комнаты оснащены удобными душевыми кабинами, фенами, банными и косметическими принадлежностями. Все номера для некурящих.";
 
             $bot->sendMessage($message->getChat()->getId(), $text, "HTML");
-            $bot->sendPhoto($message->getChat()->getId(), "images/hotel.jpg");
+            $bot->sendPhoto($message->getChat()->getId(), "http://www.skolkovo.ru/public/images/stories/campus/2012/hoteltanshan/hoteltanshan_001.jpg");
             $bot->sendMessag($message->getChat()->getId(), "", "HTML", false, null, null, $keyboard);
 
         }
