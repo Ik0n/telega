@@ -127,7 +127,7 @@ $tb = new TelegramBot();
 	SET fio='" . file_get_contents('fio.txt') . "'
 	WHERE email='" . $feedback[1] . "';");
 
-           file_put_contents('fix.txt', "");
+           file_put_contents('fio.txt', "");
            $bot->sendMessage($chatId, 'Спасибо!', false, null, null, $keyboard);
        }
 
