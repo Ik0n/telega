@@ -15,7 +15,7 @@
     if (isset($_POST['submit'])) {
         $data = $_POST;
         if ($data['refphoto'] == null) {
-            $uploaddir = 'https://bottelegabot.herokuapp.com/images/';
+            $uploaddir = '/images/';
             $uploadfile = $uploaddir . basename($_FILES['filename']['name']);
             $fileTempName = $_FILES['filename']['tmp_name'];
 
