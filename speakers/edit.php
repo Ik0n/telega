@@ -13,8 +13,8 @@ $results = pg_fetch_all($results);
 if ($_POST['submit']) {
     $data = $_POST;
     pg_query($db, "UPDATE public.\"Speakers\"
-	SET name='" . $data['name'] ."',about='" . $data['about'] . "',refphoto='" . $data['refphoto'] . "',session='" . $data['session'] . "'
-	WHERE id=" . $_GET['id'] .";");
+	SET name='" . $data['name'] . "',about='" . $data['about'] . "',refphoto='" . $data['refphoto'] . "',session='" . $data['session'] . "'
+	WHERE id=" . $data['id'] .";");
 
     header('Location: /speakers/', true, 301);
 }
@@ -32,6 +32,7 @@ if ($_POST['submit']) {
 <body>
 <? foreach ($results as $result) { ?>
 <form action="edit.php" method="POST">
+    <input type="hidden" name="id" title="id" value="<?echo $result['id']?>">
     ФИО спикера
     <br>
     <input type="text" name="name" title="name" value="<?echo $result['name'] ?>" required>
