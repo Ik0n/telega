@@ -263,6 +263,7 @@ $tb = new TelegramBot();
                 $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
                 $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
             }
+            file_put_contents('counter.txt', 6);
         }
 
         if ($messageText == "Пoказать ещё") {
