@@ -16,7 +16,7 @@
         $data = $_POST;
         if ($data['refphoto'] == null) {
             $uploaddir = '/images/';
-            $uploadfile = $uploaddir . basename($_FILES['filename']['name']);
+            $uploadfile = $uploaddir . $_FILES['filename']['name'];
             $fileTempName = $_FILES['filename']['tmp_name'];
 
             move_uploaded_file($fileTempName, $uploadfile);
