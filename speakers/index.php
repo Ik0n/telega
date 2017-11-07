@@ -20,7 +20,7 @@
             $fileTempName = $_FILES['filename']['tmp_name'];
 
             move_uploaded_file($fileTempName, $uploadfile);
-            pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $data['filename'] . "','" . $data['session'] . "');");
+            pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $_FILES['filename']['name'] . "','" . $data['session'] . "');");
         } else {
             pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
         }
