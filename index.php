@@ -53,12 +53,14 @@ $tb = new TelegramBot();
                 Наш бот поможет вам быть в курсе последних новостей Форума, формировать свою программу посещения мероприятий, голосовать за понравившиеся сессии. \n 
                 Также мы всегда на связи, чтобы ответить на ваши вопросы.";
         $answer = 'Что я могу для вас сделать?';
-        $board = \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup([
+        $board = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
             [
-                ['url' => 'http://www.b2bcg.ru/', 'text' => 'Офицальный сайт форума'],
-                ['url' => 'https://plan-b.agency/', 'text' => 'Digital-партнер Plan B Agency']
+                [
+                    ['url' => 'http://www.b2bcg.ru/', 'text' => 'Офицальный сайт форума'],
+                    ['url' => 'https://plan-b.agency/', 'text' => 'Digital-партнер Plan B Agency']
+                ]
             ]
-        ]);
+        );
 
 
         $db = pg_connect(pg_connection_string());
