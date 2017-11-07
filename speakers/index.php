@@ -14,16 +14,16 @@
 
     if (isset($_POST['submit'])) {
         $data = $_POST;
-        if ($data['refphoto'] == null) {
-            $uploaddir = '/images/';
-            $uploadfile = $uploaddir . $_FILES['filename']['name'];
-            $fileTempName = $_FILES['filename']['tmp_name'];
-
-            move_uploaded_file($fileTempName, $uploadfile);
-            pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $_FILES['filename']['name'] . "','" . $data['session'] . "');");
-        } else {
+        //if ($data['refphoto'] == null) {
+        //    $uploaddir = '/images/';
+        //    $uploadfile = $uploaddir . $_FILES['filename']['name'];
+        //    $fileTempName = $_FILES['filename']['tmp_name'];
+        //
+        //    move_uploaded_file($fileTempName, $uploadfile);
+        //    pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $_FILES['filename']['name'] . "','" . $data['session'] . "');");
+        //} else {
             pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
-        }
+        //}
     }
 
     $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
@@ -60,7 +60,7 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
             </tr>
         </table>
     <? } ?>
-    <form action="index.php" method="POST" enctype="multipart/form-data">
+    <form action="index.php" method="POST">
         ФИО спикера
         <br>
         <input type="text" name="name" title="name" required>
@@ -72,7 +72,6 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         Ссылка на фотографию спикера
         <br>
         <input type="text" name="refphoto" title="refphoto">
-        <input type="file" name="filename" title="filename">
         <hr>
         Сессия в которой участвует спикер
         <br>
