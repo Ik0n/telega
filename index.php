@@ -49,7 +49,17 @@ $tb = new TelegramBot();
      }
  }
     $bot->command('start', function ($message) use ($bot) {
+        $text = "Вас приветствуют “Digital Technologies Forum”! \n
+                Наш бот поможет вам быть в курсе последних новостей Форума, формировать свою программу посещения мероприятий, голосовать за понравившиеся сессии. \n 
+                Также мы всегда на связи, чтобы ответить на ваши вопросы.";
         $answer = 'Что я могу для вас сделать?';
+        $board = \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup([
+            [
+                ['url' => 'http://www.b2bcg.ru/', 'text' => 'Офицальный сайт форума'],
+                ['url' => 'https://plan-b.agency/', 'text' => 'Digital-партнер Plan B Agency']
+            ]
+        ]);
+
 
         $db = pg_connect(pg_connection_string());
         $result = pg_query($db , "SELECT telegram_id FROM public.\"Users\" WHERE telegram_id = " . $message->getFrom()->getId() . ";");
@@ -67,6 +77,7 @@ $tb = new TelegramBot();
             [["text" => "Связаться с организаторами"]],
             [["text" => "О форуме"]],
         ], true, true);
+        $bot->sendMessage($message->getChat()->getId(), $text, "HTML", null, null, $board);
         $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
     });
 
@@ -204,7 +215,7 @@ $tb = new TelegramBot();
             $db = pg_connect(pg_connection_string());
             pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
             $subject = $feedback[0] . " " . $feedback[1];
-            $mailMessage = $feedback[2];
+            $mailMessage = "Номер телфона: " . $feedback[0] . ", Сообщение: " . $feedback[2];
 
             $mail = new PHPMailer;
             $mail->isSMTP();
@@ -464,8 +475,8 @@ $tb = new TelegramBot();
                        ]
                    );
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Дата и время начала: </b>" . $result['begin'] . "\n" .
-                       "<b>Дата и время конца: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
+                       "<b>Начало: </b>" . $result['begin'] . "\n" .
+                       "<b>Завершение: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
@@ -492,8 +503,8 @@ $tb = new TelegramBot();
                            ]
                        );
                        $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                           "<b>Дата и время начала: </b>" . $result['begin'] . "\n" .
-                           "<b>Дата и время конца: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
+                           "<b>Начало: </b>" . $result['begin'] . "\n" .
+                           "<b>Завершение: </b>" . $result['end'] . "", "HTML" , null, null, $keyboard);
                    }
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
