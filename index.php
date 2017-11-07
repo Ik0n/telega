@@ -325,7 +325,7 @@ $tb = new TelegramBot();
                    $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ["callback_data" => "like" . $result['id'], "text" => "Мне нравиться"]
+                               ["callback_data" => "like" . $result['id'], "text" => "Мне нравится"]
                            ]
                        ]
                    );
