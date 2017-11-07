@@ -111,24 +111,25 @@ $tb = new TelegramBot();
           }
       }
 
-      if ($data == stristr($data, "subs")) {
-          $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-              [["text" => "Расписание"], ["text" => "Моё расписание"]],
-              [["text" => "Лидеры голосования"]],
-              [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
-              [["text" => "Связаться с организаторами"]],
-              [["text" => "О форуме"]],
-          ], true, true);
+       if ($data == stristr($data, "subs")) {
+           $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+               [["text" => "Расписание"], ["text" => "Моё расписание"]],
+               [["text" => "Лидеры голосования"]],
+               [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+               [["text" => "Связаться с организаторами"]],
+               [["text" => "О форуме"]],
+           ], true, true);
 
-          $db = pg_connect(pg_connection_string());
-          $feedback = explode(':', $data);
+           $db = pg_connect(pg_connection_string());
+           $feedback = explode(':', $data);
 
-          $results =  pg_query($db, "UPDATE public.\"Subscribers\"
-	SET fio='" . $test->getText() . "'
+           $results =  pg_query($db, "UPDATE public.\"Subscribers\"
+	SET fio='" . file_get_contents('fio.txt') . "'
 	WHERE email='" . $feedback[1] . "';");
 
-          $bot->sendMessage($chatId, 'Спасибо!', false, null, null, $keyboard);
-      }
+           file_put_contents('fix.txt', "");
+           $bot->sendMessage($chatId, 'Спасибо!', false, null, null, $keyboard);
+       }
 
       if ($data == stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
@@ -177,12 +178,13 @@ $tb = new TelegramBot();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
         $feedback = explode(':', $messageText);
+        file_put_contents('fio.txt',$messageText);
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
         if ($messageText == "Размещение") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
-                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Чат для делегатов"]],
                 [["text" => "Самое интересное"]],
                 [["text" => "Как добраться"]],
                 [["text" => "Размещение"],["text" => "Меню"]],
@@ -196,10 +198,10 @@ $tb = new TelegramBot();
 
         }
 
-        if($messageText == "Биржа деловых контактов") {
+        if($messageText == "Чат для делегатов") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
-                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Чат для делегатов"]],
                 [["text" => "Самое интересное"]],
                 [["text" => "Как добраться"]],
                 [["text" => "Размещение"],["text" => "Меню"]],
@@ -233,7 +235,7 @@ $tb = new TelegramBot();
             $results = pg_fetch_all($results);
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
-                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Чат для делегатов"]],
                 [["text" => "Самое интересное"]],
                 [["text" => "Как добраться"]],
                 [["text" => "Размещение"],["text" => "Меню"]],
@@ -382,7 +384,7 @@ $tb = new TelegramBot();
                $answer = 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:';
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "О Гиперкубе"]],
-                   [["text" => "Биржа деловых контактов"]],
+                   [["text" => "Чат для делегатов"]],
                    [["text" => "Самое интересное"]],
                    [["text" => "Как добраться"]],
                    [["text" => "Размещение"],["text" => "Меню"]],
@@ -394,7 +396,7 @@ $tb = new TelegramBot();
                $answer = '«Гиперкуб» − это центр городского развития «Сколково». Центр, в котором разрабатываются информационные, экономические, инженерные,градостроительные и организационные модели будущего и царит атмосфера творчества, в которой реализуются любые идеи.';
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
-                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Чат для делегатов"]],
                 [["text" => "Самое интересное"]],
                 [["text" => "Как добраться"]],
                 [["text" => "Размещение"],["text" => "Меню"]],
@@ -406,7 +408,7 @@ $tb = new TelegramBot();
                $answer = 'Адрес: ИЦ Сколково, ул. Малевича, д 1. Москва';
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                 [["text" => "О Гиперкубе"]],
-                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Чат для делегатов"]],
                 [["text" => "Самое интересное"]],
                 [["text" => "Как добраться"]],
                 [["text" => "Размещение"],["text" => "Меню"]],
@@ -594,6 +596,8 @@ $tb = new TelegramBot();
 
         return false;
        }
+
+
        return true;
    });
 
