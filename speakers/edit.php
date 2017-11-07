@@ -38,7 +38,7 @@ if ($_POST['submit']) {
     <hr>
     О спикере
     <br>
-    <input type="text" name="about" title="about" value="<?echo $result['about'] ?>" required>
+    <textarea name="about" id="about" title="about" cols="30" rows="10"><?echo $result['about']?></textarea>
     <hr>
     Ссылка на фотографию спикера
     <br>
