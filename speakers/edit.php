@@ -31,7 +31,7 @@ if ($_POST['submit']) {
 </head>
 <body>
 <? foreach ($results as $result) { ?>
-<form action="edit.php?id=<? $_GET['id'] ?>" method="POST">
+<form action="edit.php" method="POST">
     ФИО спикера
     <br>
     <input type="text" name="name" title="name" value="<?echo $result['name'] ?>" required>

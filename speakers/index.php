@@ -59,7 +59,7 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         <hr>
         О спикере
         <br>
-        <textarea name="about" id="about" title="about" cols="30" rows="10"><?echo $result['about']?></textarea>
+        <textarea name="about" id="about" title="about" cols="30" rows="10"></textarea>
         <hr>
         Ссылка на фотографию спикера
         <br>
