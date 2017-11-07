@@ -7,7 +7,7 @@ $db = pg_connect("dbname=d4re8r18uqsqa
                 password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
                 sslmode=require");
 
-$results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" WHERE id=". $_GET['id'] . " ORDER BY id;");
+$results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" WHERE id=". $_GET['id'] . ";");
 $results = pg_fetch_all($results);
 
 if ($_POST['submit']) {
@@ -34,19 +34,19 @@ if ($_POST['submit']) {
 <form action="edit.php?id=<? $_GET['id'] ?>" method="POST">
     ФИО спикера
     <br>
-    <input type="text" name="name" title="name" value="<? $result['name'] ?>" required>
+    <input type="text" name="name" title="name" value="<?echo $result['name'] ?>" required>
     <hr>
     О спикере
     <br>
-    <input type="text" name="about" title="about" value="<? $result['about'] ?>" required>
+    <input type="text" name="about" title="about" value="<?echo $result['about'] ?>" required>
     <hr>
     Ссылка на фотографию спикера
     <br>
-    <input type="text" name="refphoto" title="refphoto" value="<? $result['refphoto'] ?>" required>
+    <input type="text" name="refphoto" title="refphoto" value="<?echo $result['refphoto'] ?>" required>
     <hr>
     Сессия в которой участвует спикер
     <br>
-    <input type="text" name="session" title="session" value="<? $result['session'] ?>" required>
+    <input type="text" name="session" title="session" value="<?echo $result['session'] ?>" required>
     <hr>
     <input type="submit" name="submit">
 </form>
