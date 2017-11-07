@@ -146,7 +146,6 @@ $tb = new TelegramBot();
         $messageText = $message->getText();
         $userId = $message->getFrom()->getId();
         $feedback = explode(':', $messageText);
-        global $tb;
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
         if($messageText == "Биржа деловых контактов") {
@@ -244,14 +243,70 @@ $tb = new TelegramBot();
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
                                                           GROUP BY name, refphoto
-                                                          ORDER BY counter DESC");
+                                                          ORDER BY counter DESC
+                                                          LIMIT 6 OFFSET 6"
+            );
             $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
-
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                [
+                    [
+                        ["text" => "Пoказать ещё"]
+                    ],
+                    [
+                        ["text" => "Меню"]
+                    ]
+                ], true, true
+            );
             foreach ($resultsUserVoices as $resultUserVoices) {
                 $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
                 $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter']);
+                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
+            }
+        }
+
+        if ($messageText == "Пoказать ещё") {
+            $db = pg_connect(pg_connection_string());
+            $resultsUserVoices = pg_query($db, "SELECT name, refphoto, count(speaker_id) as \"counter\"
+	                                                      FROM public.\"Speakers\"
+                                                          LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
+                                                          GROUP BY name, refphoto
+                                                          ORDER BY counter DESC
+                                                          LIMIT 6 OFFSET " . file_get_contents('counter.txt')
+            );
+            $resultsUserVoices = pg_fetch_all($resultsUserVoices);
+
+            if ($resultsUserVoices != null) {
+                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                    [
+                        [
+                            ["text" => "Пoказать ещё"]
+                        ],
+                        [
+                            ["text" => "Меню"]
+                        ]
+                    ], true, true
+                );
+
+                foreach ($resultsUserVoices as $resultUserVoices) {
+                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
+                    $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                    $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
+                }
+
+                file_put_contents('counter.txt', file_get_contents('counter.txt') + 6);
+
+            } else {
+                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                    [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                    [["text" => "Оценить доклад"], ["text" => "Лидеры голосования"]],
+                    [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                    [["text" => "Связаться с организаторами"]],
+                    [["text" => "О форуме"]],
+                ], true, true);
+
+                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
+                file_put_contents("counter.txt", 0);
             }
         }
 
