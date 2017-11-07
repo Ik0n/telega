@@ -5,7 +5,6 @@
  * Date: 01.11.2017
  * Time: 16:23
  */
-
     $db = pg_connect("dbname=d4re8r18uqsqa 
                 host=ec2-46-51-187-253.eu-west-1.compute.amazonaws.com 
                 port=5432 
@@ -15,7 +14,13 @@
 
     if (isset($_POST['submit'])) {
         $data = $_POST;
-        pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
+        if ($data['refphoto'] == null) {
+            $uploaddir = '/images/';
+            $uploadfile = $uploaddir . basename($_FILES['filename']['name']);
+            pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $data['filename'] . "','" . $data['session'] . "');");
+        } else {
+            pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
+        }
     }
 
     $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
@@ -63,7 +68,8 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         <hr>
         Ссылка на фотографию спикера
         <br>
-        <input type="text" name="refphoto" title="refphoto" required>
+        <input type="text" name="refphoto" title="refphoto">
+        <input type="file" name="filename" title="filename">
         <hr>
         Сессия в которой участвует спикер
         <br>
