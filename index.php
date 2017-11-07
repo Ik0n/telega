@@ -49,9 +49,7 @@ $tb = new TelegramBot();
      }
  }
     $bot->command('start', function ($message) use ($bot) {
-        $text = "Вас приветствуют “Digital Technologies Forum”! \n
-                Наш бот поможет вам быть в курсе последних новостей Форума, формировать свою программу посещения мероприятий, голосовать за понравившиеся сессии. \n 
-                Также мы всегда на связи, чтобы ответить на ваши вопросы.";
+        $text = "Вас приветствуют “Digital Technologies Forum”!\nНаш бот поможет вам быть в курсе последних новостей Форума, формировать свою программу посещения мероприятий, голосовать за понравившиеся сессии.\nТакже мы всегда на связи, чтобы ответить на ваши вопросы.";
         $answer = 'Что я могу для вас сделать?';
         $board = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
             [
@@ -160,6 +158,23 @@ $tb = new TelegramBot();
         $userId = $message->getFrom()->getId();
         $feedback = explode(':', $messageText);
         //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
+
+        if ($messageText == "Размещение") {
+            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                [["text" => "О Гиперкубе"]],
+                [["text" => "Биржа деловых контактов"]],
+                [["text" => "Самое интересное"]],
+                [["text" => "Как добраться"]],
+                [["text" => "Размещение"],["text" => "Меню"]],
+            ], true, true);
+
+            $text = "Гостиница \"Тянь-Шань\", размещена на территории Парка Сколково. Номера имеют площадь 30 кв.м и оснащены всеми необходимыми атрибутами для бизнес-путешественника. В каждом номере есть сейф, гладильная доска и утюг, а также все необходимое для приготовления чая или кофе. Для удобства гостей в номерах есть мини-бар. Ванные комнаты оснащены удобными душевыми кабинами, фенами, банными и косметическими принадлежностями. Все номера для некурящих."
+
+            $bot->sendMessage($message->getChat()->getId(), $text, "HTML");
+            $bot->sendPhoto($message->getChat()->getId(), "/images/hotel.jpg");
+            $bot->sendMessag($message->getChat()->getId(), "", "HTML", false, null, null, $keyboard);
+
+        }
 
         if($messageText == "Биржа деловых контактов") {
             $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
