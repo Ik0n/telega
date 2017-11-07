@@ -15,7 +15,7 @@
     if (isset($_POST['submit'])) {
         $data = $_POST;
         if ($data['refphoto'] == null) {
-            $uploaddir = '/images/';
+            $uploaddir = 'https://bottelegabot.herokuapp.com/images/';
             $uploadfile = $uploaddir . basename($_FILES['filename']['name']);
             pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $data['filename'] . "','" . $data['session'] . "');");
         } else {
