@@ -110,6 +110,25 @@ $tb = new TelegramBot();
           }
       }
 
+      if ($data == stristr($data, "subs")) {
+          $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+              [["text" => "Расписание"], ["text" => "Моё расписание"]],
+              [["text" => "Лидеры голосования"]],
+              [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+              [["text" => "Связаться с организаторами"]],
+              [["text" => "О форуме"]],
+          ], true, true);
+
+          $db = pg_connect(pg_connection_string());
+          $feedback = explode(':', $data);
+
+          $results =  pg_query($db, "UPDATE public.\"Subscribers\"
+	SET fio='" . $message->getText() . "'
+	WHERE email='" . $feedback[1] . "';");
+
+          $bot->sendMessage($chatId, 'Спасибо!', false, null, null, $keyboard);
+      }
+
       if ($data == stristr($data, "add")) {
           $db = pg_connect(pg_connection_string());
           $resultsUsers = pg_query($db, "SELECT id, telegram_id FROM public.\"Users\" WHERE telegram_id =". $chatId . ";");
@@ -260,9 +279,16 @@ $tb = new TelegramBot();
         }
 
         if (filter_var($messageText, FILTER_VALIDATE_EMAIL)) {
+            $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                [
+                    [
+                        ['callback_data' => 'subs:' . $messageText, 'text' => 'Готово']
+                    ]
+                ]
+            );
             $db = pg_connect(pg_connection_string());
             pg_query($db, "INSERT INTO public.\"Subscribers\" (email) VALUES ('" . $messageText . "');");
-            $bot->sendMessage($message->getChat()->getId(), "Вы подписались на новости " . $messageText);
+            $bot->sendMessage($message->getChat()->getId(), "Введите своё ФИО " . $messageText, false, null , null, $keyboard);
         }
 
         if ($messageText == "Лидеры голосования") {
