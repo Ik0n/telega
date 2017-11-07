@@ -92,6 +92,7 @@ $tb = new TelegramBot();
       $chatId = $message->getChat()->getId();
       $fromId = $message->getFrom()->getId();
       $data = $callback->getData();
+      $test = $update->getMessage();
 
       if ($data == stristr($data, "like")) {
           $db = pg_connect(pg_connection_string());
@@ -123,7 +124,7 @@ $tb = new TelegramBot();
           $feedback = explode(':', $data);
 
           $results =  pg_query($db, "UPDATE public.\"Subscribers\"
-	SET fio='" . $message->getText() . "'
+	SET fio='" . $test->getText() . "'
 	WHERE email='" . $feedback[1] . "';");
 
           $bot->sendMessage($chatId, 'Спасибо!', false, null, null, $keyboard);
