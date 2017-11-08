@@ -22,11 +22,11 @@
         //    move_uploaded_file($fileTempName, $uploadfile);
         //    pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . "https://bottelegabot.herokuapp.com/images/" . $_FILES['filename']['name'] . "','" . $data['session'] . "');");
         //} else {
-            pg_query($db, "INSERT INTO public.\"Speakers\"(name, about, refphoto, session) VALUES ('". $data['name'] ."','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
+            pg_query($db, "INSERT INTO public.\"Speakers\"(first_name, last_name, about, refphoto, session) VALUES ('". $data['first_name'] ."','" . $data['last_name'] . "','" . $data['about'] ."','" . $data['refphoto'] . "','" . $data['session'] . "');");
         //}
     }
 
-    $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
+    $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id;");
     $results = pg_fetch_all($results);
 ?>
 <!doctype html>
@@ -51,7 +51,8 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         <table border="1px solid black">
             <tr>
                 <td><? echo $result['id']; ?></td>
-                <td><? echo $result['name']; ?></td>
+                <td><? echo $result['first_name']; ?></td>
+                <td><? echo $result['last_name']; ?></td>
                 <td><? echo $result['about']; ?></td>
                 <td><? echo $result['refphoto']; ?></td>
                 <td><? echo $result['session']; ?></td>
@@ -61,9 +62,13 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         </table>
     <? } ?>
     <form action="index.php" method="POST">
-        ФИО спикера
+        Фамилия спикера
         <br>
-        <input type="text" name="name" title="name" required>
+        <input type="text" name="last_name" title="last_name" required>
+        <hr>
+        Имя спикера
+        <br>
+        <input type="text" name="first_name" title="first_name" required>
         <hr>
         О спикере
         <br>

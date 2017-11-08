@@ -7,13 +7,13 @@ $db = pg_connect("dbname=d4re8r18uqsqa
                 password=078e8a10351abf96961014d551717ef2b4fb31ce260b31ea5ebd24d3aff823b0 
                 sslmode=require");
 
-$results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" WHERE id=". $_GET['id'] . ";");
+$results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session FROM public.\"Speakers\" WHERE id=". $_GET['id'] . ";");
 $results = pg_fetch_all($results);
 
 if ($_POST['submit']) {
     $data = $_POST;
     pg_query($db, "UPDATE public.\"Speakers\"
-	SET name='" . $data['name'] . "',about='" . $data['about'] . "',refphoto='" . $data['refphoto'] . "',session='" . $data['session'] . "'
+	SET first_name='" . $data['first_name'] . "',last_name='" . $data['last_name'] . "',about='" . $data['about'] . "',refphoto='" . $data['refphoto'] . "',session='" . $data['session'] . "'
 	WHERE id=" . $data['id'] .";");
 
     header('Location: /speakers/', true, 301);
@@ -33,9 +33,13 @@ if ($_POST['submit']) {
 <? foreach ($results as $result) { ?>
 <form action="edit.php" method="POST">
     <input type="hidden" name="id" title="id" value="<?echo $result['id']?>">
-    ФИО спикера
+    Фамилия спикера
     <br>
-    <input type="text" name="name" title="name" value="<?echo $result['name'] ?>" required>
+    <input type="text" name="last_name" title="last_name" value="<?echo $result['last_name'] ?>" required>
+    <hr>
+    Имя спикера
+    <br>
+    <input type="text" name="first_name" title="first_name" value="<?echo $result['first_name'] ?>" required>
     <hr>
     О спикере
     <br>
