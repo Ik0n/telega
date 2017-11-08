@@ -54,7 +54,7 @@ $tb = new TelegramBot();
         $board = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
             [
                 [
-                    ['url' => 'http://www.b2bcg.ru/', 'text' => 'Офицальный сайт форума'],
+                    ['url' => 'http://www.b2bcg.ru/events/digital-technology-forum/', 'text' => 'Офицальный сайт форума'],
                     ['url' => 'https://plan-b.agency/', 'text' => 'Digital-партнер Plan B Agency']
                 ]
             ]
@@ -572,6 +572,14 @@ $tb = new TelegramBot();
            }
 
            if ($messageText == "Моё расписание") {
+               $mainKeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                   [["text" => "Лидеры голосования"]],
+                   [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                   [["text" => "Связаться с организаторами"]],
+                   [["text" => "О форуме"]],
+               ], true, true);
+
                $db = pg_connect(pg_connection_string());
                $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".id as schedule_id, public.\"Schedule\".title, public.\"Schedule\".date_begin, public.\"Schedule\".date_end, public.\"Schedule\".time_begin, public.\"Schedule\".time_end
 	                                            FROM public.\"Users\"
@@ -591,6 +599,7 @@ $tb = new TelegramBot();
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
                        "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
                        "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
+                   $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainKeyboard);
                }
            }
 
