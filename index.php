@@ -319,7 +319,9 @@ $tb = new TelegramBot();
                );
                foreach ($resultsUserVoices as $resultUserVoices) {
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
-                   $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                   if ($resultUserVoices['refphoto'] != "") {
+                       $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                   }
                    $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
                }
                file_put_contents('counter.txt', 6);
@@ -350,7 +352,9 @@ $tb = new TelegramBot();
 
                    foreach ($resultsUserVoices as $resultUserVoices) {
                        $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
-                       $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                       if ($resultUserVoices != "") {
+                           $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                       }
                        $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
                    }
 
@@ -459,7 +463,9 @@ $tb = new TelegramBot();
 
 
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
-                   $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                   if ($result['refphoto'] != "") {
+                       $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                   }
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
@@ -532,7 +538,9 @@ $tb = new TelegramBot();
                            );
 
                            $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
-                           $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                           if ($result['refphoto'] != "") {
+                               $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                           }
                            $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                            $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                        }
