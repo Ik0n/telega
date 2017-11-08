@@ -302,11 +302,11 @@ $tb = new TelegramBot();
 	FROM public.\"Users\"
 	WHERE telegram_id = " . $userId . ";");
                $resultsUser = pg_fetch_all($resultsUser);
-               $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
+               $resultsUserVoices = pg_query($db, "SELECT public.\"Speakers\".id, first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
-                                                          GROUP BY first_name, last_name, refphoto
-                                                          ORDER BY counter DESC
+                                                          GROUP BY public.\"Speakers\".id,first_name, last_name, refphoto
+                                                          ORDER BY counter DESC, id ASC
                                                           LIMIT 6"
                );
                $resultsUserVoices = pg_fetch_all($resultsUserVoices);
@@ -366,12 +366,12 @@ $tb = new TelegramBot();
 
                    foreach ($resultsVariables as $resultVariable) {
 
-                       $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
+                       $resultsUserVoices = pg_query($db, "SELECT public.\"Speakers\".id, first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
-                                                          GROUP BY first_name, last_name, refphoto
-                                                          ORDER BY counter DESC
-                                                          LIMIT 6 OFFSET " . $resultVariable['value']
+                                                          GROUP BY public.\"Speakers\".id,first_name, last_name, refphoto
+                                                          ORDER BY counter DESC, id ASC
+                                                          LIMIT 6 OFFSET" . $resultVariable['value']
                        );
                        $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
