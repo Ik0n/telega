@@ -468,7 +468,7 @@ $tb = new TelegramBot();
                foreach ($resultsUser as $resultUser) {
                    $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
 	FROM public.\"Variables\"
-    WHERE user_id =" . $resultUser['id'] . " and name = speaker_counter;");
+    WHERE user_id =" . $resultUser['id'] . " and name = 'speaker_counter';");
                    $resultsVariables = pg_fetch_all($resultsVariables);
 
                    if ($resultsVariables != null) {
