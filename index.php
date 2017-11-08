@@ -296,10 +296,10 @@ $tb = new TelegramBot();
 
         if ($messageText == "Лидеры голосования") {
             $db = pg_connect(pg_connection_string());
-            $resultsUserVoices = pg_query($db, "SELECT name, refphoto, count(speaker_id) as \"counter\"
+            $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
-                                                          GROUP BY name, refphoto
+                                                          GROUP BY first_name, last_name, refphoto
                                                           ORDER BY counter DESC
                                                           LIMIT 6"
             );
@@ -325,10 +325,10 @@ $tb = new TelegramBot();
 
         if ($messageText == "Пoказать ещё") {
             $db = pg_connect(pg_connection_string());
-            $resultsUserVoices = pg_query($db, "SELECT name, refphoto, count(speaker_id) as \"counter\"
+            $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
-                                                          GROUP BY name, refphoto
+                                                          GROUP BY first_name, last_name, refphoto
                                                           ORDER BY counter DESC
                                                           LIMIT 6 OFFSET " . file_get_contents('counter.txt')
             );
@@ -347,7 +347,7 @@ $tb = new TelegramBot();
                 );
 
                 foreach ($resultsUserVoices as $resultUserVoices) {
-                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['name']);
+                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
                     $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
                     $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
                 }
@@ -430,7 +430,7 @@ $tb = new TelegramBot();
 
         if ($messageText == "Спикеры") {
                $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id, name, about, refphoto, session FROM public.\"Speakers\" ORDER BY id LIMIT 6;");
+               $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session FROM public.\"Speakers\" ORDER BY last_name LIMIT 6;");
                $results = pg_fetch_all($results);
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
                     [
@@ -454,7 +454,7 @@ $tb = new TelegramBot();
 
 
 
-                   $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
+                   $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
                    $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
@@ -467,9 +467,9 @@ $tb = new TelegramBot();
 
         if ($messageText == "Показать ещё") {
             $db = pg_connect(pg_connection_string());
-            $results = pg_query($db, "SELECT id, name, about, refphoto, session
+            $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session
 	FROM public.\"Speakers\"
-    ORDER BY id
+    ORDER BY last_name
     LIMIT 6 OFFSET " . file_get_contents("counter.txt") . ";");
             $results = pg_fetch_all($results);
 
@@ -494,7 +494,7 @@ $tb = new TelegramBot();
                         ]
                     );
 
-                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['name']);
+                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
                     $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
                     $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
                     $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
