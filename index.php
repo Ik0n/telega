@@ -160,14 +160,16 @@ $tb = new TelegramBot();
 
               $bot->answerCallbackQuery($callback->getId(), "Это мероприятие удалено из вашего списка ", true);
           }
-          $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-              [
-                  [["text" => "Моё расписание"]]
-              ], true, true
-          );
+          $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+              [["text" => "Расписание"], ["text" => "Моё расписание"]],
+              [["text" => "Лидеры голосования"]],
+              [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+              [["text" => "Связаться с организаторами"]],
+              [["text" => "О форуме"]],
+          ], true, true);
 
 
-          $bot->sendMessage($chatId, "Нажмите для обновления списка", false, null, null, $keyboard);
+          $bot->sendMessage($chatId, "Что я могу для вас сделать?", false, null, null, $keyboard);
       }
 
 
