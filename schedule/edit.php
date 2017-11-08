@@ -15,7 +15,7 @@ if ($_POST['submit']) {
     $data = $_POST;
     pg_query($db, "UPDATE public.\"Schedule\"
 	SET title='" . $data['title'] . "', date_begin='". $data['date_begin'] . "', date_end='" . $data['date_end'] . "', time_begin='" . $data['time_begin'] . "', time_end='" . $data['time_end'] ."'
-	WHERE id = 20;");
+	WHERE id =" . $data['id'] . ";");
 
     header('Location: /schedule/', true, 301);
 }
@@ -33,6 +33,7 @@ if ($_POST['submit']) {
 <body>
 <? foreach ($results as $result) { ?>
     <form action="edit.php" method="POST">
+        <input type="hidden" name="id" title="id" value="<?echo $result['id']?>">
         Название мероприятия
         <br>
         <input type="text" name="title" title="title" value="<? echo $result['title'] ?>" required>
