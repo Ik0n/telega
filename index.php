@@ -173,53 +173,53 @@ $tb = new TelegramBot();
       }
 
 
-   }, function ($update) use ($bot){
+   }, function ($update) use ($bot) {
        $callback = $update->getCallbackQuery();
        if (is_null($callback) || !strlen($callback->getData())) {
-        $message = $update->getMessage();
-        $messageText = $message->getText();
-        $userId = $message->getFrom()->getId();
-        $feedback = explode(':', $messageText);
-        file_put_contents('fio.txt',$messageText);
-        //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
+           $message = $update->getMessage();
+           $messageText = $message->getText();
+           $userId = $message->getFrom()->getId();
+           $feedback = explode(':', $messageText);
+           file_put_contents('fio.txt', $messageText);
+           //$bot->sendMessage($message->getChat()->getId(), preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', "88005553535"));
 
-        if ($messageText == "Размещение") {
-            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [["text" => "О Гиперкубе"]],
-                [["text" => "Чат для делегатов"]],
-                [["text" => "Самое интересное"]],
-                [["text" => "Как добраться"]],
-                [["text" => "Размещение"],["text" => "Меню"]],
-            ], true, true);
+           if ($messageText == "Размещение") {
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Чат для делегатов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"]],
+                   [["text" => "Размещение"], ["text" => "Меню"]],
+               ], true, true);
 
-            $text = "Гостиница \"Тянь-Шань\", размещена на территории Парка Сколково. Номера имеют площадь 30 кв.м и оснащены всеми необходимыми атрибутами для бизнес-путешественника. В каждом номере есть сейф, гладильная доска и утюг, а также все необходимое для приготовления чая или кофе. Для удобства гостей в номерах есть мини-бар. Ванные комнаты оснащены удобными душевыми кабинами, фенами, банными и косметическими принадлежностями. Все номера для некурящих.";
+               $text = "Гостиница \"Тянь-Шань\", размещена на территории Парка Сколково. Номера имеют площадь 30 кв.м и оснащены всеми необходимыми атрибутами для бизнес-путешественника. В каждом номере есть сейф, гладильная доска и утюг, а также все необходимое для приготовления чая или кофе. Для удобства гостей в номерах есть мини-бар. Ванные комнаты оснащены удобными душевыми кабинами, фенами, банными и косметическими принадлежностями. Все номера для некурящих.";
 
-            $bot->sendMessage($message->getChat()->getId(), $text, "HTML");
-            $bot->sendPhoto($message->getChat()->getId(), "https://bottelegabot.herokuapp.com/images/hotel.jpg");
-            $bot->sendMessage($message->getChat()->getId(), "Стоимость проживания - 7500руб./чел. + 880 завтрак чел./день.", false , null, null, $keyboard);
+               $bot->sendMessage($message->getChat()->getId(), $text, "HTML");
+               $bot->sendPhoto($message->getChat()->getId(), "https://bottelegabot.herokuapp.com/images/hotel.jpg");
+               $bot->sendMessage($message->getChat()->getId(), "Стоимость проживания - 7500руб./чел. + 880 завтрак чел./день.", false, null, null, $keyboard);
 
-        }
+           }
 
-        if($messageText == "Чат для делегатов") {
-            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [["text" => "О Гиперкубе"]],
-                [["text" => "Чат для делегатов"]],
-                [["text" => "Самое интересное"]],
-                [["text" => "Как добраться"]],
-                [["text" => "Размещение"],["text" => "Меню"]],
-            ], true, true);
-            $chatKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
-                [
-                    [
-                        ["url" => "https://t.me/digitaltechnologiesforum", "text" => "Чат для делегатов"]
-                    ]
-                ]
-            );
-            $bot->sendMessage($message->getChat()->getId(), "Нажмите на кнопку", false, null, null, $chatKeyboard);
-            $bot->sendMessage($message->getChat()->getId(), 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:', false, null, null, $keyboard);
-        }
+           if ($messageText == "Чат для делегатов") {
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Чат для делегатов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"]],
+                   [["text" => "Размещение"], ["text" => "Меню"]],
+               ], true, true);
+               $chatKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                   [
+                       [
+                           ["url" => "https://t.me/digitaltechnologiesforum", "text" => "Чат для делегатов"]
+                       ]
+                   ]
+               );
+               $bot->sendMessage($message->getChat()->getId(), "Нажмите на кнопку", false, null, null, $chatKeyboard);
+               $bot->sendMessage($message->getChat()->getId(), 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:', false, null, null, $keyboard);
+           }
 
-        if($messageText == "Расписание") {
+           if ($messageText == "Расписание") {
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
                    [["text" => "1 декабря"]],
@@ -227,150 +227,150 @@ $tb = new TelegramBot();
                ], true, true);
                $answer = "Выберите дату:";
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-        }
+           }
 
-        if ($messageText == "Самое интересное") {
-            $db = pg_connect(pg_connection_string());
-            $results = pg_query($db, "SELECT content
+           if ($messageText == "Самое интересное") {
+               $db = pg_connect(pg_connection_string());
+               $results = pg_query($db, "SELECT content
 	FROM public.\"MostInteresting\"
 	WHERE id = 1;");
-            $results = pg_fetch_all($results);
-            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [["text" => "О Гиперкубе"]],
-                [["text" => "Чат для делегатов"]],
-                [["text" => "Самое интересное"]],
-                [["text" => "Как добраться"]],
-                [["text" => "Размещение"],["text" => "Меню"]],
-            ], true, true);
-            foreach ($results as $result) {
-                $bot->sendMessage($message->getChat()->getId(), $result['content'], false, null, null, $keyboard);
-            }
-        }
+               $results = pg_fetch_all($results);
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Чат для делегатов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"]],
+                   [["text" => "Размещение"], ["text" => "Меню"]],
+               ], true, true);
+               foreach ($results as $result) {
+                   $bot->sendMessage($message->getChat()->getId(), $result['content'], false, null, null, $keyboard);
+               }
+           }
 
-        if ($messageText == "Связаться с организаторами") {
-            $answer = "Контактный номер для связи с организатором: <b>+7(926)232-15-37</b> \n Введите свой номер телефона, название компании и ваше сообщение через двоеточие.\n (Пример: 88005553535: НазваниеКомпании: Сообщение)";
-            $bot->sendMessage($message->getChat()->getId(), $answer, "HTML");
-        }
+           if ($messageText == "Связаться с организаторами") {
+               $answer = "Контактный номер для связи с организатором: <b>+7(926)232-15-37</b> \n Введите свой номер телефона, название компании и ваше сообщение через двоеточие.\n (Пример: 88005553535: НазваниеКомпании: Сообщение)";
+               $bot->sendMessage($message->getChat()->getId(), $answer, "HTML");
+           }
 
-        if (preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $messageText)) {
-            $db = pg_connect(pg_connection_string());
-            pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
-            $subject = $feedback[0] . " " . $feedback[1];
-            $mailMessage = "Номер телфона: " . $feedback[0] . ", Сообщение: " . $feedback[2];
+           if (preg_match('/((8|\+7)-?)?\(?\d{3,5}\)?-?\d{1}-?\d{1}-?\d{1}-?\d{1}-?\d{1}((-?\d{1})?-?\d{1})?/', $messageText)) {
+               $db = pg_connect(pg_connection_string());
+               pg_query($db, "INSERT INTO public.\"Feedback\"(\"number\", company_name , content) VALUES ('" . $feedback[0] . "','" . $feedback[1] . "','" . $feedback[2] . "');");
+               $subject = $feedback[0] . " " . $feedback[1];
+               $mailMessage = "Номер телфона: " . $feedback[0] . ", Сообщение: " . $feedback[2];
 
-            $mail = new PHPMailer;
-            $mail->isSMTP();
-            $mail->SMTPAuth = true;
-            $mail->SMTPSecure = 'tls';
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = '587';
-            $mail->Username = "DigitalTechnologiesForum@gmail.com";
-            $mail->Password = "DigitalTechnologiesForum2017";
-            $mail->CharSet="UTF-8";
-            $mail->setFrom("DigitalTechnologiesForum@gmail.com");
+               $mail = new PHPMailer;
+               $mail->isSMTP();
+               $mail->SMTPAuth = true;
+               $mail->SMTPSecure = 'tls';
+               $mail->Host = 'smtp.gmail.com';
+               $mail->Port = '587';
+               $mail->Username = "DigitalTechnologiesForum@gmail.com";
+               $mail->Password = "DigitalTechnologiesForum2017";
+               $mail->CharSet = "UTF-8";
+               $mail->setFrom("DigitalTechnologiesForum@gmail.com");
 
-            $mail->Subject = $subject;
-            $mail->Body = $mailMessage;
-            $mail->addAddress('DigitalTechnologiesForum@gmail.com');
+               $mail->Subject = $subject;
+               $mail->Body = $mailMessage;
+               $mail->addAddress('DigitalTechnologiesForum@gmail.com');
 
-            $mail->send();
+               $mail->send();
 
-            $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
-        }
+               $bot->sendMessage($message->getChat()->getId(), "Мы обязательно с вами свяжемся");
+           }
 
-        if ($messageText == "Подписаться на новости") {
-            $answer = "Введите свой email";
-            $bot->sendMessage($message->getChat()->getId(), $answer);
-        }
+           if ($messageText == "Подписаться на новости") {
+               $answer = "Введите свой email";
+               $bot->sendMessage($message->getChat()->getId(), $answer);
+           }
 
-        if (filter_var($messageText, FILTER_VALIDATE_EMAIL)) {
-            $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
-                [
-                    [
-                        ['callback_data' => 'subs:' . $messageText, 'text' => 'Готово']
-                    ]
-                ]
-            );
-            $db = pg_connect(pg_connection_string());
-            pg_query($db, "INSERT INTO public.\"Subscribers\" (email) VALUES ('" . $messageText . "');");
-            $bot->sendMessage($message->getChat()->getId(), "Введите своё ФИО " . $messageText, false, null , null, $keyboard);
-        }
+           if (filter_var($messageText, FILTER_VALIDATE_EMAIL)) {
+               $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                   [
+                       [
+                           ['callback_data' => 'subs:' . $messageText, 'text' => 'Готово']
+                       ]
+                   ]
+               );
+               $db = pg_connect(pg_connection_string());
+               pg_query($db, "INSERT INTO public.\"Subscribers\" (email) VALUES ('" . $messageText . "');");
+               $bot->sendMessage($message->getChat()->getId(), "Введите своё ФИО " . $messageText, false, null, null, $keyboard);
+           }
 
-        if ($messageText == "Лидеры голосования") {
-            $db = pg_connect(pg_connection_string());
-            $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
+           if ($messageText == "Лидеры голосования") {
+               $db = pg_connect(pg_connection_string());
+               $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
                                                           GROUP BY first_name, last_name, refphoto
                                                           ORDER BY counter DESC
                                                           LIMIT 6"
-            );
-            $resultsUserVoices = pg_fetch_all($resultsUserVoices);
+               );
+               $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
-            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                [
-                    [
-                        ["text" => "Пoказать ещё"]
-                    ],
-                    [
-                        ["text" => "Меню"]
-                    ]
-                ], true, true
-            );
-            foreach ($resultsUserVoices as $resultUserVoices) {
-                $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
-                $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
-            }
-            file_put_contents('counter.txt', 6);
-        }
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                   [
+                       [
+                           ["text" => "Пoказать ещё"]
+                       ],
+                       [
+                           ["text" => "Меню"]
+                       ]
+                   ], true, true
+               );
+               foreach ($resultsUserVoices as $resultUserVoices) {
+                   $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
+                   $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                   $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
+               }
+               file_put_contents('counter.txt', 6);
+           }
 
-        if ($messageText == "Пoказать ещё") {
-            $db = pg_connect(pg_connection_string());
-            $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
+           if ($messageText == "Пoказать ещё") {
+               $db = pg_connect(pg_connection_string());
+               $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
                                                           GROUP BY first_name, last_name, refphoto
                                                           ORDER BY counter DESC
                                                           LIMIT 6 OFFSET " . file_get_contents('counter.txt')
-            );
-            $resultsUserVoices = pg_fetch_all($resultsUserVoices);
+               );
+               $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
-            if ($resultsUserVoices != null) {
-                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                    [
-                        [
-                            ["text" => "Пoказать ещё"]
-                        ],
-                        [
-                            ["text" => "Меню"]
-                        ]
-                    ], true, true
-                );
+               if ($resultsUserVoices != null) {
+                   $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                       [
+                           [
+                               ["text" => "Пoказать ещё"]
+                           ],
+                           [
+                               ["text" => "Меню"]
+                           ]
+                       ], true, true
+                   );
 
-                foreach ($resultsUserVoices as $resultUserVoices) {
-                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
-                    $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                    $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
-                }
+                   foreach ($resultsUserVoices as $resultUserVoices) {
+                       $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
+                       $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                       $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
+                   }
 
-                file_put_contents('counter.txt', file_get_contents('counter.txt') + 6);
+                   file_put_contents('counter.txt', file_get_contents('counter.txt') + 6);
 
-            } else {
-                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                    [["text" => "Расписание"], ["text" => "Моё расписание"]],
-                    [["text" => "Лидеры голосования"]],
-                    [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
-                    [["text" => "Связаться с организаторами"]],
-                    [["text" => "О форуме"]],
-                ], true, true);
+               } else {
+                   $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                       [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                       [["text" => "Лидеры голосования"]],
+                       [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                       [["text" => "Связаться с организаторами"]],
+                       [["text" => "О форуме"]],
+                   ], true, true);
 
-                $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
-                file_put_contents("counter.txt", 0);
-            }
-        }
+                   $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
+                   file_put_contents("counter.txt", 0);
+               }
+           }
 
-        if($messageText == "Меню") {
+           if ($messageText == "Меню") {
                $answer = 'Что я могу для вас сделать?';
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "Расписание"], ["text" => "Моё расписание"]],
@@ -380,41 +380,41 @@ $tb = new TelegramBot();
                    [["text" => "О форуме"]],
                ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-        }
+           }
 
-        if ($messageText == "О форуме") {
+           if ($messageText == "О форуме") {
                $answer = 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:';
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "О Гиперкубе"]],
                    [["text" => "Чат для делегатов"]],
                    [["text" => "Самое интересное"]],
                    [["text" => "Как добраться"]],
-                   [["text" => "Размещение"],["text" => "Меню"]],
+                   [["text" => "Размещение"], ["text" => "Меню"]],
                ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-        }
+           }
 
-        if ($messageText == "О Гиперкубе") {
+           if ($messageText == "О Гиперкубе") {
                $answer = '«Гиперкуб» − это центр городского развития «Сколково». Центр, в котором разрабатываются информационные, экономические, инженерные,градостроительные и организационные модели будущего и царит атмосфера творчества, в которой реализуются любые идеи.';
-            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [["text" => "О Гиперкубе"]],
-                [["text" => "Чат для делегатов"]],
-                [["text" => "Самое интересное"]],
-                [["text" => "Как добраться"]],
-                [["text" => "Размещение"],["text" => "Меню"]],
-            ], true, true);
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Чат для делегатов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"]],
+                   [["text" => "Размещение"], ["text" => "Меню"]],
+               ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-        }
+           }
 
-        if ($messageText == "Как добраться") {
+           if ($messageText == "Как добраться") {
                $answer = 'Адрес: ИЦ Сколково, ул. Малевича, д 1. Москва';
-            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                [["text" => "О Гиперкубе"]],
-                [["text" => "Чат для делегатов"]],
-                [["text" => "Самое интересное"]],
-                [["text" => "Как добраться"]],
-                [["text" => "Размещение"],["text" => "Меню"]],
-            ], true, true);
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                   [["text" => "О Гиперкубе"]],
+                   [["text" => "Чат для делегатов"]],
+                   [["text" => "Самое интересное"]],
+                   [["text" => "Как добраться"]],
+                   [["text" => "Размещение"], ["text" => "Меню"]],
+               ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
                $bot->sendLocation($message->getChat()->getId(), 55.696560, 37.355938);
                $bot->sendMessage($message->getChat()->getId(), "Расписание движения транспорта по внутренним маршрутам");
@@ -426,11 +426,10 @@ $tb = new TelegramBot();
                $bot->sendMessage($message->getChat()->getId(), "На автомобиле");
                $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/4331.scheme2_2D00_auto_2D00_4_2D00_ru.jpg");
 
-        }
+           }
 
 
-
-        if ($messageText == "Спикеры") {
+           if ($messageText == "Спикеры") {
                $db = pg_connect(pg_connection_string());
                $resultsUser = pg_query($db, "SELECT id, telegram_id
 	FROM public.\"Users\"
@@ -438,16 +437,16 @@ $tb = new TelegramBot();
                $resultsUser = pg_fetch_all($resultsUser);
                $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session FROM public.\"Speakers\" ORDER BY last_name LIMIT 6;");
                $results = pg_fetch_all($results);
-                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                    [
-                        [
-                            ["text" => "Показать ещё"]
-                        ],
-                        [
-                            ["text" => "Меню"]
-                        ]
-                    ], true, true
-                );
+               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                   [
+                       [
+                           ["text" => "Показать ещё"]
+                       ],
+                       [
+                           ["text" => "Меню"]
+                       ]
+                   ], true, true
+               );
 
                foreach ($results as $result) {
                    $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
@@ -457,7 +456,6 @@ $tb = new TelegramBot();
                            ]
                        ]
                    );
-
 
 
                    $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
@@ -477,206 +475,205 @@ $tb = new TelegramBot();
                        foreach ($resultsVariables as $resultVariable) {
                            pg_query($db, "UPDATE public.\"Variables\"
 	SET value='" . 6 . "'
-	WHERE id =" . $resultVariable['id'] .";");
+	WHERE id =" . $resultVariable['id'] . ";");
                        }
                    } else {
-                       foreach ($resultsVariables as $resultVariable) {
-                           pg_query($db, "INSERT INTO public.\"Variables\"(
+                       pg_query($db, "INSERT INTO public.\"Variables\"(
 	user_id, name, value)
-	VALUES (" . $resultUser['id'] . ",'speaker_counter','" . 6 ."');");
-                       }
+	VALUES (" . $resultUser['id'] . ",'speaker_counter','" . 6 . "');");
                    }
                }
+           }
 
-                //file_put_contents("counter.txt", 6);
-                $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
+           //file_put_contents("counter.txt", 6);
+           $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
 
-        }
+       }
 
-        if ($messageText == "Показать ещё") {
-            $db = pg_connect(pg_connection_string());
-            $resultsUser = pg_query($db, "SELECT id, telegram_id
+       if ($messageText == "Показать ещё") {
+           $db = pg_connect(pg_connection_string());
+           $resultsUser = pg_query($db, "SELECT id, telegram_id
 	FROM public.\"Users\"
 	WHERE telegram_id = " . $userId . ";");
-            $resultsUser = pg_fetch_all($resultsUser);
+           $resultsUser = pg_fetch_all($resultsUser);
 
-            foreach ($resultsUser as $resultUser) {
-                $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
+           foreach ($resultsUser as $resultUser) {
+               $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
 	FROM public.\"Variables\"
-    WHERE user_id = " . $resultUser['id'] .  " and name ='speaker_counter'");
-                $resultsVariables = pg_fetch_all($resultsVariables);
+    WHERE user_id = " . $resultUser['id'] . " and name ='speaker_counter'");
+               $resultsVariables = pg_fetch_all($resultsVariables);
 
-                foreach ($resultsVariables as $resultVariable) {
+               foreach ($resultsVariables as $resultVariable) {
 
-                    $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session
+                   $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY last_name
     LIMIT 6 OFFSET " . $resultVariable['value'] . ";");
-                    $results = pg_fetch_all($results);
+                   $results = pg_fetch_all($results);
 
-                    if ($results != null) {
-                        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                            [
-                                [
-                                    ["text" => "Показать ещё"]
-                                ],
-                                [
-                                    ["text" => "Меню"]
-                                ]
-                            ], true, true
-                        );
+                   if ($results != null) {
+                       $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                           [
+                               [
+                                   ["text" => "Показать ещё"]
+                               ],
+                               [
+                                   ["text" => "Меню"]
+                               ]
+                           ], true, true
+                       );
 
-                        foreach ($results as $result) {
-                            $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
-                                [
-                                    [
-                                        ["callback_data" => "like" . $result['id'], "text" => "Мне нравится"]
-                                    ]
-                                ]
-                            );
+                       foreach ($results as $result) {
+                           $likeKeyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                               [
+                                   [
+                                       ["callback_data" => "like" . $result['id'], "text" => "Мне нравится"]
+                                   ]
+                               ]
+                           );
 
-                            $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
-                            $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
-                            $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
-                            $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
-                        }
+                           $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $result['first_name'] . " " . $result['last_name']);
+                           $bot->sendPhoto($message->getChat()->getId(), $result['refphoto']);
+                           $bot->sendMessage($message->getChat()->getId(), "О спикере: " . $result['about']);
+                           $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
+                       }
 
-                        foreach ($resultsUser as $resultUser) {
-                            $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
+                       foreach ($resultsUser as $resultUser) {
+                           $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
 	FROM public.\"Variables\"
-    WHERE user_id = " . $resultUser['id'] .  " and name ='speaker_counter'");
-                            $resultsVariables = pg_fetch_all($resultsVariables);
+    WHERE user_id = " . $resultUser['id'] . " and name ='speaker_counter'");
+                           $resultsVariables = pg_fetch_all($resultsVariables);
 
-                            foreach ($resultsVariables as $resultVariable) {
-                                pg_query($db, "UPDATE public.\"Variables\"
+                           foreach ($resultsVariables as $resultVariable) {
+                               pg_query($db, "UPDATE public.\"Variables\"
 	SET value ='" . ($resultVariable['value'] + 6) . "'
-	WHERE id = " . $resultVariable['id'] .";");
-                            }
-                        }
+	WHERE id = " . $resultVariable['id'] . ";");
+                           }
+                       }
 
 
-                        $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
-                        //file_put_contents("counter.txt", file_get_contents("counter.txt") + 6);
-                    } else {
-                        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                            [["text" => "Расписание"], ["text" => "Моё расписание"]],
-                            [["text" => "Лидеры голосования"]],
-                            [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
-                            [["text" => "Связаться с организаторами"]],
-                            [["text" => "О форуме"]],
-                        ], true, true);
+                       $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
+                       //file_put_contents("counter.txt", file_get_contents("counter.txt") + 6);
+                   } else {
+                       $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                           [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                           [["text" => "Лидеры голосования"]],
+                           [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                           [["text" => "Связаться с организаторами"]],
+                           [["text" => "О форуме"]],
+                       ], true, true);
 
-                        $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
+                       $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
 
-                        foreach ($resultsUser as $resultUser) {
-                            $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
+                       foreach ($resultsUser as $resultUser) {
+                           $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
 	FROM public.\"Variables\"
-    WHERE user_id = " . $resultUser['id'] .  " and name ='speaker_counter'");
-                            $resultsVariables = pg_fetch_all($resultsVariables);
+    WHERE user_id = " . $resultUser['id'] . " and name ='speaker_counter'");
+                           $resultsVariables = pg_fetch_all($resultsVariables);
 
-                            foreach ($resultsVariables as $resultVariable) {
-                                pg_query($db, "UPDATE public.\"Variables\"
+                           foreach ($resultsVariables as $resultVariable) {
+                               pg_query($db, "UPDATE public.\"Variables\"
 	SET value = 0
-	WHERE id = " . $resultVariable['id'] .";");
-                            }
-                        }
+	WHERE id = " . $resultVariable['id'] . ";");
+                           }
+                       }
 
-                        //file_put_contents("counter.txt", 0);
-                    }
+                       //file_put_contents("counter.txt", 0);
+                   }
 
-                }
-            }
+               }
+           }
 
-        }
+       }
 
-           if ($messageText == "30 ноября") {
-               $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\" WHERE date_begin like '30%' ORDER BY time_begin;");
-               $results = pg_fetch_all($results);
-               foreach ($results as $result) {
+       if ($messageText == "30 ноября") {
+           $db = pg_connect(pg_connection_string());
+           $results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\" WHERE date_begin like '30%' ORDER BY time_begin;");
+           $results = pg_fetch_all($results);
+           foreach ($results as $result) {
+               $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                   [
+                       [
+                           ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание ']
+                       ]
+                   ]
+               );
+               $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
+                   "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
+                   "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML", null, null, $keyboard);
+           }
+           $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+               [["text" => "30 ноября"]],
+               [["text" => "1 декабря"]],
+               [["text" => "Меню"]],
+           ], true, true);
+
+           $bot->sendMessage($message->getChat()->getId(), "Выберите дату: ", false, null, null, $keyboard);
+       }
+
+       if ($messageText == "1 декабря") {
+           $db = pg_connect(pg_connection_string());
+           $results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\" WHERE date_begin like '1%' ORDER BY time_begin;");
+           $results = pg_fetch_all($results);
+           $date = "1";
+           foreach ($results as $result) {
+               $string = stristr($result['begin'], $date);
+               if ($string == $result['begin']) {
                    $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
                        [
                            [
-                               ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание ']
+                               ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание']
                            ]
                        ]
                    );
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
                        "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
-                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
+                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML", null, null, $keyboard);
                }
-               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                   [["text" => "30 ноября"]],
-                   [["text" => "1 декабря"]],
-                   [["text" => "Меню"]],
-               ], true, true);
-
-               $bot->sendMessage($message->getChat()->getId(), "Выберите дату: ", false, null, null, $keyboard);
            }
+           $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+               [["text" => "30 ноября"]],
+               [["text" => "1 декабря"]],
+               [["text" => "Меню"]],
+           ], true, true);
 
-           if ($messageText == "1 декабря") {
-               $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\" WHERE date_begin like '1%' ORDER BY time_begin;");
-               $results = pg_fetch_all($results);
-               $date = "1";
-               foreach ($results as $result) {
-                   $string = stristr($result['begin'], $date);
-                   if ($string == $result['begin']) {
-                       $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
-                           [
-                               [
-                                   ['callback_data' => "add" . $result['id'], 'text' => 'Добавить в своё расписание']
-                               ]
-                           ]
-                       );
-                       $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                           "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
-                           "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
-                   }
-               }
-               $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                   [["text" => "30 ноября"]],
-                   [["text" => "1 декабря"]],
-                   [["text" => "Меню"]],
-               ], true, true);
+           $bot->sendMessage($message->getChat()->getId(), "Выберите дату: ", false, null, null, $keyboard);
+       }
 
-               $bot->sendMessage($message->getChat()->getId(), "Выберите дату: ", false, null, null, $keyboard);
-           }
+       if ($messageText == "Моё расписание") {
+           $mainKeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+               [["text" => "Расписание"], ["text" => "Моё расписание"]],
+               [["text" => "Лидеры голосования"]],
+               [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+               [["text" => "Связаться с организаторами"]],
+               [["text" => "О форуме"]],
+           ], true, true);
 
-           if ($messageText == "Моё расписание") {
-               $mainKeyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                   [["text" => "Расписание"], ["text" => "Моё расписание"]],
-                   [["text" => "Лидеры голосования"]],
-                   [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
-                   [["text" => "Связаться с организаторами"]],
-                   [["text" => "О форуме"]],
-               ], true, true);
-
-               $db = pg_connect(pg_connection_string());
-               $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".id as schedule_id, public.\"Schedule\".title, public.\"Schedule\".date_begin, public.\"Schedule\".date_end, public.\"Schedule\".time_begin, public.\"Schedule\".time_end
+           $db = pg_connect(pg_connection_string());
+           $results = pg_query($db, "SELECT public.\"Users\".id, public.\"Schedule\".id as schedule_id, public.\"Schedule\".title, public.\"Schedule\".date_begin, public.\"Schedule\".date_end, public.\"Schedule\".time_begin, public.\"Schedule\".time_end
 	                                            FROM public.\"Users\"
                                                 JOIN public.\"MySchedule\" on public.\"Users\".id = public.\"MySchedule\".user_id
                                                 JOIN public.\"Schedule\" on public.\"MySchedule\".schedule_id = public.\"Schedule\".id
                                                 WHERE public.\"Users\".telegram_id =" . $userId);
-               $results = pg_fetch_all($results);
-               $bot->sendMessage($message->getChat()->getId(), "Ваше расписание :");
-               foreach ($results as $result) {
-                   $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+           $results = pg_fetch_all($results);
+           $bot->sendMessage($message->getChat()->getId(), "Ваше расписание :");
+           foreach ($results as $result) {
+               $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup(
+                   [
                        [
-                           [
-                               ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания ']
-                           ]
+                           ['callback_data' => "delete" . $result['schedule_id'], 'text' => 'Удалить из своего расписания ']
                        ]
-                   );
-                   $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
-                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
-                   $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainKeyboard);
-               }
+                   ]
+               );
+               $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
+                   "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
+                   "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML", null, null, $keyboard);
+               $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainKeyboard);
            }
-
-        return false;
        }
+
+       return false;
+   }
 
 
        return true;
