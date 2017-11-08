@@ -530,8 +530,8 @@ $tb = new TelegramBot();
                        ]
                    );
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Начало: </b>" . $result['date_begin'] . " " . $result['time_begin'] . "\n" .
-                       "<b>Завершение: </b>" . $result['date_end'] . " " . $result['time_end'], "HTML" , null, null, $keyboard);
+                       "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
+                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "30 ноября"]],
@@ -558,8 +558,8 @@ $tb = new TelegramBot();
                            ]
                        );
                        $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                           "<b>Начало: </b>" . $result['date_begin'] . " " . $result['time_begin'] . "\n" .
-                           "<b>Завершение: </b>" . $result['date_end'] . " " . $result['time_end'], "HTML" , null, null, $keyboard);
+                           "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
+                           "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
                    }
                }
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -589,8 +589,8 @@ $tb = new TelegramBot();
                        ]
                    );
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Начало: </b>" . $result['date_begin'] . " " . $result['time_begin'] . "\n" .
-                       "<b>Завершение: </b>" . $result['date_end'] . " " . $result['time_end'], "HTML" , null, null, $keyboard);
+                       "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
+                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML" , null, null, $keyboard);
                }
            }
 
