@@ -298,10 +298,6 @@ $tb = new TelegramBot();
 
            if ($messageText == "Лидеры голосования") {
                $db = pg_connect(pg_connection_string());
-               $resultsUser = pg_query($db, "SELECT id, telegram_id
-	FROM public.\"Users\"
-	WHERE telegram_id = " . $userId . ";");
-               $resultsUser = pg_fetch_all($resultsUser);
                $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
@@ -326,119 +322,52 @@ $tb = new TelegramBot();
                    $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
                    $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
                }
-
-               foreach ($resultsUser as $resultUser) {
-                   $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
-	FROM public.\"Variables\"
-    WHERE user_id =" . $resultUser['id'] . " and name = 'leaders_counter';");
-                   $resultsVariables = pg_fetch_all($resultsVariables);
-
-                   if ($resultsVariables != null) {
-                       foreach ($resultsVariables as $resultVariable) {
-                           pg_query($db, "UPDATE public.\"Variables\"
-	SET value='" . 6 . "'
-	WHERE id =" . $resultVariable['id'] . ";");
-                       }
-                   } else {
-                       pg_query($db, "INSERT INTO public.\"Variables\"(
-	user_id, name, value)
-	VALUES (" . $resultUser['id'] . ",'leaders_counter','" . 6 . "');");
-                   }
-               }
-
-               //file_put_contents('counter.txt', 6);
+               file_put_contents('counter.txt', 6);
            }
 
            if ($messageText == "Пoказать ещё") {
                $db = pg_connect(pg_connection_string());
-               $resultsUser = pg_query($db, "SELECT id, telegram_id
-	FROM public.\"Users\"
-	WHERE telegram_id = " . $userId . ";");
-               $resultsUser = pg_fetch_all($resultsUser);
-
-
-               foreach ($resultsUser as $resultUser) {
-                   $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
-	FROM public.\"Variables\"
-    WHERE user_id = " . $resultUser['id'] . " and name ='leaders_counter'");
-                   $resultsVariables = pg_fetch_all($resultsVariables);
-
-                   foreach ($resultsVariables as $resultVariable) {
-
-                       $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
+               $resultsUserVoices = pg_query($db, "SELECT first_name, last_name, refphoto, count(speaker_id) as \"counter\"
 	                                                      FROM public.\"Speakers\"
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
                                                           GROUP BY first_name, last_name, refphoto
                                                           ORDER BY counter DESC
-                                                          LIMIT 6 OFFSET " . $resultVariable['value']
-                       );
-                       $resultsUserVoices = pg_fetch_all($resultsUserVoices);
+                                                          LIMIT 6 OFFSET " . file_get_contents('counter.txt')
+               );
+               $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
-                       if ($resultsUserVoices != null) {
-                           $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
-                               [
-                                   [
-                                       ["text" => "Пoказать ещё"]
-                                   ],
-                                   [
-                                       ["text" => "Меню"]
-                                   ]
-                               ], true, true
-                           );
+               if ($resultsUserVoices != null) {
+                   $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+                       [
+                           [
+                               ["text" => "Пoказать ещё"]
+                           ],
+                           [
+                               ["text" => "Меню"]
+                           ]
+                       ], true, true
+                   );
 
-                           foreach ($resultsUserVoices as $resultUserVoices) {
-                               $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
-                               $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
-                               $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
-                           }
-
-                           foreach ($resultsUser as $resultUser) {
-                               $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
-	FROM public.\"Variables\"
-    WHERE user_id = " . $resultUser['id'] . " and name ='leaders_counter'");
-                               $resultsVariables = pg_fetch_all($resultsVariables);
-
-                               foreach ($resultsVariables as $resultVariable) {
-                                   pg_query($db, "UPDATE public.\"Variables\"
-	SET value ='" . ($resultVariable['value'] + 6) . "'
-	WHERE id = " . $resultVariable['id'] . ";");
-                               }
-                           }
-
-
-                           //file_put_contents('counter.txt', file_get_contents('counter.txt') + 6);
-
-                       } else {
-                           $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
-                               [["text" => "Расписание"], ["text" => "Моё расписание"]],
-                               [["text" => "Лидеры голосования"]],
-                               [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
-                               [["text" => "Связаться с организаторами"]],
-                               [["text" => "О форуме"]],
-                           ], true, true);
-
-                           $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
-
-                           foreach ($resultsUser as $resultUser) {
-                               $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
-	FROM public.\"Variables\"
-    WHERE user_id = " . $resultUser['id'] . " and name ='leaders_counter'");
-                               $resultsVariables = pg_fetch_all($resultsVariables);
-
-                               foreach ($resultsVariables as $resultVariable) {
-                                   pg_query($db, "UPDATE public.\"Variables\"
-	SET value = 0
-	WHERE id = " . $resultVariable['id'] . ";");
-                               }
-                           }
-
-
-                           //file_put_contents("counter.txt", 0);
-                       }
-
+                   foreach ($resultsUserVoices as $resultUserVoices) {
+                       $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
+                       $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
+                       $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
                    }
-               }
 
+                   file_put_contents('counter.txt', file_get_contents('counter.txt') + 6);
+
+               } else {
+                   $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+                       [["text" => "Расписание"], ["text" => "Моё расписание"]],
+                       [["text" => "Лидеры голосования"]],
+                       [["text" => "Спикеры"], ["text" => "Подписаться на новости"]],
+                       [["text" => "Связаться с организаторами"]],
+                       [["text" => "О форуме"]],
+                   ], true, true);
+
+                   $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
+                   file_put_contents("counter.txt", 0);
+               }
            }
 
            if ($messageText == "Меню") {
