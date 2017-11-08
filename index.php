@@ -352,7 +352,7 @@ $tb = new TelegramBot();
 
                    foreach ($resultsUserVoices as $resultUserVoices) {
                        $bot->sendMessage($message->getChat()->getId(), "Спикер: " . $resultUserVoices['first_name'] . " " . $resultUserVoices['last_name']);
-                       if ($resultUserVoices != "") {
+                       if ($resultUserVoices['refphoto'] != "") {
                            $bot->sendPhoto($message->getChat()->getId(), $resultUserVoices['refphoto']);
                        }
                        $bot->sendMessage($message->getChat()->getId(), "Количество отметок мне нравится: " . $resultUserVoices['counter'], false, null, null, $keyboard);
