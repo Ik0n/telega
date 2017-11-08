@@ -371,7 +371,7 @@ $tb = new TelegramBot();
                                                           LEFT OUTER JOIN public.\"UserVoices\" on public.\"Speakers\".id = public.\"UserVoices\".speaker_id
                                                           GROUP BY public.\"Speakers\".id,first_name, last_name, refphoto
                                                           ORDER BY counter DESC, id ASC
-                                                          LIMIT 6 OFFSET" . $resultVariable['value']
+                                                          LIMIT 6 OFFSET " . $resultVariable['value']
                        );
                        $resultsUserVoices = pg_fetch_all($resultsUserVoices);
 
