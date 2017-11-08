@@ -16,12 +16,12 @@ $db = pg_connect("dbname=d4re8r18uqsqa
 if (isset($_POST['submit'])) {
     $data = $_POST;
     pg_query($db, "INSERT INTO public.\"Schedule\"(
-	title, begin, \"end\")
-	VALUES ('". $_POST['title'] ."','" . $_POST['begin'] . "','" . $_POST['end'] . "');");
+	title, date_begin, date_end, time_begin, time_end)
+	VALUES ('". $data['title'] ."','" . $data['date_begin'] . "','" . $data['date_end'] . "','" . $data['time_begin'] . "','" . $data['time_end'] . "');");
 
 }
 
-$results = pg_query($db, "SELECT id, title, begin, \"end\" FROM public.\"Schedule\";");
+$results = pg_query($db, "SELECT id, title, date_begin, date_end, time_begin, time_end FROM public.\"Schedule\";");
 $results = pg_fetch_all($results);
 ?>
 <!doctype html>
@@ -47,8 +47,10 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         <tr>
             <td><? echo $result['id']; ?></td>
             <td><? echo $result['title']; ?></td>
-            <td><? echo $result['begin']; ?></td>
-            <td><? echo $result['end']; ?></td>
+            <td><? echo $result['date_begin']; ?></td>
+            <td><? echo $result['time_begin']; ?></td>
+            <td><? echo $result['date_end']; ?></td>
+            <td><? echo $result['time_end']; ?></td>
             <td><? echo "<a href='delete.php?id=" . $result['id']. "'>Удалить запись</a>"?></td>
         </tr>
     </table>
@@ -58,13 +60,21 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
     <br>
     <input type="text" name="title" title="title" required>
     <hr>
-    Начало мероприятия(пример: 1 ноября 2017, 20:00)
+    Дата начала мероприятия(пример: 1 ноября 2017)
     <br>
-    <input type="text" name="begin" title="begin" required>
+    <input type="text" name="date_begin" title="date_begin" required>
     <hr>
-    Конец мероприятия(пример: 1 ноября 2017, 21:00)
+    Время начала мероприятия(пример: 09:30)
     <br>
-    <input type="text" name="end" title="end" required>
+    <input type="text" name="time_begin" title="time_begin" required>
+    <hr>
+    Дата конца мероприятия(пример: 1 ноября 2017)
+    <br>
+    <input type="text" name="date_end" title="date_end" required>
+    <hr>
+    Время конца мероприятия(пример: 09:30)
+    <br>
+    <input type="text" name="time_end" title="time_end" required>
     <hr>
     <input type="submit" name="submit">
 </form>
