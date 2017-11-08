@@ -430,6 +430,10 @@ $tb = new TelegramBot();
 
         if ($messageText == "Спикеры") {
                $db = pg_connect(pg_connection_string());
+               $resultsUser = pg_query($db, "SELECT id, telegram_id
+	FROM public.\"Users\"
+	WHERE telegram_id = " . $userId . ";");
+               $resultsUser = pg_fetch_all($resultsUser);
                $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session FROM public.\"Speakers\" ORDER BY last_name LIMIT 6;");
                $results = pg_fetch_all($results);
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
@@ -460,13 +464,39 @@ $tb = new TelegramBot();
                    $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                    //$bot->sendMessage($message->getChat()->getId(), "-----------------------------------");
                }
-                file_put_contents("counter.txt", 6);
+
+               foreach ($resultsUser as $resultUser) {
+                   $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
+	FROM public.\"Variables\"
+    WHERE user_id =" . $resultUser['id'] . " and name = speaker_counter;");
+                   $resultsVariables = pg_fetch_all($resultsVariables);
+
+                   if ($resultsVariables != null) {
+                       foreach ($resultsVariables as $resultVariable) {
+                           pg_query($db, "UPDATE public.\"Variables\"
+	SET value='" . 6 . "'
+	WHERE id =" . $resultVariable['id'] .";");
+                       }
+                   } else {
+                       foreach ($resultsVariables as $resultVariable) {
+                           pg_query($db, "INSERT INTO public.\"Variables\"(
+	user_id, name, value)
+	VALUES (" . $resultUser['id'] . ",'speaker_counter','" . 6 ."');");
+                       }
+                   }
+               }
+
+                //file_put_contents("counter.txt", 6);
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
 
         }
 
         if ($messageText == "Показать ещё") {
             $db = pg_connect(pg_connection_string());
+            $resultsUser = pg_query($db, "SELECT id, telegram_id
+	FROM public.\"Users\"
+	WHERE telegram_id = " . $userId . ";");
+            $resultsUser = pg_fetch_all($resultsUser);
             $results = pg_query($db, "SELECT id, first_name, last_name, about, refphoto, session
 	FROM public.\"Speakers\"
     ORDER BY last_name
@@ -500,8 +530,22 @@ $tb = new TelegramBot();
                     $bot->sendMessage($message->getChat()->getId(), "Сессия: " . $result['session'], false, null, null, $likeKeyboard);
                 }
 
+                foreach ($resultsUser as $resultUser) {
+                    $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
+	FROM public.\"Variables\"
+    WHERE user_id = " . $resultUser['id'] .  " and name ='speaker_counter'");
+                    $resultsVariables = pg_fetch_all($resultsVariables);
+
+                    foreach ($resultsVariables as $resultVariable) {
+                        pg_query($db, "UPDATE public.\"Variables\"
+	SET value ='" . ($resultVariable['value'] + 6) . "'
+	WHERE id = " . $resultVariable['id'] .";");
+                    }
+                }
+
+
                 $bot->sendMessage($message->getChat()->getId(), "Выберите действие", false, null, null, $keyboard);
-                file_put_contents("counter.txt", file_get_contents("counter.txt") + 6);
+                //file_put_contents("counter.txt", file_get_contents("counter.txt") + 6);
             } else {
                 $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                     [["text" => "Расписание"], ["text" => "Моё расписание"]],
@@ -512,7 +556,21 @@ $tb = new TelegramBot();
                 ], true, true);
 
                 $bot->sendMessage($message->getChat()->getId(), "Вы просмотрели весь список спикеров! ", false, null, null, $keyboard);
-                file_put_contents("counter.txt", 0);
+
+                foreach ($resultsUser as $resultUser) {
+                    $resultsVariables = pg_query($db, "SELECT id, user_id, name, value
+	FROM public.\"Variables\"
+    WHERE user_id = " . $resultUser['id'] .  " and name ='speaker_counter'");
+                    $resultsVariables = pg_fetch_all($resultsVariables);
+
+                    foreach ($resultsVariables as $resultVariable) {
+                        pg_query($db, "UPDATE public.\"Variables\"
+	SET value = 0
+	WHERE id = " . $resultVariable['id'] .";");
+                    }
+                }
+
+                //file_put_contents("counter.txt", 0);
             }
 
         }
