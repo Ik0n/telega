@@ -597,9 +597,11 @@ $tb = new TelegramBot();
                        ]
                    ]
                );
+               $time_begin = explode(':', $result['time_begin']);
+               $time_end = explode(":", $result['time_end']);
                $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                   "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
-                   "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML", null, null, $keyboard);
+                   "<b>Начало: </b>" . $result['date_begin'] . ", " . $time_begin[0] . ":" . $time_begin[1] . "\n" .
+                   "<b>Завершение: </b>" . $result['date_end'] . ", " . $time_end[0] . ":" . $time_end[1], "HTML", null, null, $keyboard);
            }
            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                [["text" => "30 ноября"]],
@@ -625,9 +627,11 @@ $tb = new TelegramBot();
                            ]
                        ]
                    );
+                   $time_begin = explode(':', $result['time_begin']);
+                   $time_end = explode(":", $result['time_end']);
                    $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                       "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
-                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML", null, null, $keyboard);
+                       "<b>Начало: </b>" . $result['date_begin'] . ", " . $time_begin[0] . ":" . $time_begin[1] . "\n" .
+                       "<b>Завершение: </b>" . $result['date_end'] . ", " . $time_end[0] . ":" . $time_end[1], "HTML", null, null, $keyboard);
                }
            }
            $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
@@ -664,9 +668,11 @@ $tb = new TelegramBot();
                        ]
                    ]
                );
+               $time_begin = explode(':', $result['time_begin']);
+               $time_end = explode(":", $result['time_end']);
                $bot->sendMessage($message->getChat()->getId(), "<b>Тема(ы): </b>" . $result['title'] . "\n" .
-                   "<b>Начало: </b>" . $result['date_begin'] . ", " . $result['time_begin'] . "\n" .
-                   "<b>Завершение: </b>" . $result['date_end'] . ", " . $result['time_end'], "HTML", null, null, $keyboard);
+                   "<b>Начало: </b>" . $result['date_begin'] . ", " . $time_begin[0] . ":" . $time_begin[1] . "\n" .
+                   "<b>Завершение: </b>" . $result['date_end'] . ", " . $time_end[0] . ":" . $time_end[1], "HTML", null, null, $keyboard);
                $bot->sendMessage($message->getChat()->getId(), "Что я могу для вас сделать?", false, null, null, $mainKeyboard);
            }
        }
