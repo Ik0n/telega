@@ -483,7 +483,6 @@ $tb = new TelegramBot();
 	VALUES (" . $resultUser['id'] . ",'speaker_counter','" . 6 . "');");
                    }
                }
-           }
 
            //file_put_contents("counter.txt", 6);
            $bot->sendMessage($message->getChat()->getId(), "Выберите действие ", false, null, null, $keyboard);
