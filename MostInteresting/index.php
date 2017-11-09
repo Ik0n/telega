@@ -46,6 +46,8 @@ echo "<a href='/MostInteresting/'>Самое интересное</a><br>"
         <tr>
             <td><? echo $result['id']; ?></td>
             <td><? echo $result['content']; ?></td>
+            <td><? echo "<a href='delete.php?id=" . $result['id']. "'>Удалить запись</a>"?></td>
+            <td><? echo "<a href='edit.php?id=" . $result['id']. "'>Изменить запись</a>"?></td>
         </tr>
     </table>
 <? } ?>
