@@ -15,9 +15,8 @@ $db = pg_connect("dbname=d4re8r18uqsqa
 
 if (isset($_POST['submit'])) {
     $data = $_POST;
-    pg_query($db, "UPDATE public.\"MostInteresting\"
-	SET content= '" . $_POST['content'] . "'
-	WHERE id = 1;");
+    pg_query($db, "INSERT INTO public.\"MostInteresting\"(content)
+    VALUES('" . $data['content'] ."')");
 
 }
 

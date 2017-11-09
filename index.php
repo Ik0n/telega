@@ -232,8 +232,7 @@ $tb = new TelegramBot();
            if ($messageText == "Самое интересное") {
                $db = pg_connect(pg_connection_string());
                $results = pg_query($db, "SELECT content
-	FROM public.\"MostInteresting\"
-	WHERE id = 1;");
+	FROM public.\"MostInteresting\" ORDER BY created_at ASC");
                $results = pg_fetch_all($results);
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "О Гиперкубе"]],
@@ -243,8 +242,9 @@ $tb = new TelegramBot();
                    [["text" => "Размещение"], ["text" => "Меню"]],
                ], true, true);
                foreach ($results as $result) {
-                   $bot->sendMessage($message->getChat()->getId(), $result['content'], false, null, null, $keyboard);
+                   $bot->sendMessage($message->getChat()->getId(), $result['content'] . "\n", "HTML");
                }
+               $bot->sendMessage($message->getChat()->getId(), "Выберите раздел:", false, null, null, $keyboard);
            }
 
            if ($messageText == "Связаться с организаторами") {
