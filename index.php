@@ -55,7 +55,10 @@ $tb = new TelegramBot();
             [
                 [
                     ['url' => 'http://www.b2bcg.ru/events/digital-technology-forum/', 'text' => 'Офицальный сайт форума'],
-                    ['url' => 'https://plan-b.agency/', 'text' => 'Digital-партнер Plan B Agency']
+
+                ],
+                [
+                    ['url' => 'https://plan-b.agency/', 'text' => 'Digital-партнер Plan B Agency'],
                 ]
             ]
         );
