@@ -462,7 +462,7 @@ $tb = new TelegramBot();
                $answer = 'Здесь содержится полезная информация о нашем форуме. Выберите раздел:';
                $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
                    [["text" => "О Гиперкубе"]],
-                   [["text" => "Чат для делегатов"]],
+                   [["url" => "https://t.me/digitaltechnologiesforum"],["text" => "Чат для делегатов"]],
                    [["text" => "Самое интересное"]],
                    [["text" => "Как добраться"]],
                    [["text" => "Размещение"], ["text" => "Меню"]],
