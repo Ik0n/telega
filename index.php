@@ -268,7 +268,7 @@ $tb = new TelegramBot();
                $mail->Host = 'smtp.gmail.com';
                $mail->Port = '587';
                $mail->Username = "DigitalTechnologiesForum@gmail.com";
-               $mail->Password = "DigitalTechnologiesForum2017";
+               $mail->Password = "digitaltechnologiesforum2018";
                $mail->CharSet = "UTF-8";
                $mail->setFrom("DigitalTechnologiesForum@gmail.com");
 
