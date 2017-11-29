@@ -493,6 +493,7 @@ $tb = new TelegramBot();
                ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
                $bot->sendLocation($message->getChat()->getId(), 55.696560, 37.355938);
+               $bot->sendPhoto($message->getChat()->getId(), "blob:https://web.whatsapp.com/da7b9b92-3c7f-4bf0-9e21-c1888bb396e1");
                $bot->sendMessage($message->getChat()->getId(), "Расписание движения транспорта по внутренним маршрутам");
                $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/aaaaaaa.png");
                $bot->sendMessage($message->getChat()->getId(), "Внутренние маршруты");
