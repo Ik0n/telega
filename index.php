@@ -492,14 +492,16 @@ $tb = new TelegramBot();
                    [["text" => "Размещение"], ["text" => "Меню"]],
                ], true, true);
                $bot->sendMessage($message->getChat()->getId(), $answer, false, null, null, $keyboard);
-               $bot->sendLocation($message->getChat()->getId(), 55.696560, 37.355938);
-               $bot->sendPhoto($message->getChat()->getId(), "https://wmpics.pics/di-4HCA.jpg");
-               $bot->sendMessage($message->getChat()->getId(), "Расписание движения транспорта по внутренним маршрутам");
-               $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/aaaaaaa.png");
-               $bot->sendMessage($message->getChat()->getId(), "Внутренние маршруты");
-               $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/scheme2_2D00_inner_2D00_5_2D00_ru.jpg");
-               $bot->sendMessage($message->getChat()->getId(), "На общественном транспорте");
-               $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-attached+files/scheme2_2D00_outer_2D00_4_2D00_ru.jpg");
+               //$bot->sendLocation($message->getChat()->getId(), 55.696560, 37.355938);
+               //$bot->sendPhoto($message->getChat()->getId(), "https://wmpics.pics/di-4HCA.jpg");
+               //$bot->sendMessage($message->getChat()->getId(), "Расписание движения транспорта по внутренним маршрутам");
+               //$bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/aaaaaaa.png");
+               //$bot->sendMessage($message->getChat()->getId(), "Внутренние маршруты");
+               //$bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/scheme2_2D00_inner_2D00_5_2D00_ru.jpg");
+               //$bot->sendMessage($message->getChat()->getId(), "На общественном транспорте");
+               //$bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-attached+files/scheme2_2D00_outer_2D00_4_2D00_ru.jpg");
+               $bot->sendMessage($message->getChat()->getId(), "Расписание трасферов");
+               $bot->sendPhoto($message->getChat()->getId(), "https://wmpics.pics/di-6CYJ.png");
                $bot->sendMessage($message->getChat()->getId(), "На автомобиле");
                $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/4331.scheme2_2D00_auto_2D00_4_2D00_ru.jpg");
 
