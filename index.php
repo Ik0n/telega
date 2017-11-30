@@ -503,7 +503,7 @@ $tb = new TelegramBot();
                $bot->sendMessage($message->getChat()->getId(), "Расписание трасферов");
                $bot->sendPhoto($message->getChat()->getId(), "https://wmpics.pics/di-6CYJ.png");
                $bot->sendMessage($message->getChat()->getId(), "На автомобиле");
-               $bot->sendPhoto($message->getChat()->getId(), "http://sk.ru/cfs-file.ashx/__key/communityserver-components-userfiles/00-00-02-15-95-_3F044004380441043E043504340438043D0435043D043D044B043504_+_4404300439043B044B04_/4331.scheme2_2D00_auto_2D00_4_2D00_ru.jpg");
+               $bot->sendPhoto($message->getChat()->getId(), "https://wmpics.pics/di-4HCA.jpg");
 
            }
 
